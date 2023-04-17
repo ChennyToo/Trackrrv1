@@ -1,4 +1,4 @@
-package com.example.googlebooksnetworking
+package com.example.trackrrv1
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,13 +7,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import com.example.googlebooksnetworking.databinding.FragmentMainBinding
+import com.example.trackrrv1.databinding.FragmentMainBinding
 
 class MainFragment : Fragment() {
 
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
-    private val viewModel: BookViewModel by viewModels()
+    private val viewModel: FoodViewModel by viewModels()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -23,7 +23,7 @@ class MainFragment : Fragment() {
         viewModel.getBooks()
 
         viewModel.response.observe(viewLifecycleOwner, Observer {bookList ->
-            val adapter = BookAdapter(bookList)
+            val adapter = FoodAdapter(bookList)
             binding.recyclerView.adapter = adapter
 
         })

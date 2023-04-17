@@ -1,4 +1,4 @@
-package com.example.googlebooksnetworking
+package com.example.trackrrv1
 
 import com.squareup.moshi.Moshi
 import retrofit2.http.GET
@@ -6,23 +6,21 @@ import retrofit2.Call
 import retrofit2.Retrofit
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import retrofit2.converter.moshi.MoshiConverterFactory
-
-private const val BASE_URL = "https://www.googleapis.com/books/v1/"
+private const val BASE_URL = "https://trackapi.nutritionix.com/v2/"
 private val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
 private val retrofit = Retrofit.Builder().addConverterFactory(MoshiConverterFactory.create(moshi)).baseUrl(BASE_URL).build()
 private const val QUERY_STRING =
-    "volumes?q=Android" +
-            "&maxResults=10"
+    "search/item?upc=073390008185&x-app-id=3018c32b&x-app-key=cb2bb40afcee0aaeb8e01060a5abf237"
 
 
-interface BookApiService {
+interface FoodApiService {
     @GET(QUERY_STRING)
-    fun getBooks(): Call<BooksResponse>
+    fun getFoods(): Call<FoodsResponse>
 }
 
-object BookApi {
-    val BookApi : BookApiService by lazy{
-        retrofit.create(BookApiService::class.java)
+object FoodApi {
+    val FoodApi : FoodApiService by lazy{
+        retrofit.create(FoodApiService::class.java)
     }
 
 }
