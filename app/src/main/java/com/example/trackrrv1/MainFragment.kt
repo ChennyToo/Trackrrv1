@@ -20,10 +20,10 @@ class MainFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentMainBinding.inflate(inflater, container, false)
-        viewModel.getBooks()
+        viewModel.getFoods()
 
-        viewModel.response.observe(viewLifecycleOwner, Observer {bookList ->
-            val adapter = FoodAdapter(bookList)
+        viewModel.response.observe(viewLifecycleOwner, Observer {foodList ->
+            val adapter = FoodAdapter(foodList)
             binding.recyclerView.adapter = adapter
 
         })

@@ -14,7 +14,7 @@ class FoodViewModel : ViewModel() {
         val response: LiveData<List<Food>>
             get() = _response
 
-    fun getBooks(){
+    fun getFoods(){
         val request = FoodApi.FoodApi.getFoods()
         request.enqueue(object : Callback<FoodsResponse> {
             override fun onFailure(call: Call<FoodsResponse>, t: Throwable) {
@@ -23,20 +23,19 @@ class FoodViewModel : ViewModel() {
             override fun onResponse(call: Call<FoodsResponse>, response: Response<FoodsResponse>) {
                 var listOfFoodsFetched = mutableListOf<Food>()
                 val foodsResponse : FoodsResponse? = response.body()
-//                val booksItemList = booksResponse?.booksItemsList ?: listOf()
-//
-//                for (bookItems in booksItemList){
-//                    val booksVolumeInfo = bookItems.booksVolumeInfo
-//                    val title = booksVolumeInfo.title
-//                    val authors = booksVolumeInfo.authors
-//                    val subtitle = booksVolumeInfo.subtitle
-//                    val url = booksVolumeInfo.url
-//                    val imageUri = booksVolumeInfo.imageLinks.image!!.toUri().buildUpon().scheme("https").build()
-//
-//                    val newFood = Food(title?: "", subtitle?: "", authors?: listOf<String>(), url?: "", imageUri)
-//                    listOfBooksFetched.add(newFood)
-//                    Log.d("Info", "${booksVolumeInfo.imageLinks.image}")
-//                }
+                val foodsItemList = foodsResponse?.foodsItemsList ?: listOf()
+
+                for (foodItem in foodsItemList){
+                    val name = foodItem.name
+                    val calorie = foodItem.calorie
+                    val fat = foodItem.fat
+                    val sugar = foodItem.sugar
+                    val imageUri = foodItem.imageLinks.thumbnail!!.toUri().buildUpon().scheme("https").build()
+
+                    val newFood = Food(name?: "", calorie?: 0, fat?: 0, sugar?: 0, imageUri)
+                    listOfFoodsFetched.add(newFood)
+                    Log.d("Info", "$name $calorie $fat $sugar $imageUri")
+                }
                 _response.value = listOfFoodsFetched
             }
         })

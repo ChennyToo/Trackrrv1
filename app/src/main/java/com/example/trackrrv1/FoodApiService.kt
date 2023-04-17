@@ -10,7 +10,7 @@ private const val BASE_URL = "https://trackapi.nutritionix.com/v2/"
 private val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
 private val retrofit = Retrofit.Builder().addConverterFactory(MoshiConverterFactory.create(moshi)).baseUrl(BASE_URL).build()
 private const val QUERY_STRING =
-    "search/item?upc=073390008185&x-app-id=3018c32b&x-app-key=cb2bb40afcee0aaeb8e01060a5abf237"
+    "search/item?upc=034000121465&x-app-id=3018c32b&x-app-key=cb2bb40afcee0aaeb8e01060a5abf237"
 
 
 interface FoodApiService {
@@ -22,5 +22,4 @@ object FoodApi {
     val FoodApi : FoodApiService by lazy{
         retrofit.create(FoodApiService::class.java)
     }
-
 }
