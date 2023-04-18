@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="700dp"
     android:layout_marginLeft="18dp"
     android:layout_marginRight="18dp"
     android:layout_marginBottom="18dp"
@@ -11,53 +11,12 @@
     >
 
 
-    <TextView
-        android:id="@+id/TitleTextView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="13dp"
-        android:fontFamily="sans-serif-medium"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/BookImageView"
-        app:layout_constraintTop_toTopOf="parent"
-        tools:text="Android in 518 and TEACH YOURSELF VISUALLY FOR ANDROID SOETHING" />
-
-    <TextView
-        android:id="@+id/SubtitleTextView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="13dp"
-        android:ellipsize="end"
-        android:maxLines="2"
-        android:paddingTop="10dp"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/BookImageView"
-        app:layout_constraintTop_toBottomOf="@+id/TitleTextView"
-        tools:text="Honors Mobile App Development" />
-
-    <TextView
-        android:id="@+id/AuthorTextView"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="13dp"
-        android:layout_marginTop="10dp"
-        android:gravity="start"
-        android:paddingBottom="20dp"
-        android:textSize="16sp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/BookImageView"
-        app:layout_constraintTop_toBottomOf="@+id/SubtitleTextView"
-        tools:text="Amanda Jones" />
-
     <ImageView
-        android:id="@+id/BookImageView"
+        android:id="@+id/FoodImageView"
         android:layout_width="90dp"
         android:layout_height="90dp"
         android:src="@drawable/ic_baseline_menu_book_24"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 

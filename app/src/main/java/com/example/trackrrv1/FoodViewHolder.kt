@@ -11,14 +11,16 @@ class FoodViewHolder(val binding: ListItemLayoutBinding) : RecyclerView.ViewHold
     fun bindBook(food : Food) {
         currentFood = food
 
-        val title = currentFood.foodName
-        val subtitle = currentFood.calories
-        val author = currentFood.fat
+        val name = currentFood.foodName
+        val calories = currentFood.calories
+        val fat = currentFood.fat
+        val sugar = currentFood.sugar
 
 
-        binding.AuthorTextView.text = author.toString()
-        binding.SubtitleTextView.text = subtitle.toString()
-        binding.TitleTextView.text = title
+//        binding.AuthorTextView.text = author.toString()
+//        binding.SubtitleTextView.text = subtitle.toString()
+//        binding.TitleTextView.text = title
+        ////TODO bind these after making your xml
 
         Glide.with(itemView).load(currentFood.imageUri).into(binding.BookImageView);
 
