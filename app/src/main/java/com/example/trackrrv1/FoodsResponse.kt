@@ -16,6 +16,12 @@ class FoodItem {
     var fat :Int? = 0
     @Json(name = "nf_sugars")
     var sugar :Int? = 0
+    @Json(name = "nf_sodium")
+    var sodium :Int? = 0
+    @Json(name = "nf_protein")
+    var protein :Int? = 0
+    @Json(name = "nf_total_carbohydrate")
+    var carbohydrate :Int? = 0
     @Json(name = "photo")
     lateinit var imageLinks : Thumbnail
 }

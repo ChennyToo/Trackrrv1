@@ -15,27 +15,73 @@
         android:layout_height="match_parent"
         android:layout_columnWeight="1"
         android:layout_rowWeight="1"
+        android:layout_marginTop="50dp"
         app:cardBackgroundColor="@color/purple_200"
         app:cardElevation="10dp"
         app:cardCornerRadius="25dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+
+        >
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            >
+
 
             <TextView
-                android:layout_width="wrap_content"
+                android:id="@+id/NameTextView"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text="hi"
-                android:textSize="50sp"
+                android:fontFamily="sans-serif-medium"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:layout_marginLeft="30dp"
+                android:layout_marginTop="20dp"
+                app:layout_constraintStart_toEndOf="@+id/FoodImageView"
+                app:layout_constraintTop_toTopOf="parent"
+                tools:text="Food Title Here" />
+
+            <TextView
+                android:id="@+id/CalorieTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:ellipsize="end"
+                android:maxLines="2"
+                android:textSize="18sp"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:textStyle="bold"
+                app:layout_constraintEnd_toEndOf="@+id/NameTextView"
+                app:layout_constraintStart_toStartOf="@+id/NameTextView"
+                app:layout_constraintTop_toBottomOf="@+id/NameTextView"
+                tools:text="Calories are here" />
+
+            <TextView
+                android:id="@+id/ProteinTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textSize="20sp"
+                android:gravity="center"
+                app:layout_constraintEnd_toEndOf="@+id/NameTextView"
+                app:layout_constraintStart_toStartOf="@+id/NameTextView"
+                app:layout_constraintTop_toBottomOf="@+id/CalorieTextView"
+                tools:text="Protein is here" />
+
+            <ImageView
+                android:id="@+id/FoodImageView"
+                android:layout_width="130dp"
+                android:layout_height="130dp"
+                android:layout_marginLeft="20dp"
+                android:src="@drawable/ic_baseline_menu_book_24"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
 
         </androidx.constraintlayout.widget.ConstraintLayout>

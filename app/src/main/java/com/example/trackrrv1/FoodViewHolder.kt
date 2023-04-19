@@ -22,7 +22,7 @@ class FoodViewHolder(val binding: ListItemLayoutBinding) : RecyclerView.ViewHold
 //        binding.TitleTextView.text = title
         ////TODO bind these after making your xml
 
-        Glide.with(itemView).load(currentFood.imageUri).into(binding.BookImageView);
+//        Glide.with(itemView).load(currentFood.imageUri).into(binding.BookImageView);
 
     }
 

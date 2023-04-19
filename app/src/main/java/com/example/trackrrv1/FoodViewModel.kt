@@ -30,9 +30,13 @@ class FoodViewModel : ViewModel() {
                     val calorie = foodItem.calorie
                     val fat = foodItem.fat
                     val sugar = foodItem.sugar
+                    val sodium = foodItem.sodium
+                    val protein = foodItem.protein
+                    val carbohydrate = foodItem.carbohydrate
                     val imageUri = foodItem.imageLinks.thumbnail!!.toUri().buildUpon().scheme("https").build()
 
-                    val newFood = Food(name?: "", calorie?: 0, fat?: 0, sugar?: 0, imageUri)
+                    val newFood = Food(name?: "", calorie?: 0, fat?: 0, sugar?: 0,
+                        sodium?: 0, protein?: 0, carbohydrate?: 0,imageUri)
                     listOfFoodsFetched.add(newFood)
                     Log.d("Info", "$name $calorie $fat $sugar $imageUri")
                 }
