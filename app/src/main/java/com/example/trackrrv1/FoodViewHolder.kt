@@ -19,10 +19,10 @@ class FoodViewHolder(val binding: ListItemLayoutBinding) : RecyclerView.ViewHold
         val carb = currentFood.carbohydrate
 
         binding.CalorieTextView.text = "Calories: $calories"
-        binding.FatTextView.text = "Fat: $fat"
+        binding.FatTextView.text = "Fat: ${fat}g"
         binding.NameTextView.text = name
-        binding.ProteinTextView.text = "Protein: $protein"
-        binding.CarbTextView.text = "Carbs: $carb"
+        binding.ProteinTextView.text = "Protein: ${protein}g"
+        binding.CarbTextView.text = "Carbs: ${carb}g"
         Glide.with(itemView).load(currentFood.imageUri).into(binding.FoodImageView);
 
 //        binding.AuthorTextView.text = author.toString()
