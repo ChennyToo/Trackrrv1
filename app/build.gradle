@@ -16,7 +16,7 @@ android {
     defaultConfig {
         applicationId "com.example.DietTracker"
         minSdk 21
-        targetSdk 32
+        targetSdk 33
         versionCode 1
         versionName "1.0"
 
@@ -40,6 +40,7 @@ android {
 }
 
 dependencies {
+    implementation 'com.google.mlkit:barcode-scanning:17.1.0'
     implementation 'androidx.cardview:cardview:1.0.0'
     implementation 'androidx.navigation:navigation-fragment-ktx:2.5.3'
     implementation 'androidx.navigation:navigation-ui-ktx:2.5.3'

@@ -16,8 +16,8 @@ class FoodAdapter(val foods: List<Food>) : RecyclerView.Adapter<FoodViewHolder>(
     }
 
     override fun onBindViewHolder(holder: FoodViewHolder, position: Int) {
-        val book = foods[position]
-        holder.bindBook(book)
+        val food = foods[position]
+        holder.bindFood(food)
     }
 
     override fun getItemCount(): Int {

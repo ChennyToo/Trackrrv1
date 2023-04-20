@@ -8,14 +8,22 @@ import com.example.trackrrv1.databinding.ListItemLayoutBinding
 class FoodViewHolder(val binding: ListItemLayoutBinding) : RecyclerView.ViewHolder(binding.root) {
     private lateinit var currentFood: Food
 
-    fun bindBook(food : Food) {
+    fun bindFood(food : Food) {
         currentFood = food
 
         val name = currentFood.foodName
         val calories = currentFood.calories
         val fat = currentFood.fat
         val sugar = currentFood.sugar
+        val protein = currentFood.protein
+        val carb = currentFood.carbohydrate
 
+        binding.CalorieTextView.text = "Calories: $calories"
+        binding.FatTextView.text = "Fat: $fat"
+        binding.NameTextView.text = name
+        binding.ProteinTextView.text = "Protein: $protein"
+        binding.CarbTextView.text = "Carbs: $carb"
+        Glide.with(itemView).load(currentFood.imageUri).into(binding.FoodImageView);
 
 //        binding.AuthorTextView.text = author.toString()
 //        binding.SubtitleTextView.text = subtitle.toString()

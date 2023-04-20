@@ -29,36 +29,36 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="horizontal"
-            >
+            android:orientation="horizontal">
 
 
             <TextView
                 android:id="@+id/NameTextView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
                 android:fontFamily="sans-serif-medium"
+                android:gravity="center"
                 android:textSize="24sp"
                 android:textStyle="bold"
-                android:layout_marginLeft="30dp"
-                android:layout_marginTop="20dp"
-                app:layout_constraintStart_toEndOf="@+id/FoodImageView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 tools:text="Food Title Here" />
+
 
             <TextView
                 android:id="@+id/CalorieTextView"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginLeft="30dp"
                 android:ellipsize="end"
                 android:maxLines="2"
                 android:textSize="18sp"
-                android:layout_marginTop="10dp"
-                android:gravity="center"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="@+id/NameTextView"
-                app:layout_constraintStart_toStartOf="@+id/NameTextView"
-                app:layout_constraintTop_toBottomOf="@+id/NameTextView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/FoodImageView"
+                app:layout_constraintTop_toTopOf="@+id/FoodImageView"
                 tools:text="Calories are here" />
 
             <TextView
@@ -67,11 +67,32 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:textSize="20sp"
-                android:gravity="center"
-                app:layout_constraintEnd_toEndOf="@+id/NameTextView"
-                app:layout_constraintStart_toStartOf="@+id/NameTextView"
+                app:layout_constraintEnd_toEndOf="@+id/CalorieTextView"
+                app:layout_constraintStart_toStartOf="@+id/CalorieTextView"
                 app:layout_constraintTop_toBottomOf="@+id/CalorieTextView"
                 tools:text="Protein is here" />
+
+            <TextView
+                android:id="@+id/CarbTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="@+id/CalorieTextView"
+                app:layout_constraintStart_toStartOf="@+id/CalorieTextView"
+                app:layout_constraintTop_toBottomOf="@+id/ProteinTextView"
+                tools:text="Carb is here" />
+
+            <TextView
+                android:id="@+id/FatTextView"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:textSize="20sp"
+                app:layout_constraintEnd_toEndOf="@+id/CalorieTextView"
+                app:layout_constraintStart_toStartOf="@+id/CalorieTextView"
+                app:layout_constraintTop_toBottomOf="@+id/CarbTextView"
+                tools:text="Fat is here" />
 
             <ImageView
                 android:id="@+id/FoodImageView"
