@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "614488449704",
+    "project_id": "trackrr-dbafb",
+    "storage_bucket": "trackrr-dbafb.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:614488449704:android:044070b0e98aab6fff189d",
+        "android_client_info": {
+          "package_name": "com.example.DietTracker"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "614488449704-sidi5onr7nehac2r4ok0hgefqb3tb4cn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDreHevpuaJeycQi_8XYYtbaAZ4sWISKAc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "614488449704-sidi5onr7nehac2r4ok0hgefqb3tb4cn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
