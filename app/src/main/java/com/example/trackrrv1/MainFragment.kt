@@ -21,7 +21,7 @@ class MainFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentMainBinding.inflate(inflater, container, false)
-        viewModel.getFoods()
+        viewModel.getFoods() //This is the API Call
 
         viewModel.response.observe(viewLifecycleOwner, Observer {foodList ->
             val adapter = FoodAdapter(foodList)
