@@ -9,16 +9,17 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 private const val BASE_URL = "https://trackapi.nutritionix.com/v2/"
 private val moshi = Moshi.Builder().add(KotlinJsonAdapterFactory()).build()
 private val retrofit = Retrofit.Builder().addConverterFactory(MoshiConverterFactory.create(moshi)).baseUrl(BASE_URL).build()
-private var upcCode: Int =  07339000
+var apiUPCCode: Long = 0
+    get() = CameraFragment.getUPC()
 private var QUERY_STRING =
-    "search/item?upc=${upcCode}" +
+    "search/item?upc=${apiUPCCode}" +
     "&x-app-id=3018c32b" +
     "&x-app-key=cb2bb40afcee0aaeb8e01060a5abf237"
 
 
 
 interface FoodApiService {
-    @GET("\$QUERY_STRING")
+    @GET("QUERY_STRING")
     fun getFoods(): Call<FoodsResponse>
 }
 

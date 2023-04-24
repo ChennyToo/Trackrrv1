@@ -4,6 +4,7 @@ package com.example.trackrrv1
 
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 
 import android.view.LayoutInflater
 
@@ -14,6 +15,8 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
+import androidx.navigation.findNavController
 import com.budiyev.android.codescanner.AutoFocusMode
 import com.budiyev.android.codescanner.CodeScanner
 import com.budiyev.android.codescanner.CodeScannerView
@@ -27,9 +30,16 @@ import com.example.trackrrv1.databinding.FragmentCameraBinding
 class CameraFragment : Fragment() {
     private var _binding: FragmentCameraBinding? = null
     private val binding get() = _binding!!
+    private val viewModel: FoodViewModel by activityViewModels()
     private lateinit var codeScanner: CodeScanner
+    var upcCode : Long = 0
 
-
+    companion object {
+        fun getUPC() : Long{
+            Log.d("MainActivity", "Check 2")
+            return upcCode
+        }
+    }
 
 
     override fun onCreateView(
@@ -58,6 +68,12 @@ class CameraFragment : Fragment() {
         codeScanner.decodeCallback = DecodeCallback {
             requireActivity().runOnUiThread {
                 Toast.makeText(this.requireContext(), "Scan result: ${it.text}", Toast.LENGTH_LONG).show()
+                Log.d("MainActivity", "Check 0")
+                upcCode = it.text.toLong() //gives numberformatexcetion because int limit
+                Log.d("MainActivity", "$upcCode")
+                viewModel.getFoods()
+                Log.d("MainActivity", "Check 1")
+                binding.root.findNavController().navigate(R.id.action_cameraFragment_to_mainFragment)
             }
         }
         codeScanner.errorCallback = ErrorCallback { // or ErrorCallback.SUPPRESS
