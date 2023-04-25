@@ -68,7 +68,7 @@ class CameraFragment : Fragment() {
                 Log.d("MainActivity", "Check 0")
                 UPC = it.text.toLong() //gives numberformatexcetion because int limit
                 Log.d("MainActivity", "$upcCode")
-                viewModel.getFoods()
+                viewModel.getFoods(UPC)
                 Log.d("MainActivity", "Check 1")
                 binding.root.findNavController().navigate(R.id.action_cameraFragment_to_mainFragment)
             }
