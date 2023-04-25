@@ -34,13 +34,10 @@ class CameraFragment : Fragment() {
     private lateinit var codeScanner: CodeScanner
     var upcCode : Long = 0
 
-    companion object {
-        fun getUPC() : Long{
-            Log.d("MainActivity", "Check 2")
-            return upcCode
-        }
-    }
 
+    companion object {
+        var UPC : Long = 0
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -69,7 +66,7 @@ class CameraFragment : Fragment() {
             requireActivity().runOnUiThread {
                 Toast.makeText(this.requireContext(), "Scan result: ${it.text}", Toast.LENGTH_LONG).show()
                 Log.d("MainActivity", "Check 0")
-                upcCode = it.text.toLong() //gives numberformatexcetion because int limit
+                UPC = it.text.toLong() //gives numberformatexcetion because int limit
                 Log.d("MainActivity", "$upcCode")
                 viewModel.getFoods()
                 Log.d("MainActivity", "Check 1")

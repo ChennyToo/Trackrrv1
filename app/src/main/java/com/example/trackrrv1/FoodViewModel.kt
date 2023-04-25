@@ -14,6 +14,11 @@ class FoodViewModel : ViewModel() {
         val response: LiveData<List<Food>>
             get() = _response
 
+//    var ViewModelUPC: Long = 0
+//
+//    fun storeUPC(UPC : Long){
+//        ViewModelUPC = UPC
+//    }
     fun getFoods(){
         val request = FoodApi.FoodApi.getFoods()
         request.enqueue(object : Callback<FoodsResponse> {
