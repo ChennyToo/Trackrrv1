@@ -21,7 +21,7 @@ class FoodViewModel : ViewModel() {
 //    }
     fun getFoods(code : Long){
         val request = FoodApi.FoodApi.getFoods(code, "3018c32b", "cb2bb40afcee0aaeb8e01060a5abf237")
-        request.enqueue(object : Callback<FoodsResponse> {
+    request.enqueue(object : Callback<FoodsResponse> {
             override fun onFailure(call: Call<FoodsResponse>, t: Throwable) {
                 Log.d("RESPONSE", "Failure: " + t.message)
             }

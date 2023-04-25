@@ -32,12 +32,7 @@ class CameraFragment : Fragment() {
     private val binding get() = _binding!!
     private val viewModel: FoodViewModel by activityViewModels()
     private lateinit var codeScanner: CodeScanner
-    var upcCode : Long = 0
 
-
-    companion object {
-        var UPC : Long = 0
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -64,12 +59,10 @@ class CameraFragment : Fragment() {
         // Callbacks
         codeScanner.decodeCallback = DecodeCallback {
             requireActivity().runOnUiThread {
-                Toast.makeText(this.requireContext(), "Scan result: ${it.text}", Toast.LENGTH_LONG).show()
-                Log.d("MainActivity", "Check 0")
-                UPC = it.text.toLong() //gives numberformatexcetion because int limit
-                Log.d("MainActivity", "$upcCode")
+//                Toast.makeText(this.requireContext(), "Scan result: ${it.text}", Toast.LENGTH_LONG).show()
+                var UPC = it.text.toLong() //gives numberformatexcetion because int limit
+                Log.d("MainActivity", "$UPC")
                 viewModel.getFoods(UPC)
-                Log.d("MainActivity", "Check 1")
                 binding.root.findNavController().navigate(R.id.action_cameraFragment_to_mainFragment)
             }
         }
