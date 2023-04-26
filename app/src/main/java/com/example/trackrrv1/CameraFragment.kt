@@ -77,6 +77,16 @@ class CameraFragment : Fragment() {
             codeScanner.startPreview()
         }
 
+        val buttonsClickListener: View.OnClickListener =
+            View.OnClickListener { view ->
+                when(view.id){
+                    R.id.BackCameraButton -> {
+                        binding.root.findNavController().navigate(R.id.action_cameraFragment_to_mainFragment)
+                    }
+                }
+            }
+        binding.BackCameraButton.setOnClickListener(buttonsClickListener)
+
         // Inflate the layout for this fragment
         return binding.root
     }

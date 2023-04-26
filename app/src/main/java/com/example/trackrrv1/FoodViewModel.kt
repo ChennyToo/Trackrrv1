@@ -14,11 +14,8 @@ class FoodViewModel : ViewModel() {
         val response: LiveData<List<Food>>
             get() = _response
 
-//    var ViewModelUPC: Long = 0
-//
-//    fun storeUPC(UPC : Long){
-//        ViewModelUPC = UPC
-//    }
+    var listOfFoodsFetched = mutableListOf<Food>()
+
     fun getFoods(code : Long){
         val request = FoodApi.FoodApi.getFoods(code, "3018c32b", "cb2bb40afcee0aaeb8e01060a5abf237")
     request.enqueue(object : Callback<FoodsResponse> {
@@ -26,7 +23,6 @@ class FoodViewModel : ViewModel() {
                 Log.d("RESPONSE", "Failure: " + t.message)
             }
             override fun onResponse(call: Call<FoodsResponse>, response: Response<FoodsResponse>) {
-                var listOfFoodsFetched = mutableListOf<Food>()
                 val foodsResponse : FoodsResponse? = response.body()
                 val foodsItemList = foodsResponse?.foodsItemsList ?: listOf()
 
