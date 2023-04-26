@@ -5,6 +5,9 @@ import androidx.core.net.toUri
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -15,6 +18,8 @@ class FoodViewModel : ViewModel() {
             get() = _response
 
     var listOfFoodsFetched = mutableListOf<Food>()
+    lateinit var dbRef: DatabaseReference
+
 
     fun getFoods(code : Long){
         val request = FoodApi.FoodApi.getFoods(code, "3018c32b", "cb2bb40afcee0aaeb8e01060a5abf237")
@@ -39,7 +44,8 @@ class FoodViewModel : ViewModel() {
                     val newFood = Food(name?: "", calorie?: 0, fat?: 0, sugar?: 0,
                         sodium?: 0, protein?: 0, carbohydrate?: 0,imageUri)
                     listOfFoodsFetched.add(newFood)
-                    Log.d("Info", "$name $calorie $fat $sugar $imageUri")
+                    dbRef = Firebase.database.reference
+                    dbRef.child("Foods").push().setValue(foodItem)
                 }
                 _response.value = listOfFoodsFetched
             }

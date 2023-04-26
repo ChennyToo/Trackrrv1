@@ -59,9 +59,7 @@ class CameraFragment : Fragment() {
         // Callbacks
         codeScanner.decodeCallback = DecodeCallback {
             requireActivity().runOnUiThread {
-//                Toast.makeText(this.requireContext(), "Scan result: ${it.text}", Toast.LENGTH_LONG).show()
-                var UPC = it.text.toLong() //gives numberformatexcetion because int limit
-                Log.d("MainActivity", "$UPC")
+                var UPC = it.text.toLong()
                 viewModel.getFoods(UPC)
                 binding.root.findNavController().navigate(R.id.action_cameraFragment_to_mainFragment)
             }

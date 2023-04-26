@@ -12,12 +12,16 @@ import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import com.example.trackrrv1.databinding.FragmentMainBinding
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 
 class MainFragment : Fragment() {
 
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
     private val viewModel: FoodViewModel by activityViewModels()
+    lateinit var dbRef: DatabaseReference
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,9 +42,16 @@ class MainFragment : Fragment() {
                     R.id.NewFoodButton -> {
                         binding.root.findNavController().navigate(R.id.action_mainFragment_to_cameraFragment)
                     }
+
+                    R.id.DeleteFoodItemButton ->{
+                        //ADD CODE HERE
+                    }
                 }
             }
         binding.NewFoodButton.setOnClickListener(buttonsClickListener)
+        binding.DeleteFoodItemButton.set
+
+
 
 
         return binding.root    }
