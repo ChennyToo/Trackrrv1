@@ -8,6 +8,8 @@ import com.example.trackrrv1.databinding.ListItemLayoutBinding
 class FoodViewHolder(val binding: ListItemLayoutBinding) : RecyclerView.ViewHolder(binding.root) {
     private lateinit var currentFood: Food
 
+
+
     fun bindFood(food : Food) {
         currentFood = food
 

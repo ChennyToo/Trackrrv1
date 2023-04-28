@@ -15,6 +15,10 @@ import com.example.trackrrv1.databinding.FragmentMainBinding
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import java.util.Calendar;
+import java.util.Date;
+
+
 
 class MainFragment : Fragment() {
 
@@ -28,7 +32,18 @@ class MainFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentMainBinding.inflate(inflater, container, false)
-//        viewModel.getFoods() //This is the API Call
+
+
+
+        var testList : MutableList<Food> = mutableListOf(Food("Steak", 20, 30, 33, 44, 55, 66),
+            Food("Vegetables", 20, 30, 33, 44, 55, 66),
+            Food("Corndog", 20, 30, 33, 44, 55, 66),
+            Food("Pork", 20, 30, 33, 44, 55, 66)
+        )
+        val adapter = FoodAdapter(testList)
+        binding.recyclerView.adapter = adapter
+// TESTING LIST
+
 
         viewModel.response.observe(viewLifecycleOwner, Observer {foodList ->
             val adapter = FoodAdapter(foodList)
@@ -43,15 +58,10 @@ class MainFragment : Fragment() {
                         binding.root.findNavController().navigate(R.id.action_mainFragment_to_cameraFragment)
                     }
 
-                    R.id.DeleteFoodItemButton ->{
-                        //ADD CODE HERE
-                    }
+
                 }
             }
         binding.NewFoodButton.setOnClickListener(buttonsClickListener)
-        binding.DeleteFoodItemButton.set
-
-
 
 
         return binding.root    }

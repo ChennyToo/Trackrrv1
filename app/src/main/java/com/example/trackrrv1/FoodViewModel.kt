@@ -13,8 +13,8 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class FoodViewModel : ViewModel() {
-    private val _response = MutableLiveData<List<Food>>()
-        val response: LiveData<List<Food>>
+    private val _response = MutableLiveData<MutableList<Food>>()
+        val response: LiveData<MutableList<Food>>
             get() = _response
 
     var listOfFoodsFetched = mutableListOf<Food>()
