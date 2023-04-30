@@ -2,23 +2,35 @@ package com.example.trackrrv1
 
 import android.util.Log
 import androidx.core.net.toUri
+import androidx.lifecycle.LifecycleOwner
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
+import com.google.firebase.database.ktx.getValue
 import com.google.firebase.ktx.Firebase
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.time.LocalDateTime
 
 class FoodViewModel : ViewModel() {
     private val _response = MutableLiveData<MutableList<Food>>()
         val response: LiveData<MutableList<Food>>
             get() = _response
-
     var listOfFoodsFetched = mutableListOf<Food>()
-    lateinit var dbRef: DatabaseReference
+    var dbRef = Firebase.database.reference
+    var systemTime = LocalDateTime.now()
+    var year = systemTime.year.toString()
+    var month = systemTime.month.toString()
+    val _day = MutableLiveData<String>()
+    val day: LiveData<String>
+        get() = _day
+
+    var currentFoodNumber = 0
+
 
 
     fun getFoods(code : Long){
@@ -39,16 +51,19 @@ class FoodViewModel : ViewModel() {
                     val sodium = foodItem.sodium
                     val protein = foodItem.protein
                     val carbohydrate = foodItem.carbohydrate
-                    val imageUri = foodItem.imageLinks.thumbnail!!.toUri().buildUpon().scheme("https").build()
+                    val imageUriString = foodItem.imageLinks.thumbnail!!.toUri().buildUpon().scheme("https").build().toString()
 
                     val newFood = Food(name?: "", calorie?: 0, fat?: 0, sugar?: 0,
-                        sodium?: 0, protein?: 0, carbohydrate?: 0,imageUri)
-                    listOfFoodsFetched.add(newFood)
+                        sodium?: 0, protein?: 0, carbohydrate?: 0, LocalDateTime.now(), imageUriString)
+//                    listOfFoodsFetched.add(newFood)
                     dbRef = Firebase.database.reference
-                    dbRef.child("Foods").push().setValue(foodItem)
+                    dbRef.child(year).child(month).child(day.value!!).child(currentFoodNumber.toString()).setValue(newFood)
+                    currentFoodNumber++
                 }
-                _response.value = listOfFoodsFetched
+//                _response.value = listOfFoodsFetched
             }
+
+
         })
     }
 

@@ -1,6 +1,7 @@
 package com.example.trackrrv1
 
 import android.view.View
+import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.trackrrv1.databinding.ListItemLayoutBinding
@@ -25,7 +26,7 @@ class FoodViewHolder(val binding: ListItemLayoutBinding) : RecyclerView.ViewHold
         binding.NameTextView.text = name
         binding.ProteinTextView.text = "Protein: ${protein}g"
         binding.CarbTextView.text = "Carbs: ${carb}g"
-        Glide.with(itemView).load(currentFood.imageUri).into(binding.FoodImageView);
+        Glide.with(itemView).load(currentFood.imageUriString.toUri()).into(binding.FoodImageView);
 
 //        binding.AuthorTextView.text = author.toString()
 //        binding.SubtitleTextView.text = subtitle.toString()
