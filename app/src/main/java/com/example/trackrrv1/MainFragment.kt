@@ -23,11 +23,7 @@ class MainFragment : Fragment() {
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
     private val viewModel: FoodViewModel by activityViewModels()
-    lateinit var dbRef: DatabaseReference
-    var systemTime = LocalDateTime.now()
-    var year = systemTime.year.toString()
-    var month = systemTime.month.toString()
-    var day = systemTime.dayOfMonth.toString()
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -57,12 +53,10 @@ class MainFragment : Fragment() {
             Food("Pink", 20, 30, 33, 44, 55, 66, systemTime)
         )
 
-        var food1 = Food("Vegetables", 20, 30, 33, 44, 55, 66, systemTime)
-
-        dbRef.child(year).child(month).child(day!!).child("0").setValue(testList2[0])
-        dbRef.child(year).child(month).child(day!!).child("1").setValue(testList2[1])
-        dbRef.child(year).child(month).child(day!!).child("2").setValue(testList2[2])
-        dbRef.child(year).child(month).child(day!!).child("3").setValue(testList2[3])
+        dbRef.child(year).child(month).child(day!!).child(testList2[0].foodName).setValue(testList2[0])
+        dbRef.child(year).child(month).child(day!!).child(testList2[1].foodName).setValue(testList2[1])
+        dbRef.child(year).child(month).child(day!!).child(testList2[2].foodName).setValue(testList2[2])
+        dbRef.child(year).child(month).child(day!!).child(testList2[3].foodName).setValue(testList2[3])
         getFoodListDay(30)
 
         viewModel.response.observe(viewLifecycleOwner, Observer {foodList ->
@@ -83,8 +77,6 @@ class MainFragment : Fragment() {
                     R.id.NewFoodButton -> {
                         binding.root.findNavController().navigate(R.id.action_mainFragment_to_cameraFragment)
                     }
-
-
                 }
             }
         binding.NewFoodButton.setOnClickListener(buttonsClickListener)
@@ -118,5 +110,16 @@ class MainFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    companion object {
+        lateinit var dbRef: DatabaseReference
+        var systemTime = LocalDateTime.now()
+        var year = systemTime.year.toString()
+        var month = systemTime.month.toString()
+        var day = systemTime.dayOfMonth.toString()
+        fun removeItemInList(name : String){
+            var foodSnapShot = dbRef.child(year).child(month).child(day).child(name).ref.removeValue()
+        }
     }
 }

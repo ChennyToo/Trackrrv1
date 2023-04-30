@@ -8,10 +8,13 @@ import android.widget.Button
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.trackrrv1.databinding.ListItemLayoutBinding
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 
 
 class FoodAdapter(var foods: MutableList<Food>) : RecyclerView.Adapter<FoodViewHolder>() {
-
+    var dbRef: DatabaseReference = Firebase.database.reference
     lateinit var binding: ListItemLayoutBinding
 
 
@@ -30,7 +33,7 @@ class FoodAdapter(var foods: MutableList<Food>) : RecyclerView.Adapter<FoodViewH
             View.OnClickListener { view ->
                 when(view.id){
                     R.id.DeleteFoodItemButton -> {
-                        Log.d("MainActivity", "${holder.bindingAdapterPosition}")
+                        MainFragment.removeItemInList(foods[position].foodName)
                         val positionalChange = holder.bindingAdapterPosition
                         foods.removeAt(holder.bindingAdapterPosition)
                         notifyItemRemoved(positionalChange)
@@ -45,4 +48,6 @@ class FoodAdapter(var foods: MutableList<Food>) : RecyclerView.Adapter<FoodViewH
     override fun getItemCount(): Int {
         return foods.size
     }
+
+
 }
