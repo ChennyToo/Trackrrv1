@@ -1,19 +1,18 @@
 package com.example.trackrrv1
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.NonNull
+import android.view.animation.TranslateAnimation
+import androidx.core.view.marginTop
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import com.example.trackrrv1.databinding.FragmentMainBinding
-import com.google.android.gms.tasks.OnFailureListener
+import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
-import com.google.firebase.database.*
 import com.google.firebase.ktx.Firebase
 import java.time.LocalDateTime
 
@@ -23,6 +22,7 @@ class MainFragment : Fragment() {
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
     private val viewModel: FoodViewModel by activityViewModels()
+    var isUp = false
 
 
     override fun onCreateView(
@@ -57,12 +57,11 @@ class MainFragment : Fragment() {
         dbRef.child(year).child(month).child(day!!).child(testList2[1].foodName).setValue(testList2[1])
         dbRef.child(year).child(month).child(day!!).child(testList2[2].foodName).setValue(testList2[2])
         dbRef.child(year).child(month).child(day!!).child(testList2[3].foodName).setValue(testList2[3])
-        getFoodListDay(30)
+        getFoodListToday()
 
         viewModel.response.observe(viewLifecycleOwner, Observer {foodList ->
             val adapter = FoodAdapter(foodList)
             binding.recyclerView.adapter = adapter
-
         })
 
 
@@ -75,7 +74,18 @@ class MainFragment : Fragment() {
             View.OnClickListener { view ->
                 when(view.id){
                     R.id.NewFoodButton -> {
-                        binding.root.findNavController().navigate(R.id.action_mainFragment_to_cameraFragment)
+                        if (isUp) {
+                            slideDown(binding.NewFoodButton);
+                            binding.NewFoodButton.setText("Slide up");
+                        } else {
+                            slideUp(binding.NewFoodButton);
+                            binding.NewFoodButton.setText("Slide down");
+                        }
+                        isUp = !isUp
+
+
+
+//                        binding.root.findNavController().navigate(R.id.action_mainFragment_to_cameraFragment)
                     }
                 }
             }
@@ -84,10 +94,10 @@ class MainFragment : Fragment() {
 
         return binding.root    }
 
-    fun getFoodListDay(day : Int){
+    fun getFoodListToday(){
         val foodList = mutableListOf<Food>()
         dbRef.get().addOnSuccessListener{snapshot ->
-            var foodSnapShot = snapshot.child(year).child(month).child(day.toString()).children
+            var foodSnapShot = snapshot.child(year).child(month).child(day).children
             for (foodItem in foodSnapShot){
                 val name = foodItem.child("foodName").value.toString()
                 val calorie = foodItem.child("calories").value.toString().toInt()
@@ -112,6 +122,34 @@ class MainFragment : Fragment() {
         _binding = null
     }
 
+    fun slideUp(view: View) {
+        view.visibility = View.VISIBLE
+        val animate = TranslateAnimation(
+            0f,  // fromXDelta
+            0f,  // toXDelta
+            -500f,  // fromYDelta
+            -100f
+        ) // toYDelta
+        animate.duration = 500
+        animate.fillAfter = true
+        view.startAnimation(animate)
+    }
+
+    // slide the view from its current position to below itself
+    fun slideDown(view: View) {
+        val animate = TranslateAnimation(
+            0f,  // fromXDelta
+            0f,  // toXDelta
+            -100f,  // fromYDelta
+            -500f
+        ) // toYDelta
+        view.marginTop.plus(400)
+        animate.duration = 500
+        animate.fillAfter = true
+        view.startAnimation(animate)
+    }
+
+
     companion object {
         lateinit var dbRef: DatabaseReference
         var systemTime = LocalDateTime.now()
@@ -119,7 +157,7 @@ class MainFragment : Fragment() {
         var month = systemTime.month.toString()
         var day = systemTime.dayOfMonth.toString()
         fun removeItemInList(name : String){
-            var foodSnapShot = dbRef.child(year).child(month).child(day).child(name).ref.removeValue()
+            dbRef.child(year).child(month).child(day).child(name).ref.removeValue()
         }
     }
 }
