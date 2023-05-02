@@ -1,6 +1,7 @@
 package com.example.trackrrv1
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,9 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.navigation.findNavController
 import com.example.trackrrv1.databinding.FragmentMainBinding
+import com.google.firebase.database.ChildEventListener
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
@@ -18,9 +22,9 @@ import java.time.LocalDateTime
 
 
 class MainFragment : Fragment() {
-
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
+
     private val viewModel: FoodViewModel by activityViewModels()
     var isUp = false
 
@@ -39,6 +43,7 @@ class MainFragment : Fragment() {
         year = viewModel.year
         month = viewModel.month
         day = viewModel.day.value!!
+        //hello
 
 
         var testList : MutableList<Food> = mutableListOf(Food("Steak", 20, 30, 33, 44, 55, 66, systemTime),
@@ -53,10 +58,10 @@ class MainFragment : Fragment() {
             Food("Pink", 20, 30, 33, 44, 55, 66, systemTime)
         )
 
-        dbRef.child(year).child(month).child(day!!).child(testList2[0].foodName).setValue(testList2[0])
-        dbRef.child(year).child(month).child(day!!).child(testList2[1].foodName).setValue(testList2[1])
-        dbRef.child(year).child(month).child(day!!).child(testList2[2].foodName).setValue(testList2[2])
-        dbRef.child(year).child(month).child(day!!).child(testList2[3].foodName).setValue(testList2[3])
+//        dbRef.child(year).child(month).child(day!!).child(testList2[0].foodName).setValue(testList2[0])
+//        dbRef.child(year).child(month).child(day!!).child(testList2[1].foodName).setValue(testList2[1])
+//        dbRef.child(year).child(month).child(day!!).child(testList2[2].foodName).setValue(testList2[2])
+//        dbRef.child(year).child(month).child(day!!).child(testList2[3].foodName).setValue(testList2[3])
         getFoodListToday()
 
         viewModel.response.observe(viewLifecycleOwner, Observer {foodList ->
@@ -74,25 +79,49 @@ class MainFragment : Fragment() {
             View.OnClickListener { view ->
                 when(view.id){
                     R.id.NewFoodButton -> {
-                        if (isUp) {
-                            slideDown(binding.NewFoodButton);
-                            binding.NewFoodButton.setText("Slide up");
-                        } else {
-                            slideUp(binding.NewFoodButton);
-                            binding.NewFoodButton.setText("Slide down");
-                        }
-                        isUp = !isUp
+//                        if (isUp) {
+//                            slideDown(binding.NewFoodButton);
+//                            binding.NewFoodButton.setText("Slide up");
+//                        } else {
+//                            slideUp(binding.NewFoodButton);
+//                            binding.NewFoodButton.setText("Slide down");
+//                        }
+//                        isUp = !isUp
 
 
 
-//                        binding.root.findNavController().navigate(R.id.action_mainFragment_to_cameraFragment)
+                        binding.root.findNavController().navigate(R.id.action_mainFragment_to_cameraFragment)
                     }
                 }
             }
         binding.NewFoodButton.setOnClickListener(buttonsClickListener)
 
+        val childEventListener = object : ChildEventListener {
+            override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
+                Log.d("MainActivity", "ADDED")
+
+            }
+
+            override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
+                Log.d("MainActivity", "CHANGED")
+            }
+
+            override fun onChildRemoved(snapshot: DataSnapshot) {
+                Log.d("MainActivity", "REMOVED")
+            }
+
+            override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+            }
+        }
+
+        dbRef.child(year).child(month).child(day).addChildEventListener(childEventListener)
+
 
         return binding.root    }
+
 
     fun getFoodListToday(){
         val foodList = mutableListOf<Food>()
@@ -113,10 +142,8 @@ class MainFragment : Fragment() {
             }
             val adapter = FoodAdapter(foodList)
             binding.recyclerView.adapter = adapter
-
         }
     }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
@@ -157,7 +184,10 @@ class MainFragment : Fragment() {
         var month = systemTime.month.toString()
         var day = systemTime.dayOfMonth.toString()
         fun removeItemInList(name : String){
+            Log.d("MainActivity", "$name")
             dbRef.child(year).child(month).child(day).child(name).ref.removeValue()
         }
+
+
     }
 }

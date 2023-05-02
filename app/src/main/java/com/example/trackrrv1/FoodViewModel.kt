@@ -7,6 +7,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
+import com.google.firebase.database.ChildEventListener
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.database.ktx.getValue
@@ -30,6 +33,8 @@ class FoodViewModel : ViewModel() {
         get() = _day
 
     var currentFoodNumber = 0
+
+
 
 
 
@@ -57,7 +62,8 @@ class FoodViewModel : ViewModel() {
                         sodium?: 0, protein?: 0, carbohydrate?: 0, LocalDateTime.now(), imageUriString)
 //                    listOfFoodsFetched.add(newFood)
                     dbRef = Firebase.database.reference
-                    dbRef.child(year).child(month).child(day.value!!).child(currentFoodNumber.toString()).setValue(newFood)
+                    dbRef.child(year).child(month).child(day.value!!).child(name!!).setValue(newFood).addOnSuccessListener {
+                    }
                     currentFoodNumber++
                 }
 //                _response.value = listOfFoodsFetched
