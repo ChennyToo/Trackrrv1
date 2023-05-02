@@ -38,6 +38,8 @@ class FoodViewModel : ViewModel() {
 
 
 
+
+
     fun getFoods(code : Long){
         val request = FoodApi.FoodApi.getFoods(code, "3018c32b", "cb2bb40afcee0aaeb8e01060a5abf237")
     request.enqueue(object : Callback<FoodsResponse> {
@@ -63,6 +65,7 @@ class FoodViewModel : ViewModel() {
 //                    listOfFoodsFetched.add(newFood)
                     dbRef = Firebase.database.reference
                     dbRef.child(year).child(month).child(day.value!!).child(name!!).setValue(newFood).addOnSuccessListener {
+                        MainFragment.refreshScreen = true
                     }
                     currentFoodNumber++
                 }

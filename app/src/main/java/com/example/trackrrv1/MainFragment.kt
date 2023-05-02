@@ -62,17 +62,8 @@ class MainFragment : Fragment() {
 //        dbRef.child(year).child(month).child(day!!).child(testList2[1].foodName).setValue(testList2[1])
 //        dbRef.child(year).child(month).child(day!!).child(testList2[2].foodName).setValue(testList2[2])
 //        dbRef.child(year).child(month).child(day!!).child(testList2[3].foodName).setValue(testList2[3])
-        getFoodListToday()
-
-        viewModel.response.observe(viewLifecycleOwner, Observer {foodList ->
-            val adapter = FoodAdapter(foodList)
-            binding.recyclerView.adapter = adapter
-        })
 
 
-        viewModel.day.observe(viewLifecycleOwner, Observer{
-            viewModel.currentFoodNumber = 0
-        })
 
         // Inflate the layout for this fragment
         val buttonsClickListener: View.OnClickListener =
@@ -98,8 +89,6 @@ class MainFragment : Fragment() {
 
         val childEventListener = object : ChildEventListener {
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
-                Log.d("MainActivity", "ADDED")
-
             }
 
             override fun onChildChanged(snapshot: DataSnapshot, previousChildName: String?) {
@@ -119,11 +108,14 @@ class MainFragment : Fragment() {
 
         dbRef.child(year).child(month).child(day).addChildEventListener(childEventListener)
 
+        showFoodListToday()
+
+
 
         return binding.root    }
 
 
-    fun getFoodListToday(){
+    fun showFoodListToday(){
         val foodList = mutableListOf<Food>()
         dbRef.get().addOnSuccessListener{snapshot ->
             var foodSnapShot = snapshot.child(year).child(month).child(day).children
@@ -177,16 +169,21 @@ class MainFragment : Fragment() {
     }
 
 
+
+
     companion object {
         lateinit var dbRef: DatabaseReference
         var systemTime = LocalDateTime.now()
         var year = systemTime.year.toString()
         var month = systemTime.month.toString()
         var day = systemTime.dayOfMonth.toString()
+        var refreshScreen = false;
         fun removeItemInList(name : String){
             Log.d("MainActivity", "$name")
             dbRef.child(year).child(month).child(day).child(name).ref.removeValue()
         }
+
+
 
 
     }

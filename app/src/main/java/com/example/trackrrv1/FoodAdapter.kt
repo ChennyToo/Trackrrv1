@@ -29,13 +29,11 @@ class FoodAdapter(var foods: MutableList<Food>) : RecyclerView.Adapter<FoodViewH
     override fun onBindViewHolder(holder: FoodViewHolder, position: Int) {
         val food = foods[position]
         holder.bindFood(food)
-        Log.d("MainActivity", "S${position}")
         val buttonsClickListener: View.OnClickListener =
             View.OnClickListener { view ->
                 when(view.id){
                     R.id.DeleteFoodItemButton -> {
-                        Log.d("MainActivity", "A${position}")
-                        Log.d("MainActivity", "B${holder.bindingAdapterPosition}")
+
                         val positionalChange = holder.bindingAdapterPosition
                         MainFragment.removeItemInList(foods[holder.bindingAdapterPosition].foodName)
                         foods.removeAt(holder.bindingAdapterPosition)
