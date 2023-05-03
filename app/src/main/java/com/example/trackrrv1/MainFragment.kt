@@ -123,6 +123,7 @@ class MainFragment : Fragment() {
 
             override fun onChildRemoved(snapshot: DataSnapshot) {
                 Log.d("MainActivity", "REMOVED")
+                showFoodListToday()
             }
 
             override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
@@ -146,7 +147,10 @@ class MainFragment : Fragment() {
             // cancelled when the ViewModel is cleared
             while (true) {
                 delay(1000L)
-                //DO THIS
+                if (refreshScreen){
+                    showFoodListToday()
+                    refreshScreen = false
+                }
             }
         }
     }
@@ -164,10 +168,23 @@ class MainFragment : Fragment() {
                 val protein = foodItem.child("protein").value.toString().toInt()
                 val carbohydrate = foodItem.child("carbohydrate").value.toString().toInt()
                 val imageUriString = foodItem.child("imageUriString").value.toString()
+                val time = foodItem.child("timeLogged").value.toString()
+                //DO THIS COMPARE THE STRING CVALUES
                 val newFood = Food(name?: "", calorie?: 0, fat?: 0, sugar?: 0,
                     sodium?: 0, protein?: 0, carbohydrate?: 0, LocalDateTime.now(), imageUriString)
                 foodList.add(newFood)
             }
+
+            for (i in 0 until foodList.size - 2){
+                if (foodList[i].timeLogged.compareTo(foodList[i + 1].timeLogged) > 0){
+                    val foodAtIndex = foodList[i]
+                    foodList[i] = foodList[i + 1]
+                    foodList[i + 1] = foodAtIndex
+                }
+            }
+
+            Log.d("MainActivity", "${foodList.toString()}")
+
             val adapter = FoodAdapter(foodList)
             binding.recyclerView.adapter = adapter
         }
