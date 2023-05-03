@@ -10,6 +10,7 @@ import androidx.core.view.marginTop
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import com.example.trackrrv1.databinding.FragmentMainBinding
 import com.google.firebase.database.ChildEventListener
@@ -18,7 +19,12 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.time.LocalDateTime
+import kotlin.properties.Delegates
 
 
 class MainFragment : Fragment() {
@@ -33,8 +39,10 @@ class MainFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         _binding = FragmentMainBinding.inflate(inflater, container, false)
         dbRef = Firebase.database.reference
+
 //        dbRef.child("users").child("Meow").setValue(21)
         //Makes users branch
         // The expand for Meow:21
@@ -43,7 +51,25 @@ class MainFragment : Fragment() {
         year = viewModel.year
         month = viewModel.month
         day = viewModel.day.value!!
-        //hello
+
+        refreshCheckerLoop()
+
+//GlobalScope.launch {
+//    delay(1000L)
+//    if (refreshScreen){
+//        showFoodListToday()
+//        refreshScreen = false
+//    }
+//
+//    else {
+//        this.launch {  }
+//    }
+//
+//}
+
+
+
+
 
 
         var testList : MutableList<Food> = mutableListOf(Food("Steak", 20, 30, 33, 44, 55, 66, systemTime),
@@ -115,6 +141,16 @@ class MainFragment : Fragment() {
         return binding.root    }
 
 
+    fun refreshCheckerLoop() {
+        lifecycleScope.launch {
+            // cancelled when the ViewModel is cleared
+            while (true) {
+                delay(1000L)
+                //DO THIS
+            }
+        }
+    }
+
     fun showFoodListToday(){
         val foodList = mutableListOf<Food>()
         dbRef.get().addOnSuccessListener{snapshot ->
@@ -171,13 +207,18 @@ class MainFragment : Fragment() {
 
 
 
+
+
     companion object {
         lateinit var dbRef: DatabaseReference
         var systemTime = LocalDateTime.now()
         var year = systemTime.year.toString()
         var month = systemTime.month.toString()
         var day = systemTime.dayOfMonth.toString()
-        var refreshScreen = false;
+
+
+        var refreshScreen = false
+
         fun removeItemInList(name : String){
             Log.d("MainActivity", "$name")
             dbRef.child(year).child(month).child(day).child(name).ref.removeValue()
