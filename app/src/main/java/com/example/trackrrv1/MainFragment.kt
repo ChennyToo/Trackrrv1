@@ -20,6 +20,7 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -33,52 +34,29 @@ class MainFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel: FoodViewModel by activityViewModels()
-    lateinit var timeAsLocal: LocalDateTime
     var isUp = false
-
+    lateinit var adapter : FoodAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         _binding = FragmentMainBinding.inflate(inflater, container, false)
         dbRef = Firebase.database.reference
-
-//        dbRef.child("users").child("Meow").setValue(21)
-        //Makes users branch
-        // The expand for Meow:21
         systemTime = viewModel.systemTime
         year = viewModel.year
         month = viewModel.month
         day = viewModel.day
-
-
-        refreshCheckerLoop()
-
-//GlobalScope.launch {
-//    delay(1000L)
-//    if (refreshScreen){
-//        showFoodListToday()
-//        refreshScreen = false
-//    }
-//
-//    else {
-//        this.launch {  }
-//    }
-//
-//}
+        showFoodListToday()
 
 
 
 
 
 
-        var testList : MutableList<Food> = mutableListOf(Food("Steak", 20, 30, 33, 44, 55, 66, systemTime),
-            Food("Vegetables", 20, 30, 33, 44, 55, 66, systemTime),
-            Food("Corndog", 20, 30, 33, 44, 55, 66, systemTime),
-            Food("Pork", 20, 30, 33, 44, 55, 66, systemTime)
-        )
+
+
+
 
         var testList2 : MutableList<Food> = mutableListOf(Food("Red", 20, 30, 33, 44, 55, 66, systemTime),
             Food("Blue", 20, 30, 33, 44, 55, 66, systemTime),
@@ -88,7 +66,7 @@ class MainFragment : Fragment() {
 
 //        dbRef.child(year).child(month).child(day).child(testList2[0].foodName).setValue(testList2[0])
 //        dbRef.child(year).child(month).child(day).child(testList2[1].foodName).setValue(testList2[1])
-        dbRef.child(year).child(month).child(day).child(testList2[2].foodName).setValue(testList2[2])
+//        dbRef.child(year).child(month).child(day).child(testList2[2].foodName).setValue(testList2[2])
 //        dbRef.child(year).child(month).child(day).child(testList2[3].foodName).setValue(testList2[3])
 
 
@@ -107,8 +85,6 @@ class MainFragment : Fragment() {
 //                        }
 //                        isUp = !isUp
 
-
-
                         binding.root.findNavController().navigate(R.id.action_mainFragment_to_cameraFragment)
                     }
                 }
@@ -125,7 +101,7 @@ class MainFragment : Fragment() {
 
             override fun onChildRemoved(snapshot: DataSnapshot) {
                 Log.d("MainActivity", "REMOVED")
-                showFoodListToday()
+//                showFoodListToday()
             }
 
             override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
@@ -136,8 +112,7 @@ class MainFragment : Fragment() {
         }
 
         dbRef.child(year).child(month).child(day).addChildEventListener(childEventListener)
-
-        showFoodListToday()
+        refreshCheckerLoop()
 
 
 
@@ -146,9 +121,8 @@ class MainFragment : Fragment() {
 
     fun refreshCheckerLoop() {
         lifecycleScope.launch {
-            // cancelled when the ViewModel is cleared
             while (true) {
-                delay(1000L)
+                delay(500L)
                 if (refreshScreen){
                     showFoodListToday()
                     refreshScreen = false
@@ -172,20 +146,14 @@ class MainFragment : Fragment() {
                 val imageUriString = foodItem.child("imageUriString").value.toString()
                 val time = convertToTime(foodItem.child("timeLogged"))
 
-                Log.d("MainActivity", "${time.monthValue}")
 
-//
-
-                //DO THIS COMPARE THE STRING CVALUES
                 val newFood = Food(name?: "", calorie?: 0, fat?: 0, sugar?: 0,
                     sodium?: 0, protein?: 0, carbohydrate?: 0, time, imageUriString)
                 foodList.add(newFood)
             }
-            Log.d("MainActivity", "${foodList.size}")
             for (i in 0 until foodList.size - 1){
                 for (j in 0 until foodList.size - 1 - i) {
                     if (foodList[j].timeLogged.compareTo(foodList[j + 1].timeLogged) > 0) {
-                        Log.d("MainActivity", "works")
                         val foodAtIndex = foodList[j]
                         foodList[j] = foodList[j + 1]
                         foodList[j + 1] = foodAtIndex
@@ -193,14 +161,17 @@ class MainFragment : Fragment() {
                 }
             }
 
-            Log.d("MainActivity", "${foodList.toString()}")
 
-            val adapter = FoodAdapter(foodList)
+            adapter = FoodAdapter(foodList)
+            Log.d("MainActivity", "before")
+
+//
             binding.recyclerView.adapter = adapter
         }
     }
     override fun onDestroyView() {
         super.onDestroyView()
+        lifecycleScope.cancel()
         _binding = null
     }
 

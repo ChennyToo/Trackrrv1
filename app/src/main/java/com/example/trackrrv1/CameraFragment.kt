@@ -24,7 +24,7 @@ import com.budiyev.android.codescanner.DecodeCallback
 import com.budiyev.android.codescanner.ErrorCallback
 import com.budiyev.android.codescanner.ScanMode
 import com.example.trackrrv1.databinding.FragmentCameraBinding
-
+import kotlinx.coroutines.delay
 
 
 class CameraFragment : Fragment() {
