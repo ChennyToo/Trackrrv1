@@ -28,9 +28,8 @@ class FoodViewModel : ViewModel() {
     var systemTime = LocalDateTime.now()
     var year = systemTime.year.toString()
     var month = systemTime.month.toString()
-    val _day = MutableLiveData<String>()
-    val day: LiveData<String>
-        get() = _day
+    val day = systemTime.dayOfMonth.toString()
+
 
     var currentFoodNumber = 0
 
@@ -64,7 +63,7 @@ class FoodViewModel : ViewModel() {
                         sodium?: 0, protein?: 0, carbohydrate?: 0, LocalDateTime.now(), imageUriString)
 //                    listOfFoodsFetched.add(newFood)
                     dbRef = Firebase.database.reference
-                    dbRef.child(year).child(month).child(day.value!!).child(name!!).setValue(newFood).addOnSuccessListener {
+                    dbRef.child(year).child(month).child(day).child(name!!).setValue(newFood).addOnSuccessListener {
                         MainFragment.refreshScreen = true
                     }
                     currentFoodNumber++

@@ -24,6 +24,7 @@ import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
+import java.time.Month
 import kotlin.properties.Delegates
 
 
@@ -32,6 +33,7 @@ class MainFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val viewModel: FoodViewModel by activityViewModels()
+    lateinit var timeAsLocal: LocalDateTime
     var isUp = false
 
 
@@ -47,10 +49,10 @@ class MainFragment : Fragment() {
         //Makes users branch
         // The expand for Meow:21
         systemTime = viewModel.systemTime
-        viewModel._day.value = systemTime.dayOfMonth.toString()
         year = viewModel.year
         month = viewModel.month
-        day = viewModel.day.value!!
+        day = viewModel.day
+
 
         refreshCheckerLoop()
 
@@ -80,14 +82,14 @@ class MainFragment : Fragment() {
 
         var testList2 : MutableList<Food> = mutableListOf(Food("Red", 20, 30, 33, 44, 55, 66, systemTime),
             Food("Blue", 20, 30, 33, 44, 55, 66, systemTime),
-            Food("Purple", 20, 30, 33, 44, 55, 66, systemTime),
+            Food("Purplepls", 20, 30, 33, 44, 55, 66, systemTime),
             Food("Pink", 20, 30, 33, 44, 55, 66, systemTime)
         )
 
-//        dbRef.child(year).child(month).child(day!!).child(testList2[0].foodName).setValue(testList2[0])
-//        dbRef.child(year).child(month).child(day!!).child(testList2[1].foodName).setValue(testList2[1])
-//        dbRef.child(year).child(month).child(day!!).child(testList2[2].foodName).setValue(testList2[2])
-//        dbRef.child(year).child(month).child(day!!).child(testList2[3].foodName).setValue(testList2[3])
+//        dbRef.child(year).child(month).child(day).child(testList2[0].foodName).setValue(testList2[0])
+//        dbRef.child(year).child(month).child(day).child(testList2[1].foodName).setValue(testList2[1])
+        dbRef.child(year).child(month).child(day).child(testList2[2].foodName).setValue(testList2[2])
+//        dbRef.child(year).child(month).child(day).child(testList2[3].foodName).setValue(testList2[3])
 
 
 
@@ -168,18 +170,26 @@ class MainFragment : Fragment() {
                 val protein = foodItem.child("protein").value.toString().toInt()
                 val carbohydrate = foodItem.child("carbohydrate").value.toString().toInt()
                 val imageUriString = foodItem.child("imageUriString").value.toString()
-                val time = foodItem.child("timeLogged").value.toString()
+                val time = convertToTime(foodItem.child("timeLogged"))
+
+                Log.d("MainActivity", "${time.monthValue}")
+
+//
+
                 //DO THIS COMPARE THE STRING CVALUES
                 val newFood = Food(name?: "", calorie?: 0, fat?: 0, sugar?: 0,
-                    sodium?: 0, protein?: 0, carbohydrate?: 0, LocalDateTime.now(), imageUriString)
+                    sodium?: 0, protein?: 0, carbohydrate?: 0, time, imageUriString)
                 foodList.add(newFood)
             }
-
-            for (i in 0 until foodList.size - 2){
-                if (foodList[i].timeLogged.compareTo(foodList[i + 1].timeLogged) > 0){
-                    val foodAtIndex = foodList[i]
-                    foodList[i] = foodList[i + 1]
-                    foodList[i + 1] = foodAtIndex
+            Log.d("MainActivity", "${foodList.size}")
+            for (i in 0 until foodList.size - 1){
+                for (j in 0 until foodList.size - 1 - i) {
+                    if (foodList[j].timeLogged.compareTo(foodList[j + 1].timeLogged) > 0) {
+                        Log.d("MainActivity", "works")
+                        val foodAtIndex = foodList[j]
+                        foodList[j] = foodList[j + 1]
+                        foodList[j + 1] = foodAtIndex
+                    }
                 }
             }
 
@@ -219,6 +229,16 @@ class MainFragment : Fragment() {
         animate.duration = 500
         animate.fillAfter = true
         view.startAnimation(animate)
+    }
+
+    fun convertToTime(foodItem : DataSnapshot) : LocalDateTime{
+        val hour = (foodItem.child("hour").value as Long).toInt()
+        val monthValue = (foodItem.child("monthValue").value as Long).toInt()
+        val day = (foodItem.child("dayOfMonth").value as Long).toInt()
+        val year = (foodItem.child("year").value as Long).toInt()
+        val minute = (foodItem.child("minute").value as Long).toInt()
+        val second = (foodItem.child("second").value as Long).toInt()
+        return LocalDateTime.of(year, monthValue, day, hour, minute, second)
     }
 
 
