@@ -76,14 +76,12 @@ class MainFragment : Fragment() {
             View.OnClickListener { view ->
                 when(view.id){
                     R.id.NewFoodButton -> {
-//                        if (isUp) {
-//                            slideDown(binding.NewFoodButton);
-//                            binding.NewFoodButton.setText("Slide up");
-//                        } else {
-//                            slideUp(binding.NewFoodButton);
-//                            binding.NewFoodButton.setText("Slide down");
-//                        }
-//                        isUp = !isUp
+                        if (isUp) {
+                            slideDown(binding.NewFoodButton);
+                        } else {
+                            slideUp(binding.NewFoodButton);
+                        }
+                        isUp = !isUp
 
                         binding.root.findNavController().navigate(R.id.action_mainFragment_to_cameraFragment)
                     }
@@ -101,7 +99,7 @@ class MainFragment : Fragment() {
 
             override fun onChildRemoved(snapshot: DataSnapshot) {
                 Log.d("MainActivity", "REMOVED")
-//                showFoodListToday()
+                showFoodListToday()
             }
 
             override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
@@ -145,12 +143,11 @@ class MainFragment : Fragment() {
                 val carbohydrate = foodItem.child("carbohydrate").value.toString().toInt()
                 val imageUriString = foodItem.child("imageUriString").value.toString()
                 val time = convertToTime(foodItem.child("timeLogged"))
-
-
                 val newFood = Food(name?: "", calorie?: 0, fat?: 0, sugar?: 0,
                     sodium?: 0, protein?: 0, carbohydrate?: 0, time, imageUriString)
                 foodList.add(newFood)
             }
+
             for (i in 0 until foodList.size - 1){
                 for (j in 0 until foodList.size - 1 - i) {
                     if (foodList[j].timeLogged.compareTo(foodList[j + 1].timeLogged) > 0) {
