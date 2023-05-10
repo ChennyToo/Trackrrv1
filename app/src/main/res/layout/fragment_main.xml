@@ -19,6 +19,19 @@
         android:layout_width="match_parent"
  />
 
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/animationView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/recyclerView"
+        app:layout_constraintStart_toStartOf="@+id/recyclerView"
+        app:layout_constraintTop_toTopOf="parent"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        app:lottie_rawRes="@raw/animationfabin" />
+
+
 <!--    <com.google.android.material.button.MaterialButton-->
 <!--        android:text="Log"-->
 <!--        android:id="@+id/NewFoodButton"-->
