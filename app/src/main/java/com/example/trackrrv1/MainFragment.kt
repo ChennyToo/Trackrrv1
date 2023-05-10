@@ -12,6 +12,7 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
+import com.airbnb.lottie.LottieAnimationView
 import com.example.trackrrv1.databinding.FragmentMainBinding
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
@@ -49,6 +50,11 @@ class MainFragment : Fragment() {
         day = viewModel.day
         showFoodListToday()
 
+        var fabani : LottieAnimationView = binding.animationView
+        fabani.loop(false)
+
+
+
 
 
 
@@ -77,13 +83,15 @@ class MainFragment : Fragment() {
                 when(view.id){
                     R.id.NewFoodButton -> {
                         if (isUp) {
-                            slideDown(binding.NewFoodButton);
+                            fabani.reverseAnimationSpeed()
+                            fabani.playAnimation()
                         } else {
-                            slideUp(binding.NewFoodButton);
+                            fabani.reverseAnimationSpeed()
+                            fabani.playAnimation()
                         }
                         isUp = !isUp
 
-                        binding.root.findNavController().navigate(R.id.action_mainFragment_to_cameraFragment)
+//                        binding.root.findNavController().navigate(R.id.action_mainFragment_to_cameraFragment)
                     }
                 }
             }

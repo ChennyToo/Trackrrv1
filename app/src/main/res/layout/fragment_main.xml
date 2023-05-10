@@ -23,16 +23,18 @@
         android:id="@+id/animationView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:scaleX="1.3"
-        android:scaleY="1.3"
-        android:layout_marginBottom="160dp"
+        android:scaleX="1"
+        android:scaleY="1"
+        android:layout_marginTop="30dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="@+id/recyclerView"
         app:layout_constraintStart_toStartOf="@+id/recyclerView"
         app:layout_constraintTop_toTopOf="parent"
         app:lottie_autoPlay="true"
         app:lottie_loop="true"
-        app:lottie_rawRes="@raw/fabbyin" />
+        app:lottie_rawRes="@raw/fabout1" />
+
+
 
 
 <!--    <com.google.android.material.button.MaterialButton-->
@@ -62,7 +64,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/ic_plus_24"
         app:backgroundTint="@color/salmon"
-        app:borderWidth="4dp"/>
+        app:borderWidth="4dp"
+        android:alpha="0"
+        />
 
 
 
