@@ -36,19 +36,36 @@ class MainFragment : Fragment() {
 
     private val viewModel: FoodViewModel by activityViewModels()
     var isUp = false
+    var firstClick = true
     lateinit var adapter : FoodAdapter
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        binding.animationView.frame = 0
+        binding.animationView.pauseAnimation()
+        Log.d("MainActivity", "ViewCreated")
+
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        Log.d("MainActivity", "CreatedView")
         _binding = FragmentMainBinding.inflate(inflater, container, false)
+        binding.animationView.frame = 0
+        binding.animationView.pauseAnimation()
         dbRef = Firebase.database.reference
         systemTime = viewModel.systemTime
         year = viewModel.year
         month = viewModel.month
         day = viewModel.day
         showFoodListToday()
+        isUp = false
+        firstClick = true
+        binding.TakePhotoButton.hide()
+        binding.WriteFoodButton.hide()
+
 
         var fabani : LottieAnimationView = binding.animationView
         fabani.loop(false)
@@ -82,20 +99,24 @@ class MainFragment : Fragment() {
             View.OnClickListener { view ->
                 when(view.id){
                     R.id.NewFoodButton -> {
-                        if (isUp) {
-                            fabani.reverseAnimationSpeed()
+                        if (firstClick) {
                             fabani.playAnimation()
+                            firstClick = false
+                            logFoodGUI()
                         } else {
                             fabani.reverseAnimationSpeed()
                             fabani.playAnimation()
+                            logFoodGUI()
                         }
-                        isUp = !isUp
 
-//                        binding.root.findNavController().navigate(R.id.action_mainFragment_to_cameraFragment)
+                    }
+                    R.id.TakePhotoButton ->{
+                        binding.root.findNavController().navigate(R.id.action_mainFragment_to_cameraFragment)
                     }
                 }
             }
         binding.NewFoodButton.setOnClickListener(buttonsClickListener)
+        binding.TakePhotoButton.setOnClickListener(buttonsClickListener)
 
         val childEventListener = object : ChildEventListener {
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
@@ -121,8 +142,19 @@ class MainFragment : Fragment() {
         refreshCheckerLoop()
 
 
-
         return binding.root    }
+
+    fun logFoodGUI(){
+        isUp = !isUp
+        if(isUp){
+            binding.TakePhotoButton.show()
+            binding.WriteFoodButton.show()
+        }
+        else{
+            binding.TakePhotoButton.hide()
+            binding.WriteFoodButton.hide()
+        }
+    }
 
 
     fun refreshCheckerLoop() {
