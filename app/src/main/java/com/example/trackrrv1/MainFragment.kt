@@ -70,17 +70,6 @@ class MainFragment : Fragment() {
         var fabani : LottieAnimationView = binding.animationView
         fabani.loop(false)
 
-
-
-
-
-
-
-
-
-
-
-
         var testList2 : MutableList<Food> = mutableListOf(Food("Red", 20, 30, 33, 44, 55, 66, systemTime),
             Food("Blue", 20, 30, 33, 44, 55, 66, systemTime),
             Food("Purplepls", 20, 30, 33, 44, 55, 66, systemTime),
@@ -113,10 +102,15 @@ class MainFragment : Fragment() {
                     R.id.TakePhotoButton ->{
                         binding.root.findNavController().navigate(R.id.action_mainFragment_to_cameraFragment)
                     }
+
+                    R.id.WriteFoodButton ->{
+                        binding.root.findNavController().navigate(R.id.action_mainFragment_to_writeFragment)
+                    }
                 }
             }
         binding.NewFoodButton.setOnClickListener(buttonsClickListener)
         binding.TakePhotoButton.setOnClickListener(buttonsClickListener)
+        binding.WriteFoodButton.setOnClickListener(buttonsClickListener)
 
         val childEventListener = object : ChildEventListener {
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
