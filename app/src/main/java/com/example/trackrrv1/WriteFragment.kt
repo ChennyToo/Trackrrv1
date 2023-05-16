@@ -32,9 +32,11 @@ class WriteFragment : Fragment() {
             View.OnClickListener { view ->
                 when(view.id){
                     R.id.LogButton -> LogAndNavigate()
+                    R.id.BackButton -> binding.root.findNavController().navigate(R.id.action_writeFragment_to_mainFragment)
                 }
             }
         binding.LogButton.setOnClickListener(buttonsClickListener)
+        binding.BackButton.setOnClickListener(buttonsClickListener)
 
         // Inflate the layout for this fragment
         return binding.root

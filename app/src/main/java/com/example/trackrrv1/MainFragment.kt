@@ -135,7 +135,6 @@ class MainFragment : Fragment() {
         dbRef.child(year).child(month).child(day).addChildEventListener(childEventListener)
         refreshCheckerLoop()
 
-
         return binding.root    }
 
     fun logFoodGUI(){
@@ -149,7 +148,6 @@ class MainFragment : Fragment() {
             binding.WriteFoodButton.hide()
         }
     }
-
 
     fun refreshCheckerLoop() {
         lifecycleScope.launch {
@@ -191,7 +189,6 @@ class MainFragment : Fragment() {
                     }
                 }
             }
-
 
             adapter = FoodAdapter(foodList)
             Log.d("MainActivity", "before")
@@ -254,16 +251,12 @@ class MainFragment : Fragment() {
         var year = systemTime.year.toString()
         var month = systemTime.month.toString()
         var day = systemTime.dayOfMonth.toString()
-
-
         var refreshScreen = false
 
         fun removeItemInList(name : String){
             Log.d("MainActivity", "$name")
             dbRef.child(year).child(month).child(day).child(name).ref.removeValue()
         }
-
-
 
 
     }
