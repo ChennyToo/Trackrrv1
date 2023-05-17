@@ -26,7 +26,9 @@
         android:id="@+id/topPortionBackground"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="430dp"
         android:background="@drawable/top_bg"
+        app:layout_constraintBottom_toBottomOf="@+id/solidBackground"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -35,19 +37,22 @@
         android:id="@+id/topBottomCorner"
         android:layout_width="match_parent"
         android:layout_height="27dp"
+        android:layout_marginTop="27dp"
+        android:translationZ="1dp"
         android:background="@drawable/top_bottom_corner2"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="@+id/topPortionBackground" />
+        app:layout_constraintTop_toTopOf="@+id/solidBackground" />
 
     <ImageView
         android:id="@+id/topHalfGradient"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/top_half_gradient"
-        android:layout_marginTop="189dp"
+        android:layout_marginBottom="250dp"
         android:translationZ="1dp"
-        app:layout_constraintBottom_toTopOf="@+id/topBottomCorner"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@+id/solidBackground" />
@@ -92,13 +97,27 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-    <ImageView
+<!--    <ImageView-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:background="@drawable/logo"-->
+<!--        android:layout_marginTop="78dp"-->
+<!--        android:layout_marginLeft="74dp"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent" />-->
+
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/circularProgressIndicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:background="@drawable/logo"
-        android:layout_marginTop="78dp"
-        android:layout_marginLeft="74dp"
+        android:layout_marginTop="100dp"
+        android:progress="60"
+        app:indicatorColor="@color/black"
+        app:indicatorSize="95dp"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
+        app:layout_constraintTop_toTopOf="parent"
+        app:trackColor="@color/salmon"
+        app:trackCornerRadius="5dp"
+        app:trackThickness="6dp" />
 </androidx.constraintlayout.widget.ConstraintLayout>
