@@ -44,6 +44,7 @@ class FoodViewModel : ViewModel() {
     request.enqueue(object : Callback<FoodsResponse> {
             override fun onFailure(call: Call<FoodsResponse>, t: Throwable) {
                 Log.d("RESPONSE", "Failure: " + t.message)
+                //TODO Display Toast Prompting that Barcode does not work
             }
             override fun onResponse(call: Call<FoodsResponse>, response: Response<FoodsResponse>) {
                 val foodsResponse : FoodsResponse? = response.body()
