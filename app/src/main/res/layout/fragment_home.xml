@@ -110,14 +110,30 @@
         android:id="@+id/circularProgressIndicator"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:progress="60"
-        app:indicatorColor="@color/black"
-        app:indicatorSize="95dp"
+        android:layout_marginTop="47dp"
+        android:progress="40"
+        app:indicatorColor="#FF7966"
+        android:elevation="100dp"
+        android:outlineSpotShadowColor="@color/black"
+        android:outlineAmbientShadowColor="@color/black"
+        app:indicatorSize="312dp"
+        android:rotation="-133"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:trackColor="@color/salmon"
+        app:trackColor="#004E4E61"
         app:trackCornerRadius="5dp"
-        app:trackThickness="6dp" />
+        app:trackThickness="10dp" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/coolcirclebar"
+        android:backgroundTint="#61434242"
+        android:layout_marginTop="50dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
