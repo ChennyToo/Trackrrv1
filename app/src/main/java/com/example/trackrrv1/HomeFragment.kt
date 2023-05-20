@@ -17,8 +17,27 @@ import com.example.trackrrv1.databinding.FragmentHomeBinding
             inflater: LayoutInflater, container: ViewGroup?,
             savedInstanceState: Bundle?
         ): View? {
-            Log.d("MainActivity", "hello?")
             _binding = FragmentHomeBinding.inflate(inflater, container, false)
+
+
+            val buttonsClickListener: View.OnClickListener =
+                View.OnClickListener { view ->
+                    when (view.id) {
+                        R.id.logo ->{
+                            while(true){
+                                var progress = 45
+                                binding.circularProgressIndicator.progress = progress
+                                progress++
+                            }
+                        }
+                    }
+                }
+
+            binding.logo.setOnClickListener(buttonsClickListener)
+
+
+
+
             return binding.root
         }
 

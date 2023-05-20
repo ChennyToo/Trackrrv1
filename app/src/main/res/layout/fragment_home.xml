@@ -97,14 +97,189 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-<!--    <ImageView-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:background="@drawable/logo"-->
-<!--        android:layout_marginTop="78dp"-->
-<!--        android:layout_marginLeft="74dp"-->
-<!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toTopOf="parent" />-->
+    <ImageView
+        android:id="@+id/logo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/logo"
+        android:layout_marginTop="68dp"
+        android:layout_marginLeft="80dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/appName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="125dp"
+        android:layout_marginLeft="70dp"
+        android:fontFamily="@font/amaranth_bold"
+        android:textColor="@color/white"
+        android:textSize="30dp"
+        android:text="Trackrr"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/calorieCount"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="170dp"
+        android:elevation="1dp"
+        android:fontFamily="@font/archivo_semibold"
+        android:text="1,750"
+        android:textColor="@color/white"
+        android:textSize="40dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+    <TextView
+        android:id="@+id/calorieTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="232dp"
+        android:elevation="1dp"
+        android:fontFamily="@font/archivo_semibold"
+        android:text="Calories"
+        android:textColor="#C1C1CD"
+        android:textSize="20dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/redBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/redbox"
+        android:layout_marginTop="375dp"
+        android:elevation="2dp"
+        android:layout_marginRight="250dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/purpleBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/purplebox"
+        android:layout_marginTop="375dp"
+        android:elevation="2dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/cyanBox"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/cyanbox"
+        android:layout_marginTop="375dp"
+        android:elevation="2dp"
+        android:layout_marginLeft="250dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/redBoxTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sodium"
+        android:textColor="#83839C"
+        android:fontFamily="@font/archivo_semibold"
+        android:elevation="3dp"
+        app:layout_constraintEnd_toEndOf="@+id/redBox"
+        app:layout_constraintStart_toStartOf="@+id/redBox"
+        app:layout_constraintTop_toTopOf="@+id/redBox"
+        app:layout_constraintBottom_toBottomOf="@+id/redBox"
+        android:layout_marginBottom="25dp"
+        />
+
+    <TextView
+        android:id="@+id/purpleBoxTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Protein"
+        android:textColor="#83839C"
+        android:fontFamily="@font/archivo_semibold"
+        android:elevation="3dp"
+        app:layout_constraintEnd_toEndOf="@+id/purpleBox"
+        app:layout_constraintStart_toStartOf="@+id/purpleBox"
+        app:layout_constraintTop_toTopOf="@+id/purpleBox"
+        app:layout_constraintBottom_toBottomOf="@+id/purpleBox"
+        android:layout_marginBottom="25dp"
+        />
+
+    <TextView
+        android:id="@+id/cyanBoxTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sugar"
+        android:textColor="#83839C"
+        android:fontFamily="@font/archivo_semibold"
+        android:elevation="3dp"
+        app:layout_constraintEnd_toEndOf="@+id/cyanBox"
+        app:layout_constraintStart_toStartOf="@+id/cyanBox"
+        app:layout_constraintTop_toTopOf="@+id/cyanBox"
+        app:layout_constraintBottom_toBottomOf="@+id/cyanBox"
+        android:layout_marginBottom="25dp"
+        />
+
+    <TextView
+        android:id="@+id/redBoxContent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="1700mg"
+        android:textSize="17dp"
+        android:textColor="@color/white"
+        android:fontFamily="@font/archivo_semibold"
+        android:elevation="3dp"
+        app:layout_constraintEnd_toEndOf="@+id/redBox"
+        app:layout_constraintStart_toStartOf="@+id/redBox"
+        app:layout_constraintTop_toTopOf="@+id/redBoxTitle"
+        app:layout_constraintBottom_toBottomOf="@+id/redBox"
+        android:layout_marginTop="5dp"
+        />
+
+    <TextView
+        android:id="@+id/purpleBoxContent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="25g"
+        android:textSize="17dp"
+        android:textColor="@color/white"
+        android:fontFamily="@font/archivo_semibold"
+        android:elevation="3dp"
+        app:layout_constraintEnd_toEndOf="@+id/purpleBox"
+        app:layout_constraintStart_toStartOf="@+id/purpleBox"
+        app:layout_constraintTop_toTopOf="@+id/purpleBoxTitle"
+        app:layout_constraintBottom_toBottomOf="@+id/purpleBox"
+        android:layout_marginTop="5dp"
+        />
+
+    <TextView
+        android:id="@+id/cyanBoxContent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="60g"
+        android:textSize="17dp"
+        android:textColor="@color/white"
+        android:fontFamily="@font/archivo_semibold"
+        android:elevation="3dp"
+        app:layout_constraintEnd_toEndOf="@+id/cyanBox"
+        app:layout_constraintStart_toStartOf="@+id/cyanBox"
+        app:layout_constraintTop_toTopOf="@+id/cyanBoxTitle"
+        app:layout_constraintBottom_toBottomOf="@+id/cyanBox"
+        android:layout_marginTop="5dp"
+        />
+
+
+
+
+
 
     <com.google.android.material.progressindicator.CircularProgressIndicator
         android:id="@+id/circularProgressIndicator"
@@ -113,9 +288,7 @@
         android:layout_marginTop="47dp"
         android:progress="40"
         app:indicatorColor="#FF7966"
-        android:elevation="100dp"
-        android:outlineSpotShadowColor="@color/black"
-        android:outlineAmbientShadowColor="@color/black"
+        android:elevation="1dp"
         app:indicatorSize="312dp"
         android:rotation="-133"
         app:layout_constraintEnd_toEndOf="parent"
