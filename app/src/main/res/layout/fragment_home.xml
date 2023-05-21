@@ -153,35 +153,35 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/redbox"
-        android:layout_marginTop="375dp"
         android:elevation="2dp"
-        android:layout_marginRight="250dp"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginLeft="15dp"
+        app:layout_constraintEnd_toStartOf="@+id/purpleBox"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="@id/purpleBox" />
 
     <ImageView
         android:id="@+id/purpleBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/purplebox"
-        android:layout_marginTop="375dp"
         android:elevation="2dp"
+        android:layout_marginBottom="65dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
 
     <ImageView
         android:id="@+id/cyanBox"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/cyanbox"
-        android:layout_marginTop="375dp"
         android:elevation="2dp"
-        android:layout_marginLeft="250dp"
+        android:layout_marginRight="15dp"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintStart_toEndOf="@id/purpleBox"
+        app:layout_constraintTop_toTopOf="@id/purpleBox" />
 
     <TextView
         android:id="@+id/redBoxTitle"
@@ -276,6 +276,97 @@
         android:layout_marginTop="5dp"
         />
 
+    <ImageButton
+        android:id="@+id/homeButtonCalendar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/homebuttonbg"
+        app:layout_constraintEnd_toStartOf="@id/homeButtonGoals"
+        app:layout_constraintTop_toBottomOf="@id/topBottomCorner"
+        app:layout_constraintBottom_toTopOf="@id/homeButtonSettings"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <ImageButton
+        android:id="@+id/homeButtonLogFood"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/homebuttonbg"
+        app:layout_constraintBottom_toBottomOf="@id/homeButtonCalendar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/homeButtonCalendar" />
+
+    <ImageButton
+        android:id="@+id/homeButtonSettings"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/homebuttonbg"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/homeButtonCalendar"
+        app:layout_constraintStart_toStartOf="@id/homeButtonCalendar"/>
+
+    <ImageButton
+        android:id="@+id/homeButtonGoals"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/homebuttonbg"
+        app:layout_constraintBottom_toBottomOf="@id/homeButtonSettings"
+        app:layout_constraintEnd_toEndOf="@+id/bottomColorFade"
+        app:layout_constraintStart_toEndOf="@id/homeButtonSettings" />
+
+    <TextView
+        android:id="@+id/homeButtonCalendarTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="22dp"
+        android:fontFamily="@font/archivo_semibold"
+        android:text="Calendar"
+        android:textColor="@color/white"
+        android:textSize="25dp"
+        app:layout_constraintBottom_toBottomOf="@id/homeButtonCalendar"
+        app:layout_constraintStart_toStartOf="@id/homeButtonCalendar"/>
+
+    <TextView
+        android:id="@+id/homeButtonLogFoodTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="22dp"
+        android:fontFamily="@font/archivo_semibold"
+        android:text="Log Food"
+        android:textColor="@color/white"
+        android:textSize="25dp"
+        app:layout_constraintBottom_toBottomOf="@id/homeButtonLogFood"
+        app:layout_constraintStart_toStartOf="@id/homeButtonLogFood"/>
+
+    <TextView
+        android:id="@+id/homeButtonSettingsTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="22dp"
+        android:fontFamily="@font/archivo_semibold"
+        android:text="Settings"
+        android:textColor="@color/white"
+        android:textSize="25dp"
+        app:layout_constraintBottom_toBottomOf="@id/homeButtonSettings"
+        app:layout_constraintStart_toStartOf="@id/homeButtonSettings"/>
+
+    <TextView
+        android:id="@+id/homeButtonGoalsTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginBottom="22dp"
+        android:fontFamily="@font/archivo_semibold"
+        android:text="Goals"
+        android:textColor="@color/white"
+        android:textSize="25dp"
+        app:layout_constraintBottom_toBottomOf="@id/homeButtonGoals"
+        app:layout_constraintStart_toStartOf="@id/homeButtonGoals"/>
+
+
+
 
 
 
@@ -286,10 +377,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="47dp"
-        android:progress="40"
+        android:progress="0"
         app:indicatorColor="#FF7966"
         android:elevation="1dp"
-        app:indicatorSize="312dp"
+        app:indicatorSize="312.5dp"
         android:rotation="-133"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"

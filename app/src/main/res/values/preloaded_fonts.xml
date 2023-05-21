@@ -4,5 +4,6 @@
         <item>@font/amaranth_bold</item>
         <item>@font/amiko_semibold</item>
         <item>@font/archivo_semibold</item>
+        <item>@font/inter_thin</item>
     </array>
 </resources>

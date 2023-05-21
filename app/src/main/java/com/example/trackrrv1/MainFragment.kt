@@ -70,7 +70,7 @@ class MainFragment : Fragment() {
         var fabani : LottieAnimationView = binding.animationView
         fabani.loop(false)
 
-        var testList2 : MutableList<Food> = mutableListOf(Food("Red", 20, 30, 33, 44, 55, 66, systemTime),
+        var testList2 : MutableList<Food> = mutableListOf(Food("Red", 2000, 30, 33, 44, 55, 66, systemTime),
             Food("Blue", 20, 30, 33, 44, 55, 66, systemTime),
             Food("Purplepls", 20, 30, 33, 44, 55, 66, systemTime),
             Food("Pink", 20, 30, 33, 44, 55, 66, systemTime)
@@ -203,32 +203,20 @@ class MainFragment : Fragment() {
         _binding = null
     }
 
-    fun slideUp(view: View) {
-        view.visibility = View.VISIBLE
-        val animate = TranslateAnimation(
-            0f,  // fromXDelta
-            0f,  // toXDelta
-            -500f,  // fromYDelta
-            -100f
-        ) // toYDelta
-        animate.duration = 500
-        animate.fillAfter = true
-        view.startAnimation(animate)
-    }
+//    fun slideUp(view: View) {
+//        view.visibility = View.VISIBLE
+//        val animate = TranslateAnimation(
+//            0f,  // fromXDelta
+//            0f,  // toXDelta
+//            -500f,  // fromYDelta
+//            -100f
+//        ) // toYDelta
+//        animate.duration = 500
+//        animate.fillAfter = true
+//        view.startAnimation(animate)
+//    }
 
-    // slide the view from its current position to below itself
-    fun slideDown(view: View) {
-        val animate = TranslateAnimation(
-            0f,  // fromXDelta
-            0f,  // toXDelta
-            -100f,  // fromYDelta
-            -500f
-        ) // toYDelta
-        view.marginTop.plus(400)
-        animate.duration = 500
-        animate.fillAfter = true
-        view.startAnimation(animate)
-    }
+
 
     fun convertToTime(foodItem : DataSnapshot) : LocalDateTime{
         val hour = (foodItem.child("hour").value as Long).toInt()

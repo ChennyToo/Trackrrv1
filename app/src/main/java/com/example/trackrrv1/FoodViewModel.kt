@@ -32,12 +32,26 @@ class FoodViewModel : ViewModel() {
 
 
     var currentFoodNumber = 0
+    var todayCalorie = 0
 
 
 
 
 
-
+    fun getCalorieToday(){
+        dbRef.get().addOnSuccessListener { snapshot ->
+            var foodSnapShot = snapshot.child(year).child(month).child(
+                MainFragment.day
+            ).children
+            var cal = 0
+            for (foodItem in foodSnapShot) {
+                val calorie = foodItem.child("calories").value.toString().toInt()
+                cal += calorie
+            }
+            todayCalorie = cal
+            HomeFragment.checkCalories = true
+        }
+    }
 
     fun getFoods(code : Long){
         val request = FoodApi.FoodApi.getFoods(code, "3018c32b", "cb2bb40afcee0aaeb8e01060a5abf237")
