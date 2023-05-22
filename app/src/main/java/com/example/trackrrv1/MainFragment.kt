@@ -20,6 +20,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.coroutineScope
@@ -53,8 +54,6 @@ class MainFragment : Fragment() {
     ): View? {
         Log.d("MainActivity", "CreatedView")
         _binding = FragmentMainBinding.inflate(inflater, container, false)
-        binding.animationView.frame = 0
-        binding.animationView.pauseAnimation()
         dbRef = Firebase.database.reference
         systemTime = viewModel.systemTime
         year = viewModel.year
@@ -149,8 +148,8 @@ class MainFragment : Fragment() {
         }
     }
 
-    fun refreshCheckerLoop() {
-        lifecycleScope.launch {
+    fun refreshCheckerLoop() { //Checks if the screen needs to be refreshed for new foods
+        lifecycleScope.launch(Dispatchers.IO) {
             while (true) {
                 delay(500L)
                 if (refreshScreen){
@@ -158,6 +157,7 @@ class MainFragment : Fragment() {
                     refreshScreen = false
                 }
             }
+            this.cancel()//TODO may cause problems
         }
     }
 
@@ -193,8 +193,9 @@ class MainFragment : Fragment() {
             adapter = FoodAdapter(foodList)
             Log.d("MainActivity", "before")
 
-//
+
             binding.recyclerView.adapter = adapter
+            (activity as MainActivity?)!!.endTransition()//Finishes transition after all of the loading is done
         }
     }
     override fun onDestroyView() {
@@ -202,20 +203,6 @@ class MainFragment : Fragment() {
         lifecycleScope.cancel()
         _binding = null
     }
-
-//    fun slideUp(view: View) {
-//        view.visibility = View.VISIBLE
-//        val animate = TranslateAnimation(
-//            0f,  // fromXDelta
-//            0f,  // toXDelta
-//            -500f,  // fromYDelta
-//            -100f
-//        ) // toYDelta
-//        animate.duration = 500
-//        animate.fillAfter = true
-//        view.startAnimation(animate)
-//    }
-
 
 
     fun convertToTime(foodItem : DataSnapshot) : LocalDateTime{
