@@ -21,6 +21,18 @@ class CalendarFragment : Fragment() {
     ): View? {
         _binding = FragmentCalendarBinding.inflate(inflater, container, false)
 
+        val days = mutableListOf(Day("Mo", 1),
+            Day("Tu", 2),
+            Day("We", 3),
+            Day("Th", 4),
+            Day("Fr", 5),
+            Day("Sa", 6),
+            Day("Su", 7)
+        )
+
+        val mAdapter = DayAdapter(days)
+        binding.recyclerView.adapter = mAdapter
+
         // Inflate the layout for this fragment
         return binding.root
     }
