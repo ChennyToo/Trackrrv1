@@ -16,6 +16,7 @@ import androidx.core.content.ContextCompat
 
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import com.budiyev.android.codescanner.AutoFocusMode
 import com.budiyev.android.codescanner.CodeScanner
@@ -24,7 +25,9 @@ import com.budiyev.android.codescanner.DecodeCallback
 import com.budiyev.android.codescanner.ErrorCallback
 import com.budiyev.android.codescanner.ScanMode
 import com.example.trackrrv1.databinding.FragmentCameraBinding
+import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 
 class CameraFragment : Fragment() {
@@ -61,7 +64,11 @@ class CameraFragment : Fragment() {
             requireActivity().runOnUiThread {
                 var UPC = it.text.toLong()
                 viewModel.getFoods(UPC)
-                binding.root.findNavController().navigate(R.id.action_cameraFragment_to_mainFragment)
+                (activity as MainActivity?)!!.startTransition()
+                lifecycleScope.launch() {
+                    delay(Constants.transitionStartTime)
+                    binding.root.findNavController().navigate(R.id.action_cameraFragment_to_mainFragment)
+                }
             }
         }
         codeScanner.errorCallback = ErrorCallback { // or ErrorCallback.SUPPRESS
@@ -79,10 +86,15 @@ class CameraFragment : Fragment() {
             View.OnClickListener { view ->
                 when(view.id){
                     R.id.BackCameraButton -> {
-                        binding.root.findNavController().navigate(R.id.action_cameraFragment_to_mainFragment)
+                        (activity as MainActivity?)!!.startTransition()
+                        lifecycleScope.launch() {
+                            delay(Constants.transitionStartTime)
+                            binding.root.findNavController().navigate(R.id.action_cameraFragment_to_mainFragment)
+                        }
                     }
                 }
             }
+
         binding.BackCameraButton.setOnClickListener(buttonsClickListener)
 
         // Inflate the layout for this fragment
@@ -98,6 +110,11 @@ override fun onPause() {
     codeScanner.releaseResources()
     super.onPause()
 }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        lifecycleScope.cancel()
+    }
 
 
 }

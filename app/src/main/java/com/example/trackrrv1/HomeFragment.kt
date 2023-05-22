@@ -43,7 +43,6 @@ class HomeFragment : Fragment() {
             this.cancel()
         }
 
-
         val buttonsClickListener: View.OnClickListener =
             View.OnClickListener { view ->
                 when (view.id) {
@@ -55,7 +54,6 @@ class HomeFragment : Fragment() {
                             //TODO Navigate to Calendar Screen
                         }
                     }
-
                     R.id.homeButtonLogFood->{
                         (activity as MainActivity?)!!.startTransition()
                         removeAllButtonFunctionality()

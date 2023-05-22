@@ -204,6 +204,10 @@ class MainFragment : Fragment() {
         _binding = null
     }
 
+    fun printfood(){
+        Log.d("MainActivity", "possible")
+    }
+
 
     fun convertToTime(foodItem : DataSnapshot) : LocalDateTime{
         val hour = (foodItem.child("hour").value as Long).toInt()
