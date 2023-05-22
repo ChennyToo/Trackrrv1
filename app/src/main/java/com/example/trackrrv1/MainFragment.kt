@@ -155,6 +155,7 @@ class MainFragment : Fragment() {
                 if (refreshScreen){
                     showFoodListToday()
                     refreshScreen = false
+                    break
                 }
             }
             this.cancel()//TODO may cause problems
