@@ -33,7 +33,7 @@
         android:textSize="50dp"
         android:fontFamily="@font/archivo_semibold"
         android:layout_marginLeft="30dp"
-        android:layout_marginBottom="110dp"
+        android:layout_marginBottom="140dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="@id/topHalf"
@@ -63,7 +63,7 @@
         android:text="5 items logged on this day"
         android:textColor="#A2A2B5"
         android:textSize="17dp"
-        android:layout_marginBottom="150dp"
+        android:layout_marginBottom="160dp"
         app:layout_constraintBottom_toBottomOf="@+id/topHalf"
         app:layout_constraintStart_toStartOf="@id/titleTV"
         app:layout_constraintTop_toBottomOf="@id/titleTV" />
@@ -88,9 +88,31 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        android:layout_width="350dp"
+        android:layout_width="match_parent"
         />
 
+    <ImageView
+        android:id="@+id/sideShadowLeft"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/cal_sideshadow"
+        app:layout_constraintBottom_toBottomOf="@id/recyclerView"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@id/recyclerView"
+        android:elevation="6dp"
+        />
+
+    <ImageView
+        android:id="@+id/sideShadowRight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/cal_sideshadow"
+        app:layout_constraintBottom_toBottomOf="@id/recyclerView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/recyclerView"
+        android:elevation="6dp"
+        android:rotation="180"
+        />
 
 
     <ImageView
@@ -277,6 +299,101 @@
         app:layout_constraintTop_toTopOf="@id/fatBG"
         app:layout_constraintBottom_toBottomOf="@id/fatTV"/>
 
+    <TextView
+        android:id="@+id/proteinAmountTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="5dp"
+        android:text="50g"
+        android:textColor="@color/white"
+        android:textSize="25dp"
+        android:fontFamily="@font/archivo_semibold"
+        android:layout_marginBottom="30dp"
+        app:layout_constraintEnd_toEndOf="@id/proteinProgress"
+        app:layout_constraintStart_toStartOf="@id/proteinProgress"
+        app:layout_constraintTop_toTopOf="@id/proteinBG"
+        app:layout_constraintBottom_toBottomOf="@id/proteinBG"
+        />
+
+    <TextView
+        android:id="@+id/carbAmountTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="5dp"
+        android:text="50g"
+        android:textColor="@color/white"
+        android:textSize="25dp"
+        android:fontFamily="@font/archivo_semibold"
+        android:layout_marginBottom="30dp"
+        app:layout_constraintEnd_toEndOf="@id/carbProgress"
+        app:layout_constraintStart_toStartOf="@id/carbProgress"
+        app:layout_constraintTop_toTopOf="@id/carbBG"
+        app:layout_constraintBottom_toBottomOf="@id/carbBG"
+        />
+
+    <TextView
+        android:id="@+id/fatAmountTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="5dp"
+        android:text="50g"
+        android:textColor="@color/white"
+        android:textSize="25dp"
+        android:fontFamily="@font/archivo_semibold"
+        android:layout_marginBottom="30dp"
+        app:layout_constraintEnd_toEndOf="@id/fatProgress"
+        app:layout_constraintStart_toStartOf="@id/fatProgress"
+        app:layout_constraintTop_toTopOf="@id/fatBG"
+        app:layout_constraintBottom_toBottomOf="@id/fatBG"
+        />
+
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/proteinProgress"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        app:trackThickness="15dp"
+        app:trackCornerRadius="20dp"
+        app:indicatorColor="#E85336"
+        app:trackColor="#6a4b45"
+        android:progress="50"
+        android:layout_marginLeft="70dp"
+        app:layout_constraintTop_toTopOf="@id/proteinTV"
+        app:layout_constraintBottom_toBottomOf="@id/proteinTV"
+        app:layout_constraintEnd_toEndOf="@id/proteinBG"
+        app:layout_constraintStart_toStartOf="@id/proteinBG"
+        />
+
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/carbProgress"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        app:trackThickness="15dp"
+        app:trackCornerRadius="20dp"
+        app:indicatorColor="#E8A136"
+        app:trackColor="#736041"
+        android:progress="50"
+        android:layout_marginLeft="70dp"
+        app:layout_constraintTop_toTopOf="@id/carbTV"
+        app:layout_constraintBottom_toBottomOf="@id/carbTV"
+        app:layout_constraintEnd_toEndOf="@id/carbBG"
+        app:layout_constraintStart_toStartOf="@id/carbBG"
+        />
+
+    <com.google.android.material.progressindicator.LinearProgressIndicator
+        android:id="@+id/fatProgress"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        app:trackThickness="15dp"
+        app:trackCornerRadius="20dp"
+        app:indicatorColor="#E8F811"
+        app:trackColor="#76853E"
+        android:progress="50"
+        android:layout_marginLeft="70dp"
+        app:layout_constraintTop_toTopOf="@id/fatTV"
+        app:layout_constraintBottom_toBottomOf="@id/fatTV"
+        app:layout_constraintEnd_toEndOf="@id/fatBG"
+        app:layout_constraintStart_toStartOf="@id/fatBG"
+        />
 
 
 

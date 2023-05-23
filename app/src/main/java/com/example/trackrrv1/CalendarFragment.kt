@@ -7,12 +7,18 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import com.example.trackrrv1.databinding.FragmentCalendarBinding
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
+import java.time.LocalDateTime
 
 
 class CalendarFragment : Fragment() {
     private var _binding: FragmentCalendarBinding? = null
     private val binding get() = _binding!!
     private val viewModel: FoodViewModel by activityViewModels()
+    private val calViewModel: CalendarViewModel by activityViewModels()
+    lateinit var dbRef: DatabaseReference
 
 
     override fun onCreateView(
@@ -20,8 +26,11 @@ class CalendarFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentCalendarBinding.inflate(inflater, container, false)
-
-        val days = mutableListOf(Day("Mo", 1),
+        var densityOfScreen = getResources().getDisplayMetrics().density
+        density = densityOfScreen
+        dbRef = Firebase.database.reference
+        val days = mutableListOf(Day("Mo", 0),
+            Day("Mo", 1),
             Day("Tu", 2),
             Day("We", 3),
             Day("Th", 4),
@@ -30,8 +39,20 @@ class CalendarFragment : Fragment() {
             Day("Su", 7)
         )
 
-        val mAdapter = DayAdapter(days)
-        binding.recyclerView.adapter = mAdapter
+        Thread {//lessen system load
+            activity?.runOnUiThread{
+                val mAdapter = DayAdapter(calViewModel.createDays(LocalDateTime.now().monthValue))
+                binding.recyclerView.getRecycledViewPool().setMaxRecycledViews(0, 0) //prevents bug where some items may disappear by setting the view to be invisible
+                binding.recyclerView.adapter = mAdapter
+                binding.recyclerView.layoutManager?.scrollToPosition(LocalDateTime.now().dayOfMonth - 1)//capability to start the screen with correct day in position
+                //position parameter is currentDay - 1 because of the invisibleDay
+//                var currentView : View = binding.recyclerView.layoutManager.findViewByPosition(LocalDateTime.now().dayOfMonth)!!
+            }
+        }.start()
+
+
+
+
 
         // Inflate the layout for this fragment
         return binding.root
@@ -39,6 +60,42 @@ class CalendarFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    fun displayDataForDate(time : LocalDateTime){
+        var dayCalorie = 0
+        var dayFat = 0
+        var dayProtein = 0
+        var dayCarb = 0
+        dbRef.get().addOnSuccessListener { snapshot ->
+            var foodSnapShot = snapshot.child(viewModel.year).child(viewModel.month).child(
+                viewModel.day
+            ).children
+            for (foodItem in foodSnapShot) {
+                dayCalorie += foodItem.child("calories").value.toString().toInt()
+                dayFat = foodItem.child("fat").value.toString().toInt()
+                dayProtein += foodItem.child("protein").value.toString().toInt()
+                dayCarb += foodItem.child("carbohydrate").value.toString().toInt()
+            }
+
+            binding.thisCalorieTV.text = dayCalorie.toString()//TODO comma parsing
+            binding.proteinAmountTV.text = dayProtein.toString() + "g"
+            binding.carbAmountTV.text = dayCarb.toString() + "g"
+            binding.fatAmountTV.text = dayFat.toString() + "g"
+
+            binding.proteinProgress.progress = ((dayProtein / Constants.proteinIntake) * 100)
+            binding.carbProgress.progress = ((dayCarb / Constants.carbIntake) * 100)
+            binding.fatProgress.progress = ((dayFat / Constants.fatIntake) * 100)
+
+
+
+        }
+    }//TODO TEST IF WORKS LATER
+
+
+
+    companion object{
+        var density : Float = 0f
     }
 
 

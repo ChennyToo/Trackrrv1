@@ -33,7 +33,6 @@ class FoodAdapter(var foods: MutableList<Food>) : RecyclerView.Adapter<FoodViewH
             View.OnClickListener { view ->
                 when(view.id){
                     R.id.DeleteFoodItemButton -> {
-
                         val positionalChange = holder.bindingAdapterPosition
                         MainFragment.removeItemInList(foods[holder.bindingAdapterPosition].foodName)
                         foods.removeAt(holder.bindingAdapterPosition)
