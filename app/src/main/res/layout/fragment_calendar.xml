@@ -78,6 +78,31 @@
         app:layout_constraintBottom_toBottomOf="@id/itemAmountLogged"
         app:layout_constraintEnd_toEndOf="@id/thisCalorieTV"/>
 
+    <TextView
+        android:id="@+id/selectedMonthTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:elevation="7dp"
+        app:layout_constraintStart_toStartOf="@id/monthButtonBG"
+        app:layout_constraintEnd_toEndOf="@id/monthButtonBG"
+        app:layout_constraintTop_toTopOf="@id/monthButtonBG"
+        app:layout_constraintBottom_toBottomOf="@id/monthButtonBG"
+        android:text="January"
+        android:fontFamily="@font/archivo_semibold"
+        android:textColor="@color/white"/>
+
+    <Spinner
+        android:id="@+id/monthSpinner"
+        android:popupBackground="@android:color/transparent"
+        android:background="@android:color/transparent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="@id/monthButtonBG"
+        app:layout_constraintEnd_toEndOf="@id/monthButtonBG"
+        app:layout_constraintStart_toStartOf="@id/monthButtonBG"
+        app:layout_constraintTop_toTopOf="@id/monthButtonBG"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerView"
         app:layout_constraintBottom_toBottomOf="@id/topHalf"
@@ -165,7 +190,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:elevation="5dp"
-        android:text="January"
+        android:text="Loading"
         android:textColor="@color/white"
         android:textSize="30dp"
         android:fontFamily="@font/archivo_semibold"

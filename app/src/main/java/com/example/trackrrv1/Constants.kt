@@ -7,5 +7,7 @@ class Constants {
         var proteinIntake : Int = 50
         var carbIntake : Int = 300
         var fatIntake : Int = 60
+        var monthList : List<String> = listOf("January", "February", "March",
+            "April", "May", "June", "July", "August", "September", "October", "November", "December")
     }
 }

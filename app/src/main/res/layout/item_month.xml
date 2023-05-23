@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@android:color/transparent"
+    android:paddingTop="5dp"
+    android:paddingBottom="5dp"
+    >
+
+    <ImageView
+        android:id="@+id/BG"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/cal_dropdownbg"
+        android:elevation="7dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/monthTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:elevation="7dp"
+        app:layout_constraintStart_toStartOf="@id/BG"
+        app:layout_constraintEnd_toEndOf="@id/BG"
+        app:layout_constraintTop_toTopOf="@id/BG"
+        app:layout_constraintBottom_toBottomOf="@id/BG"
+        android:text="January"
+        android:fontFamily="@font/archivo_semibold"
+        android:textColor="@color/white"
+        />
+
+
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>
