@@ -5,9 +5,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.trackrrv1.databinding.ListItemLayoutCalendarBinding
+import java.time.LocalDate
 import java.time.LocalDateTime
 
-class DayAdapter (var days: MutableList<Day>) : RecyclerView.Adapter<CalendarViewHolder>() {
+class DayAdapter (var days: MutableList<Day>, var calendar : CalendarFragment, val monthOfYear : Int) : RecyclerView.Adapter<CalendarViewHolder>() {
     lateinit var binding: ListItemLayoutCalendarBinding
     lateinit var previousClickedView : View
     var positionOfSelected =-1
@@ -42,6 +43,9 @@ class DayAdapter (var days: MutableList<Day>) : RecyclerView.Adapter<CalendarVie
                             previousClickedView.findViewById<View>(R.id.dayNode)
                                 .setBackgroundResource(R.drawable.cal_unselected_day) //makes the previous clicked day unselected
                             previousClickedView = view //updates the previous clicked view to the view just pressed
+                            var time : LocalDate = LocalDate.of(LocalDateTime.now().year, monthOfYear, positionOfSelected)//position of selected is the day selected based on index
+
+                            calendar.displayDataForDate(time)//Input date of note selected
                         }
 
                     }
