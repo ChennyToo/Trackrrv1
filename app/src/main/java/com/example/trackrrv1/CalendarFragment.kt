@@ -1,6 +1,7 @@
 package com.example.trackrrv1
 
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,6 +9,7 @@ import android.widget.AdapterView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.findNavController
 import com.example.trackrrv1.databinding.FragmentCalendarBinding
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
@@ -48,9 +50,23 @@ class CalendarFragment : Fragment() {
 
         var initializationCheck = 0
 
-        binding.homeScreenButton.setOnClickListener { view ->
-            //TODO
+        val buttonsClickListener: View.OnClickListener =
+            View.OnClickListener { view ->
+            when (view.id) {
+                R.id.homeScreenButton ->{
+                    Log.d("MainActivity", "Bruh moment")
+                    (activity as MainActivity?)!!.startTransition() //How to call methods in MainActivity
+//                    removeAllButtonFunctionality() //prevents the user from clicking once navigation starts
+                    lifecycleScope.launch() {
+                        delay(Constants.transitionStartTime)
+                        binding.root.findNavController().navigate(R.id.action_calendarFragment_to_homeFragment)
+                    }
+                }
+            }
         }
+
+        binding.homeScreenButton.setOnClickListener(buttonsClickListener)
+        Log.d("MainActivity", "AYO")
 
 
         var monthAdapter = MonthAdapter(this, Constants.monthList)

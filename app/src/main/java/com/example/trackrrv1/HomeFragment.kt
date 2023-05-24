@@ -27,6 +27,7 @@ class HomeFragment : Fragment() {
     ): View? {
         viewModel.getCalorieToday()
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
+        (activity as MainActivity?)!!.endTransition()
         lifecycleScope.launch {
             while (!checkCalories) {
                 delay(10L) //repeated checking of when viewModel finishes calculations
