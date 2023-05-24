@@ -54,6 +54,21 @@
         app:layout_constraintTop_toTopOf="parent"
         />
 
+    <ImageButton
+        android:id="@+id/homeScreenButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/homeicon"
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="50dp"
+        app:layout_constraintStart_toEndOf="@id/titleTV2"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:elevation="5dp"
+        />
+
+
+
     <TextView
         android:id="@+id/itemAmountLogged"
         android:layout_width="wrap_content"

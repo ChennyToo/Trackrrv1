@@ -48,6 +48,10 @@ class CalendarFragment : Fragment() {
 
         var initializationCheck = 0
 
+        binding.homeScreenButton.setOnClickListener { view ->
+            //TODO
+        }
+
 
         var monthAdapter = MonthAdapter(this, Constants.monthList)
 
