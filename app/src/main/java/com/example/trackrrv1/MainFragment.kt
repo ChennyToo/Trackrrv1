@@ -75,10 +75,10 @@ class MainFragment : Fragment() {
             Food("Pink", 20, 30, 33, 44, 55, 66, systemTime)
         )
 
-        dbRef.child(year).child(month).child("19").child(testList2[0].foodName).setValue(testList2[0])
-        dbRef.child(year).child(month).child("19").child(testList2[1].foodName).setValue(testList2[1])
-        dbRef.child(year).child(month).child("19").child(testList2[2].foodName).setValue(testList2[2])
-        dbRef.child(year).child(month).child("19").child(testList2[3].foodName).setValue(testList2[3])
+        dbRef.child(year).child(month).child("24").child(testList2[0].foodName).setValue(testList2[0])
+        dbRef.child(year).child(month).child("24").child(testList2[1].foodName).setValue(testList2[1])
+        dbRef.child(year).child(month).child("24").child(testList2[2].foodName).setValue(testList2[2])
+        dbRef.child(year).child(month).child("24").child(testList2[3].foodName).setValue(testList2[3])
 
 
 

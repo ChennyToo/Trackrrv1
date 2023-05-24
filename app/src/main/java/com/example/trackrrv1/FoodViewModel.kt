@@ -33,9 +33,44 @@ class FoodViewModel : ViewModel() {
 
     var currentFoodNumber = 0
     var todayCalorie = 0
+    val field1value = MutableLiveData(-1)
+    val field2value = MutableLiveData(-1)
+    val field3value = MutableLiveData(-1)
 
+    fun resetFields(){
+        field1value.value = -1
+        field2value.value = -1
+        field3value.value = -1
+    }
 
+    fun getNutritionToday(nutrient : String){
+        dbRef.get().addOnSuccessListener { snapshot ->
+            var foodSnapShot = snapshot.child(year).child(month).child(
+                MainFragment.day
+            ).children
+            var value = 0
+            for (foodItem in foodSnapShot) {
+                value += foodItem.child(nutrient).value.toString().toInt()
+            }
 
+            if (Constants.HCField1Type.equals(nutrient)){
+                field1value.value = value
+            }
+
+            else if (Constants.HCField2Type.equals(nutrient)){
+                field2value.value = value
+            }
+
+            else if (Constants.HCField3Type.equals(nutrient)){
+                field3value.value = value
+            }
+
+            else {
+                Log.d("MainActivity", "Nutrition Field Error, no field matches nutrient")
+            }
+
+        }
+    }
 
 
     fun getCalorieToday(){

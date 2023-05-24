@@ -42,8 +42,7 @@ class CalendarFragment : Fragment() {
     ): View? {
         _binding = FragmentCalendarBinding.inflate(inflater, container, false)
         didProgressThreadsCreated = false
-        var densityOfScreen = getResources().getDisplayMetrics().density
-        density = densityOfScreen
+        density = getResources().getDisplayMetrics().density
         dbRef = Firebase.database.reference
         displayDataForDate(now)
         displayDaysOfMonth(now.monthValue)
@@ -54,7 +53,7 @@ class CalendarFragment : Fragment() {
             View.OnClickListener { view ->
             when (view.id) {
                 R.id.homeScreenButton ->{
-                    Log.d("MainActivity", "Bruh moment")
+                    removeAllButtonFunctionality()
                     (activity as MainActivity?)!!.startTransition() //How to call methods in MainActivity
 //                    removeAllButtonFunctionality() //prevents the user from clicking once navigation starts
                     lifecycleScope.launch() {
@@ -66,7 +65,6 @@ class CalendarFragment : Fragment() {
         }
 
         binding.homeScreenButton.setOnClickListener(buttonsClickListener)
-        Log.d("MainActivity", "AYO")
 
 
         var monthAdapter = MonthAdapter(this, Constants.monthList)
@@ -100,6 +98,7 @@ class CalendarFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        lifecycleScope.cancel()
         DayAdapter.startScreen = true
         _binding = null
     }
@@ -214,6 +213,13 @@ class CalendarFragment : Fragment() {
 
         }
     }//TODO TEST IF WORKS LATER
+
+    fun removeAllButtonFunctionality(){//When navigating the user doesn't have the ability to access buttons
+        binding.recyclerView.isClickable = false
+        binding.homeScreenButton.isClickable = false
+        binding.monthSpinner.isClickable = false
+    }
+
 
 
 
