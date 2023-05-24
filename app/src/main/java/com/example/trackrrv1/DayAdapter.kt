@@ -1,5 +1,6 @@
 package com.example.trackrrv1
 
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,8 +11,8 @@ import java.time.LocalDateTime
 
 class DayAdapter (var days: MutableList<Day>, var calendar : CalendarFragment, val monthOfYear : Int) : RecyclerView.Adapter<CalendarViewHolder>() {
     lateinit var binding: ListItemLayoutCalendarBinding
-    lateinit var previousClickedView : View
-    var positionOfSelected =-1
+    var previousClickedView : View? = null//Used to remove the selected background image of the previous node when selecting new node
+    var positionOfSelected =-1//if the position of selected is same node, nothing will happen
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CalendarViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -25,12 +26,15 @@ class DayAdapter (var days: MutableList<Day>, var calendar : CalendarFragment, v
     override fun onBindViewHolder(holder: CalendarViewHolder, position: Int) {
         val day = days[position]
         holder.bindDay(day)
-        if(day.dayOfMonth == LocalDateTime.now().dayOfMonth){//TODO add more conditionals so that
-            //TODO upon creation, only today is selected and not other months
+        if(day.dayOfMonth == LocalDate.now().dayOfMonth && startScreen){
+            //upon creation, only today is selected and not other nodes when changing to past months
+            startScreen = false
             positionOfSelected = position
             binding.dayNode.setBackgroundResource(R.drawable.cal_selected_day)
             previousClickedView = holder.itemView
         }
+
+
         val buttonsClickListener: View.OnClickListener =
             View.OnClickListener { view ->
                 when(view.id){
@@ -40,8 +44,11 @@ class DayAdapter (var days: MutableList<Day>, var calendar : CalendarFragment, v
                             positionOfSelected = holder.bindingAdapterPosition // updates the selected position if user selects new dat
                             view.findViewById<View>(R.id.dayNode)
                                 .setBackgroundResource(R.drawable.cal_selected_day)  //makes the clicked day selected
-                            previousClickedView.findViewById<View>(R.id.dayNode)
-                                .setBackgroundResource(R.drawable.cal_unselected_day) //makes the previous clicked day unselected
+
+                            if (previousClickedView != null){//if there is no selected view, dont run the conditional
+                            previousClickedView!!.findViewById<View>(R.id.dayNode)
+                                .setBackgroundResource(R.drawable.cal_unselected_day)} //makes the previous clicked day unselected
+
                             previousClickedView = view //updates the previous clicked view to the view just pressed
                             var time : LocalDate = LocalDate.of(LocalDateTime.now().year, monthOfYear, positionOfSelected)//position of selected is the day selected based on index
 
@@ -52,5 +59,10 @@ class DayAdapter (var days: MutableList<Day>, var calendar : CalendarFragment, v
                 }
             }
         binding.dayNode.setOnClickListener(buttonsClickListener)    }
+
+    companion object{
+        var startScreen = true//boolean to determine whether or not there should be a selected node by default
+
+    }
 
 }

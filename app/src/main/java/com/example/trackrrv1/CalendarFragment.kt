@@ -1,17 +1,21 @@
 package com.example.trackrrv1
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
+import androidx.lifecycle.lifecycleScope
 import com.example.trackrrv1.databinding.FragmentCalendarBinding
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.cancel
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 import java.time.LocalDate
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -25,58 +29,48 @@ class CalendarFragment : Fragment() {
     lateinit var dbRef: DatabaseReference
     val formatters = DateTimeFormatter.ofPattern("dd.MM.uuuu")
     val now = LocalDate.now()
+    lateinit var Thread1 : Job //Each thread is meant to animate the nutrition progress bar
+    lateinit var Thread2 : Job
+    lateinit var Thread3 : Job
+    var didProgressThreadsCreated = false //shows if threads have been created yet
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentCalendarBinding.inflate(inflater, container, false)
+        didProgressThreadsCreated = false
         var densityOfScreen = getResources().getDisplayMetrics().density
         density = densityOfScreen
         dbRef = Firebase.database.reference
         displayDataForDate(now)
         displayDaysOfMonth(now.monthValue)
-        binding.selectedMonthTV.text = Constants.monthList.get(now.monthValue - 1)
-        binding.thisMonthTV.text = Constants.monthList.get(now.monthValue - 1)
+
         var initializationCheck = 0
 
 
         var monthAdapter = MonthAdapter(this, Constants.monthList)
-        binding.monthSpinner.adapter = monthAdapter
-        binding.monthSpinner.setPopupBackgroundResource(R.drawable.cal_spinnerbg) //sets the background
-        binding.monthSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
-            override fun onNothingSelected(parent: AdapterView<*>?) {
 
-            }
+        Thread {//lessen system load
+            activity?.runOnUiThread{
+                binding.monthSpinner.adapter = monthAdapter
+                binding.monthSpinner.setPopupBackgroundResource(R.drawable.cal_spinnerbg) //sets the background
+                binding.monthSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
+                    override fun onNothingSelected(parent: AdapterView<*>?) {
 
-            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
-                if(initializationCheck !=0) {
-                    displayDaysOfMonth(position + 1)//index starts at 0, month value starts at 1
-                    binding.thisMonthTV.text = Constants.monthList.get(position)
-                    binding.selectedMonthTV.text = Constants.monthList.get(position)
+                    }
+
+                    override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                        if(initializationCheck !=0) {
+                            displayDaysOfMonth(position + 1)//index starts at 0, month value starts at 1
+                            binding.selectedMonthTV.text = Constants.monthList.get(position)
+                        }
+                        initializationCheck++
+                    }
+
                 }
-                initializationCheck++
             }
-
-        }
-//        val buttonsClickListener: View.OnClickListener =
-//            View.OnClickListener { view ->
-//                when(view.id){
-//                    R.id.carbIcon->{
-//                        val position = binding.monthSpinner.selectedItemPosition
-//                        Log.d("MainActivity", "$position")
-//                    }
-//                }
-//            }
-//
-//        binding.carbIcon.setOnClickListener(buttonsClickListener)
-
-
-
-
-
-
-
+        }.start()
 
         // Inflate the layout for this fragment
         return binding.root
@@ -86,6 +80,7 @@ class CalendarFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
+        DayAdapter.startScreen = true
         _binding = null
     }
 
@@ -103,11 +98,22 @@ class CalendarFragment : Fragment() {
     }
 
     fun displayDataForDate(time : LocalDate){
+        if(didProgressThreadsCreated){ //This is to stop the threads from animating once day changes
+            Thread1.cancel() //Threads start after Firebase data is obtained
+            Thread2.cancel() //Therefore, trying to cancel threads before creation will result in crash
+            Thread3.cancel() //Only cancel threads that have already been created via if statement
+        }
+            binding.proteinProgress.progress = 0 //reset all progress bars to 0 once day changes
+            binding.carbProgress.progress = 0 //animation will play soon after
+            binding.fatProgress.progress = 0
+
         var dayCalorie = 0
         var dayFat = 0
         var dayProtein = 0
         var dayCarb = 0
         var itemsLogged = 0
+        binding.selectedMonthTV.text = Constants.monthList.get(time.monthValue - 1)
+        binding.thisMonthTV.text = Constants.monthList.get(time.monthValue - 1)
         binding.thisDateTV.text = time.format(formatters)
         dbRef.get().addOnSuccessListener { snapshot ->
             var foodSnapShot = snapshot.child(viewModel.year).child(time.month.toString()).child(
@@ -127,9 +133,62 @@ class CalendarFragment : Fragment() {
             binding.carbAmountTV.text = dayCarb.toString() + "g"
             binding.fatAmountTV.text = dayFat.toString() + "g"
 
-            binding.proteinProgress.progress = ((dayProtein * 100 / Constants.proteinIntake))
-            binding.carbProgress.progress = ((dayCarb * 100 / Constants.carbIntake))
-            binding.fatProgress.progress = ((dayFat * 100 / Constants.fatIntake))
+            var proProgress = ((dayProtein * 100 / Constants.proteinIntake)) //where the progress meter will end
+            var carbProgress = ((dayCarb * 100 / Constants.carbIntake))
+            var fatProgress = ((dayFat * 100 / Constants.fatIntake))
+            if(proProgress > 100){//if progress is above 100 due to overconsumption
+                proProgress = 100//change to 100 as that will affect animation speed
+            }
+            if (carbProgress > 100){
+                carbProgress = 100
+            }
+            if (fatProgress > 100){
+                fatProgress = 100
+            }
+
+            Thread1 = lifecycleScope.launch() {//Thread to animate progress bar
+                var progress = 0
+                var frequency = 1L
+                if (proProgress != 0){
+                    frequency = (Constants.calProgressAnimationDuration / proProgress).toLong()
+                }
+                while (progress <= proProgress) {
+                    binding.proteinProgress.progress = progress
+                    delay(frequency)
+                    progress++
+                }
+            }
+
+                Thread2 = lifecycleScope.launch() {
+                    var progress = 0
+                    var frequency = 1L
+                    if (proProgress != 0){
+                        frequency = (Constants.calProgressAnimationDuration / carbProgress).toLong()
+                    }
+                    while (progress <= carbProgress) {
+                        binding.carbProgress.progress = progress
+                        delay(frequency)
+                        progress++
+                    }
+                }
+
+
+            Thread3 = lifecycleScope.launch(){
+                var progress = 0
+                var frequency = 1L
+                if (proProgress != 0){
+                    frequency = (Constants.calProgressAnimationDuration / fatProgress).toLong()
+                }
+                while (progress <= fatProgress){
+                    binding.fatProgress.progress = progress
+                    delay(frequency)
+                    progress++
+                }
+            }
+
+            didProgressThreadsCreated = true
+
+
 
 
 

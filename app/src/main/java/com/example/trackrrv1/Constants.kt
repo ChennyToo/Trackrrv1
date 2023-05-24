@@ -9,5 +9,6 @@ class Constants {
         var fatIntake : Int = 60
         var monthList : List<String> = listOf("January", "February", "March",
             "April", "May", "June", "July", "August", "September", "October", "November", "December")
+        var calProgressAnimationDuration = 500L
     }
 }
