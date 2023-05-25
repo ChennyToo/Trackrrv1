@@ -81,6 +81,7 @@ class MainFragment : Fragment() {
         dbRef.child(year).child(month).child("25").child(testList2[2].foodName).setValue(testList2[2])
         dbRef.child(year).child(month).child("25").child(testList2[3].foodName).setValue(testList2[3])
         showFoodListToday()
+        Log.d("MainActivity", "STARTED1")
 
 
 
@@ -196,7 +197,7 @@ class MainFragment : Fragment() {
                 }
             }
 
-            adapter = FoodAdapter(foodList)
+            adapter = FoodAdapter(foodList, this)
             Log.d("MainActivity", "before")
 
 
