@@ -40,6 +40,8 @@ class CalendarFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        (activity as MainActivity?)!!.endTransition()
+        Log.d("MainActvity", "CREATEDCAL")
         _binding = FragmentCalendarBinding.inflate(inflater, container, false)
         didProgressThreadsCreated = false
         density = getResources().getDisplayMetrics().density

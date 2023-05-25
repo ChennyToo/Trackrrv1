@@ -23,10 +23,12 @@
 
     <ImageView
         android:id="@+id/cardBG2"
-        android:layout_width="wrap_content"
+        android:layout_width="335dp"
         android:layout_height="wrap_content"
         android:background="@drawable/main_card2"
         android:layout_marginTop="7dp"
+
+
         app:layout_constraintStart_toStartOf="@id/cardBG1"
         app:layout_constraintTop_toTopOf="@id/cardBG1"
         app:layout_constraintEnd_toEndOf="@id/cardBG1"/>
@@ -125,16 +127,27 @@
         app:layout_constraintBottom_toBottomOf="@id/cardBG1"
         tools:text="Fat is here" />
 
-            <ImageView
+            <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/FoodImageView"
-                android:layout_width="130dp"
-                android:layout_height="130dp"
+                android:layout_width="110dp"
+                android:layout_height="110dp"
                 android:layout_marginRight="180dp"
+                android:elevation="3dp"
                 android:src="@drawable/ic_baseline_menu_book_24"
                 app:layout_constraintBottom_toBottomOf="@id/cardBG2"
                 app:layout_constraintEnd_toEndOf="@id/cardBG2"
                 app:layout_constraintStart_toStartOf="@id/cardBG2"
                 app:layout_constraintTop_toTopOf="@id/cardBG2" />
+
+    <ImageView
+        android:id="@+id/circleBGonIcon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/main_foodiconbg"
+        app:layout_constraintBottom_toBottomOf="@id/FoodImageView"
+        app:layout_constraintEnd_toEndOf="@id/FoodImageView"
+        app:layout_constraintTop_toTopOf="@id/FoodImageView"
+        app:layout_constraintStart_toStartOf="@id/FoodImageView"/>
 
             <Button
                 android:id="@+id/DeleteFoodItemButton"

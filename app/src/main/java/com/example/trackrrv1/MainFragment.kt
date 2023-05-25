@@ -59,7 +59,8 @@ class MainFragment : Fragment() {
         year = viewModel.year
         month = viewModel.month
         day = viewModel.day
-        showFoodListToday()
+
+
         isUp = false
         firstClick = true
         binding.TakePhotoButton.hide()
@@ -75,10 +76,14 @@ class MainFragment : Fragment() {
             Food("Pink", 20, 30, 33, 44, 55, 66, systemTime)
         )
 
-        dbRef.child(year).child(month).child("24").child(testList2[0].foodName).setValue(testList2[0])
-        dbRef.child(year).child(month).child("24").child(testList2[1].foodName).setValue(testList2[1])
-        dbRef.child(year).child(month).child("24").child(testList2[2].foodName).setValue(testList2[2])
-        dbRef.child(year).child(month).child("24").child(testList2[3].foodName).setValue(testList2[3])
+        dbRef.child(year).child(month).child("25").child(testList2[0].foodName).setValue(testList2[0])
+        dbRef.child(year).child(month).child("25").child(testList2[1].foodName).setValue(testList2[1])
+        dbRef.child(year).child(month).child("25").child(testList2[2].foodName).setValue(testList2[2])
+        dbRef.child(year).child(month).child("25").child(testList2[3].foodName).setValue(testList2[3])
+        showFoodListToday()
+
+
+
 
 
 
@@ -121,7 +126,7 @@ class MainFragment : Fragment() {
 
             override fun onChildRemoved(snapshot: DataSnapshot) {
                 Log.d("MainActivity", "REMOVED")
-                showFoodListToday()
+                //TODO Should add showfoodlisttoday?
             }
 
             override fun onChildMoved(snapshot: DataSnapshot, previousChildName: String?) {
@@ -196,7 +201,8 @@ class MainFragment : Fragment() {
 
 
             binding.recyclerView.adapter = adapter
-            (activity as MainActivity?)!!.endTransition()//Finishes transition after all of the loading is done
+            (activity as MainActivity?)!!.endTransition()//starts the ending transition upon onCreateView
+            //TODO May have to add condition to determine if transition plays
         }
     }
     override fun onDestroyView() {

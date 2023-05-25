@@ -56,7 +56,8 @@ class HomeFragment : Fragment() {
                         removeAllButtonFunctionality() //prevents the user from clicking once navigation starts
                         lifecycleScope.launch() {
                             delay(Constants.transitionStartTime)
-                            //TODO Navigate to Calendar Screen
+                            binding.root.findNavController()
+                                .navigate(R.id.action_homeFragment_to_calendarFragment)
                         }
                     }
 

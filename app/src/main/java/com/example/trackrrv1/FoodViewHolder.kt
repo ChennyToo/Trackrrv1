@@ -21,7 +21,7 @@ class FoodViewHolder(val binding: ListItemLayoutBinding) : RecyclerView.ViewHold
         val protein = currentFood.protein
         val carb = currentFood.carbohydrate
 //TODO CHANGE THE NAMES
-        binding.CalorieTextView.text = "Calories: $calories"
+        binding.CalorieTextView.text = "$calories"
         binding.nutrientTV3.text = "Fat: ${fat}g"
         binding.NameTextView.text = name
         binding.nutrientTV1.text = "Protein: ${protein}g"
