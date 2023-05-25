@@ -3,33 +3,34 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="300dp"
+    android:layout_height="350dp"
     android:layout_marginLeft="18dp"
     android:layout_marginRight="18dp"
-    android:layout_marginBottom="18dp"
 
     >
 
-    <androidx.cardview.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+    <ImageView
+        android:id="@+id/cardBG1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/main_card1"
         android:layout_columnWeight="1"
         android:layout_rowWeight="1"
-        android:layout_marginTop="50dp"
-        app:cardBackgroundColor="@color/purple_200"
-        app:cardElevation="10dp"
-        app:cardCornerRadius="25dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
 
-        >
+    <ImageView
+        android:id="@+id/cardBG2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/main_card2"
+        android:layout_marginTop="7dp"
+        app:layout_constraintStart_toStartOf="@id/cardBG1"
+        app:layout_constraintTop_toTopOf="@id/cardBG1"
+        app:layout_constraintEnd_toEndOf="@id/cardBG1"/>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="horizontal">
 
 
             <TextView
@@ -42,82 +43,109 @@
                 android:textSize="24sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toEndOf="@id/FoodImageView"
+                app:layout_constraintTop_toTopOf="@id/cardBG2"
                 tools:text="Food Title Here" />
 
 
             <TextView
                 android:id="@+id/CalorieTextView"
-                android:layout_width="0dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="30dp"
+                android:layout_marginBottom="30dp"
                 android:ellipsize="end"
                 android:maxLines="2"
-                android:textSize="18sp"
+                android:textSize="22sp"
                 android:textStyle="bold"
-                app:layout_constraintEnd_toEndOf="parent"
+
+                app:layout_constraintEnd_toEndOf="@id/NameTextView"
                 app:layout_constraintStart_toEndOf="@+id/FoodImageView"
-                app:layout_constraintTop_toTopOf="@+id/FoodImageView"
-                tools:text="Calories are here" />
+                app:layout_constraintTop_toBottomOf="@+id/NameTextView"
+                app:layout_constraintBottom_toBottomOf="@id/cardBG2"
+                tools:text="2000" />
+
+    <TextView
+        android:id="@+id/calorieTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Calories"
+        android:textSize="23dp"
+        android:layout_marginTop="5dp"
+        app:layout_constraintTop_toBottomOf="@id/CalorieTextView"
+        app:layout_constraintStart_toStartOf="@id/CalorieTextView"
+        app:layout_constraintEnd_toEndOf="@id/CalorieTextView"/>
+
+
 
             <TextView
-                android:id="@+id/ProteinTextView"
-                android:layout_width="0dp"
+                android:id="@+id/nutrientTV1"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
                 android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="@+id/CalorieTextView"
-                app:layout_constraintStart_toStartOf="@+id/CalorieTextView"
-                app:layout_constraintTop_toBottomOf="@+id/CalorieTextView"
+                android:layout_marginLeft="30dp"
+                app:layout_constraintEnd_toStartOf="@+id/nutrientTV2"
+                app:layout_constraintStart_toStartOf="@+id/cardBG1"
+                app:layout_constraintTop_toBottomOf="@+id/cardBG2"
+                app:layout_constraintBottom_toTopOf="@id/nutrientTV3"
                 tools:text="Protein is here" />
 
             <TextView
-                android:id="@+id/CarbTextView"
-                android:layout_width="0dp"
+                android:id="@+id/nutrientTV2"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
                 android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="@+id/CalorieTextView"
-                app:layout_constraintStart_toStartOf="@+id/CalorieTextView"
-                app:layout_constraintTop_toBottomOf="@+id/ProteinTextView"
+                app:layout_constraintEnd_toEndOf="@+id/cardBG1"
+                app:layout_constraintStart_toEndOf="@+id/nutrientTV1"
+                app:layout_constraintTop_toBottomOf="@+id/cardBG2"
+                app:layout_constraintBottom_toTopOf="@id/nutrientTV4"
                 tools:text="Carb is here" />
 
             <TextView
-                android:id="@+id/FatTextView"
-                android:layout_width="0dp"
+                android:id="@+id/nutrientTV3"
+                android:layout_width="150dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
                 android:textSize="20sp"
-                app:layout_constraintEnd_toEndOf="@+id/CalorieTextView"
-                app:layout_constraintStart_toStartOf="@+id/CalorieTextView"
-                app:layout_constraintTop_toBottomOf="@+id/CarbTextView"
+                android:layout_marginLeft="30dp"
+                android:layout_marginBottom="20dp"
+                app:layout_constraintEnd_toStartOf="@+id/nutrientTV4"
+                app:layout_constraintStart_toStartOf="@id/cardBG1"
+                app:layout_constraintTop_toBottomOf="@+id/nutrientTV1"
+                app:layout_constraintBottom_toBottomOf="@id/cardBG1"
                 tools:text="Fat is here" />
+
+    <TextView
+        android:id="@+id/nutrientTV4"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintEnd_toEndOf="@id/cardBG1"
+        app:layout_constraintStart_toEndOf="@+id/nutrientTV3"
+        app:layout_constraintTop_toBottomOf="@+id/nutrientTV2"
+        app:layout_constraintBottom_toBottomOf="@id/cardBG1"
+        tools:text="Fat is here" />
 
             <ImageView
                 android:id="@+id/FoodImageView"
                 android:layout_width="130dp"
                 android:layout_height="130dp"
-                android:layout_marginLeft="20dp"
+                android:layout_marginRight="180dp"
                 android:src="@drawable/ic_baseline_menu_book_24"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintBottom_toBottomOf="@id/cardBG2"
+                app:layout_constraintEnd_toEndOf="@id/cardBG2"
+                app:layout_constraintStart_toStartOf="@id/cardBG2"
+                app:layout_constraintTop_toTopOf="@id/cardBG2" />
 
             <Button
                 android:id="@+id/DeleteFoodItemButton"
                 android:text="Delete"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="20dp"
-                android:layout_marginBottom="10dp"
+                android:layout_marginRight="200dp"
+                android:layout_marginBottom="20dp"
+                app:layout_constraintTop_toBottomOf="@id/cardBG1"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent" />
-
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
-
-    </androidx.cardview.widget.CardView>
 
 
 
