@@ -10,13 +10,111 @@
     android:background="@drawable/main_bg"
     >
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        app:layout_constraintBottom_toBottomOf="parent"
+    <Button
+        android:id="@+id/main_clickBlocker"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0"
+        android:visibility="invisible"/>
+
+    <ImageView
+        android:id="@+id/main_top"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        android:background="@drawable/main_topone"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/main_titleTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:elevation="5dp"
+        android:text="Today's Log"
+        android:textColor="#FFFFFF"
+        android:textSize="20dp"
+        android:fontFamily="@font/archivo_semibold"
+        android:layout_marginTop="45dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        android:layout_height="match_parent"
+        />
+
+    <ImageButton
+        android:id="@+id/homeScreenButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/homeicon"
+        android:layout_marginLeft="40dp"
+        app:layout_constraintStart_toEndOf="@id/main_titleTV"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/main_titleTV"
+        app:layout_constraintBottom_toBottomOf="@id/main_titleTV"
+        android:elevation="5dp"
+        />
+
+    <ImageButton
+        android:id="@+id/main_ButtonMorning"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/main_stateone"
+        android:layout_marginTop="100dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/main_ButtonAfternoon"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/main_top"
+        android:elevation="5dp"
+        />
+
+    <ImageButton
+        android:id="@+id/main_ButtonAfternoon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/main_statetwo"
+        app:layout_constraintStart_toEndOf="@id/main_ButtonMorning"
+        app:layout_constraintEnd_toStartOf="@id/main_ButtonNight"
+        app:layout_constraintTop_toTopOf="@id/main_ButtonMorning"
+        app:layout_constraintBottom_toBottomOf="@id/main_ButtonMorning"
+        android:elevation="5dp"
+        />
+
+    <ImageButton
+        android:id="@+id/main_ButtonNight"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/main_statethree"
+        app:layout_constraintStart_toEndOf="@id/main_ButtonAfternoon"
+        app:layout_constraintEnd_toStartOf="@id/main_ButtonAll"
+        app:layout_constraintTop_toTopOf="@id/main_ButtonMorning"
+        app:layout_constraintBottom_toBottomOf="@id/main_ButtonMorning"
+        android:elevation="5dp"
+        />
+
+    <ImageButton
+        android:id="@+id/main_ButtonAll"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/main_statefour"
+        app:layout_constraintStart_toEndOf="@id/main_ButtonNight"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@id/main_ButtonMorning"
+        app:layout_constraintBottom_toBottomOf="@id/main_ButtonMorning"
+        android:elevation="5dp"
+        />
+
+
+
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/main_top"
+        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_height="0dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         android:layout_width="match_parent"
  />

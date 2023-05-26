@@ -16,6 +16,7 @@
         android:background="@drawable/main_card1"
         android:layout_columnWeight="1"
         android:layout_rowWeight="1"
+        android:contentDescription=""
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
@@ -200,7 +201,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="@+id/cardBG1"
         app:layout_constraintTop_toBottomOf="@id/cardBG1"
-        android:contentDescription="versed"
         app:lottie_autoPlay="false"
         app:lottie_loop="false"
         app:lottie_rawRes="@raw/main_customizelottie" />

@@ -5,6 +5,7 @@ class Constants {
         //TODO Implement Shared preferences so settings save
         var transitionStartTime : Long = 400L//Upon finishing starttime, that is when navigation should occur
         var transitionEndTime : Long = 400L
+        var main_customizeAnimationTime : Long = 800L
         var calorieIntake : Int = 200
         var proteinIntake : Int = 50//update based on user preference
         var carbIntake : Int = 300

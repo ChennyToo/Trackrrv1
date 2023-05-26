@@ -33,7 +33,7 @@ import kotlin.properties.Delegates
 
 class MainFragment : Fragment() {
     private var _binding: FragmentMainBinding? = null
-    private val binding get() = _binding!!
+    val binding get() = _binding!!
 
     private val viewModel: FoodViewModel by activityViewModels()
     var isUp = false
