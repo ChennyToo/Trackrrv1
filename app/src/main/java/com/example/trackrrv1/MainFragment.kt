@@ -116,14 +116,35 @@ class MainFragment : Fragment() {
 
                     }
                     R.id.TakePhotoButton ->{
-                        binding.root.findNavController().navigate(R.id.action_mainFragment_to_cameraFragment)
+                        binding.mainClickBlocker.visibility = View.VISIBLE
+                        (activity as MainActivity?)!!.startTransition()//begins screen transition
+                        lifecycleScope.launch {
+                            delay(Constants.transitionStartTime)
+                            binding.root.findNavController().navigate(R.id.action_mainFragment_to_cameraFragment)
+                        }
                     }
 
                     R.id.WriteFoodButton ->{
-                        binding.root.findNavController().navigate(R.id.action_mainFragment_to_writeFragment)
+                        binding.mainClickBlocker.visibility = View.VISIBLE
+                        (activity as MainActivity?)!!.startTransition()//begins screen transition
+                        lifecycleScope.launch {
+                            delay(Constants.transitionStartTime)
+                            binding.root.findNavController().navigate(R.id.action_mainFragment_to_writeFragment)
+                        }
+
+
+
+
                     }
 
                     R.id.homeScreenButton ->{
+
+                        binding.mainClickBlocker.visibility = View.VISIBLE
+                        (activity as MainActivity?)!!.startTransition()//begins screen transition
+                        lifecycleScope.launch {
+                            delay(Constants.transitionStartTime)
+                            binding.root.findNavController().navigate(R.id.action_mainFragment_to_homeFragment)
+                        }
 
                     }
                 }
@@ -131,6 +152,7 @@ class MainFragment : Fragment() {
         binding.NewFoodButton.setOnClickListener(buttonsClickListener)
         binding.TakePhotoButton.setOnClickListener(buttonsClickListener)
         binding.WriteFoodButton.setOnClickListener(buttonsClickListener)
+        binding.homeScreenButton.setOnClickListener(buttonsClickListener)
 
         val childEventListener = object : ChildEventListener {
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {

@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.example.trackrrv1.databinding.ListItemLayoutBinding
 import com.google.firebase.database.DatabaseReference
@@ -78,7 +79,7 @@ class FoodAdapter(var foods: MutableList<Food>, myFragment: MainFragment) :
 
                         //IF IT IS OPEN
                         else {
-                            holder.binding.CustomizeFoodItemButton.text = "closed"
+                            holder.binding.CustomizeFoodItemButton.text = "closed"//get the state to close and then play the closing animation
                             if (holder.binding.customizeAnimation.speed < 0) {
                                 holder.binding.customizeAnimation.playAnimation()
                             } else {
@@ -86,14 +87,14 @@ class FoodAdapter(var foods: MutableList<Food>, myFragment: MainFragment) :
                                 holder.binding.customizeAnimation.playAnimation()
                             }
 
-                            holder.binding.TrashFoodItemButton.visibility = View.INVISIBLE
+                            holder.binding.TrashFoodItemButton.visibility = View.INVISIBLE//disables the two buttons when closing
                             holder.binding.WriteFoodItemButton.visibility = View.INVISIBLE
                             Log.d("1MainActivity", "IsNotVISIBLE")
 
                         }
-                        holder.binding.CustomizeFoodItemButton.isClickable = false //Prevents user from pressing the button to glitch out the animation by making them wait
+                        holder.binding.CustomizeFoodItemButton.isClickable = false //Prevents user from pressing the button to glitch out the animation by making them wait until it fully plays
 
-                        parentFragment.lifecycleScope.launch {
+                        parentFragment.lifecycleScope.launch {//Runs a thread that after about a second, the user can start opening or closing the menu again
                             this.run{
                                 delay(Constants.main_customizeAnimationTime)
                                 holder.binding.CustomizeFoodItemButton.isClickable = true
@@ -108,7 +109,19 @@ class FoodAdapter(var foods: MutableList<Food>, myFragment: MainFragment) :
                     }
 
                     R.id.WriteFoodItemButton -> {
-                        holder.binding.WriteFoodItemButton.isClickable = false//Ensures that they do not run the same function again
+                        parentFragment.binding.mainClickBlocker.visibility = View.VISIBLE//Ensures user cannot click anything upon navigation
+                        (parentFragment.activity as MainActivity?)!!.startTransition()//begins screen transition
+
+                        parentFragment.lifecycleScope.launch {
+                            delay(Constants.transitionStartTime)
+                            parentFragment.binding.root.findNavController().navigate(R.id.action_mainFragment_to_writeFragment)
+                        }
+
+                        val navigateToWriteFrag = MainFragmentDirections.actionMainFragmentToWriteFragment(
+                            holder.binding.NameTextView.text.toString(),
+
+                        )
+
 
                     }
 
@@ -128,18 +141,18 @@ class FoodAdapter(var foods: MutableList<Food>, myFragment: MainFragment) :
                                     val positionalChange =
                                         holder.bindingAdapterPosition
                                     //TODO May have to utilize positional change if code breaks
-                                    MainFragment.removeItemInList(foods[holder.bindingAdapterPosition].foodName)
-                                    foods.removeAt(holder.bindingAdapterPosition)
-                                    notifyItemRemoved(holder.bindingAdapterPosition)
-//                                    notifyDataSetChanged()//Good fix but does not do animation
-                                    notifyItemRangeChanged(
+                                    MainFragment.removeItemInList(foods[holder.bindingAdapterPosition].foodName)//Purpose is to remove from Firebase
+                                    foods.removeAt(holder.bindingAdapterPosition)//Remove from the list
+                                    notifyItemRemoved(holder.bindingAdapterPosition)//Tells the adapter that something was removed
+//                                    notifyDataSetChanged()//Another method that is less likely to break but at the cost of not doing the shifting animation
+                                    notifyItemRangeChanged(//Makes everything after the adapter shift position
                                         holder.bindingAdapterPosition,
                                         itemCount
                                     )
-                                    holder.itemView.visibility = View.GONE
+//                                    holder.itemView.visibility = View.GONE//Ensures that the view is deleted//May not be necessary
                                     parentFragment.binding.mainClickBlocker.visibility =
-                                        View.INVISIBLE//Click privilage is back
-                                    parentFragment.binding.amountLoggedTV.text = "You have logged ${foods.size} items"
+                                        View.INVISIBLE//Click privilage is back to the user once deletion is fully done
+                                    parentFragment.binding.amountLoggedTV.text = "You have logged ${foods.size} items" //updates the amount of items logged for today to tell the user
                                     Log.d("MainActivity", "${foods.forEach { food ->  Log.d("MainActivity", "$food")}}")
                                 }
                             }
@@ -162,10 +175,6 @@ class FoodAdapter(var foods: MutableList<Food>, myFragment: MainFragment) :
         return foods.size
     }
 
-
-    fun allowEditMode() {
-
-    }
 
 
 }

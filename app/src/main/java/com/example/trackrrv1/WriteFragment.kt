@@ -37,6 +37,7 @@ class WriteFragment : Fragment() {
             }
         binding.LogButton.setOnClickListener(buttonsClickListener)
         binding.BackButton.setOnClickListener(buttonsClickListener)
+        (activity as MainActivity?)!!.endTransition()//finish the transition after everything else is done
 
         // Inflate the layout for this fragment
         return binding.root
