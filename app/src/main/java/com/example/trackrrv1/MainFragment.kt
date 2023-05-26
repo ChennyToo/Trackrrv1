@@ -71,16 +71,26 @@ class MainFragment : Fragment() {
         var fabani : LottieAnimationView = binding.animationView
         fabani.loop(false)
 
-        var testList2 : MutableList<Food> = mutableListOf(Food("Red", 2000, 30, 33, 44, 55, 66, systemTime),
-            Food("Blue", 20, 30, 33, 44, 55, 66, systemTime),
-            Food("Purplepls", 20, 30, 33, 44, 55, 66, systemTime),
-            Food("Pink", 20, 30, 33, 44, 55, 66, systemTime)
+        var testList2 : MutableList<Food> = mutableListOf(Food("A", 2000, 30, 33, 44, 55, 66, systemTime),
+            Food("B", 20, 30, 33, 44, 55, 66, systemTime),
+            Food("C", 20, 30, 33, 44, 55, 66, systemTime),
+            Food("D", 20, 30, 33, 44, 55, 66, systemTime),
+            Food("E", 20, 30, 33, 44, 55, 66, systemTime),
+            Food("F", 20, 30, 33, 44, 55, 66, systemTime),
+            Food("G", 20, 30, 33, 44, 55, 66, systemTime),
+            Food("H", 20, 30, 33, 44, 55, 66, systemTime),
+            Food("I", 20, 30, 33, 44, 55, 66, systemTime),
+            Food("J", 20, 30, 33, 44, 55, 66, systemTime)
         )
 
         dbRef.child(year).child(month).child("26").child(testList2[0].foodName).setValue(testList2[0])
         dbRef.child(year).child(month).child("26").child(testList2[1].foodName).setValue(testList2[1])
         dbRef.child(year).child(month).child("26").child(testList2[2].foodName).setValue(testList2[2])
         dbRef.child(year).child(month).child("26").child(testList2[3].foodName).setValue(testList2[3])
+        dbRef.child(year).child(month).child("26").child(testList2[4].foodName).setValue(testList2[4])
+        dbRef.child(year).child(month).child("26").child(testList2[5].foodName).setValue(testList2[5])
+        dbRef.child(year).child(month).child("26").child(testList2[6].foodName).setValue(testList2[6])
+        dbRef.child(year).child(month).child("26").child(testList2[7].foodName).setValue(testList2[7])
         showFoodListToday()
         Log.d("MainActivity", "STARTED1")
 
@@ -207,7 +217,7 @@ class MainFragment : Fragment() {
             foodListSize = foodList.size
             Log.d("MainActivity", "before")
 
-
+            binding.recyclerView.recycledViewPool.setMaxRecycledViews(0, 0) //prevents bug where some items may disappear by setting the view to be invisible
             binding.recyclerView.adapter = adapter
             (activity as MainActivity?)!!.endTransition()//starts the ending transition upon onCreateView
             //TODO May have to add condition to determine if transition plays

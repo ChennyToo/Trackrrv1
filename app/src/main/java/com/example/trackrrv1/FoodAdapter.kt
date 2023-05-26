@@ -36,42 +36,44 @@ class FoodAdapter(var foods: MutableList<Food>, myFragment: MainFragment) :
     override fun onBindViewHolder(holder: FoodViewHolder, position: Int) {
         val food = foods[position]
         holder.bindFood(food)
+//        Log.d("TrySail", "${food.foodName}${holder.bindingAdapterPosition}")
 
         val buttonsClickListener: View.OnClickListener =
             View.OnClickListener { view ->
                 when (view.id) {
+                    R.id.cardBG2 ->{
+//                        Log.d("MainActivity", "${holder.bindingAdapterPosition}")
+                    }
+
                     R.id.CustomizeFoodItemButton -> {
-                        Log.d("1MainActivity", "1Registering")
-                        Log.d("1MainActivity", "2${holder.binding.CustomizeFoodItemButton.text}")
-                        Log.d("1MainActivity", "3${holder.bindingAdapterPosition}")
-                        //Code that ensures there is only one open list item at a time
+                        //Code that ensures there is only one open list item at a time, second condition ensures that clicking the same item twice does not run this condition and rest of code on the same item.
+                        //Third condition ensures that this code only runs when the menu is opened, or else it will run the animation when closed
                         if (pastHolder != null && pastHolder != holder && pastHolder!!.binding.CustomizeFoodItemButton.text == "opened") {
-                            if (pastHolder!!.binding.customizeAnimation.speed < 0) {
+                            if (pastHolder!!.binding.customizeAnimation.speed < 0) {//If the lottie is reversed, play it so that it closes
                                 pastHolder!!.binding.customizeAnimation.playAnimation()
                             } else {
                                 pastHolder!!.binding.customizeAnimation.reverseAnimationSpeed()
                                 pastHolder!!.binding.customizeAnimation.playAnimation()
                             }
-                            pastHolder!!.binding.CustomizeFoodItemButton.text = "closed"
-                            pastHolder!!.binding.TrashFoodItemButton.visibility = View.INVISIBLE
+                            pastHolder!!.binding.CustomizeFoodItemButton.text = "closed"//Set the state of the Button to closed
+                            pastHolder!!.binding.TrashFoodItemButton.visibility = View.INVISIBLE //Disable the ability to click on the buttons as they are not on screen anymore
                             pastHolder!!.binding.WriteFoodItemButton.visibility = View.INVISIBLE
                         }
 
                         //RUNS IF CLOSED
                         if (holder.binding.CustomizeFoodItemButton.text.equals("closed")) {
-                            holder.binding.CustomizeFoodItemButton.text = "opened"
-                            if (holder.binding.customizeAnimation.speed > 0) {
+                            holder.binding.CustomizeFoodItemButton.text = "opened"//set state to open
+                            if (holder.binding.customizeAnimation.speed > 0) {//if animation is normal speed, play
                                 holder.binding.customizeAnimation.playAnimation()
                             } else {
-                                holder.binding.customizeAnimation.reverseAnimationSpeed()
+                                holder.binding.customizeAnimation.reverseAnimationSpeed()//else, make it go from reverse to normal and then play
                                 holder.binding.customizeAnimation.playAnimation()
                             }
 
 
 
-                            holder.binding.TrashFoodItemButton.visibility = View.VISIBLE
+                            holder.binding.TrashFoodItemButton.visibility = View.VISIBLE//Make the two buttons able to be clicked when animation begins opening
                             holder.binding.WriteFoodItemButton.visibility = View.VISIBLE
-                            Log.d("1MainActivity", "IsVISIBLE")
                         }
 
                         //IF IT IS OPEN
@@ -98,7 +100,6 @@ class FoodAdapter(var foods: MutableList<Food>, myFragment: MainFragment) :
                             }
                         }
                         pastHolder = holder //Assign past holder AFTER everything has occured because holder changes greatly throughout
-                        Log.d("1MainActivity", "4${pastHolder!!.bindingAdapterPosition}")
 
 
 
@@ -126,13 +127,16 @@ class FoodAdapter(var foods: MutableList<Food>, myFragment: MainFragment) :
                                     //Code that will shift the items to replace the deleted item as well as update FireBase of this deletion
                                     val positionalChange =
                                         holder.bindingAdapterPosition
+                                    //TODO May have to utilize positional change if code breaks
                                     MainFragment.removeItemInList(foods[holder.bindingAdapterPosition].foodName)
                                     foods.removeAt(holder.bindingAdapterPosition)
-                                    notifyItemRemoved(positionalChange)
+                                    notifyItemRemoved(holder.bindingAdapterPosition)
+//                                    notifyDataSetChanged()//Good fix but does not do animation
                                     notifyItemRangeChanged(
-                                        positionalChange,
-                                        foods.size
+                                        holder.bindingAdapterPosition,
+                                        itemCount
                                     )
+                                    holder.itemView.visibility = View.GONE
                                     parentFragment.binding.mainClickBlocker.visibility =
                                         View.INVISIBLE//Click privilage is back
                                     parentFragment.binding.amountLoggedTV.text = "You have logged ${foods.size} items"
@@ -149,6 +153,7 @@ class FoodAdapter(var foods: MutableList<Food>, myFragment: MainFragment) :
         binding.CustomizeFoodItemButton.setOnClickListener(buttonsClickListener)
         binding.WriteFoodItemButton.setOnClickListener(buttonsClickListener)
         binding.TrashFoodItemButton.setOnClickListener(buttonsClickListener)
+        binding.cardBG2.setOnClickListener(buttonsClickListener)
 
 
     }
