@@ -39,6 +39,7 @@ class MainFragment : Fragment() {
     var isUp = false
     var firstClick = true
     lateinit var adapter : FoodAdapter
+    var foodListSize = 0
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -76,10 +77,10 @@ class MainFragment : Fragment() {
             Food("Pink", 20, 30, 33, 44, 55, 66, systemTime)
         )
 
-        dbRef.child(year).child(month).child("25").child(testList2[0].foodName).setValue(testList2[0])
-        dbRef.child(year).child(month).child("25").child(testList2[1].foodName).setValue(testList2[1])
-        dbRef.child(year).child(month).child("25").child(testList2[2].foodName).setValue(testList2[2])
-        dbRef.child(year).child(month).child("25").child(testList2[3].foodName).setValue(testList2[3])
+        dbRef.child(year).child(month).child("26").child(testList2[0].foodName).setValue(testList2[0])
+        dbRef.child(year).child(month).child("26").child(testList2[1].foodName).setValue(testList2[1])
+        dbRef.child(year).child(month).child("26").child(testList2[2].foodName).setValue(testList2[2])
+        dbRef.child(year).child(month).child("26").child(testList2[3].foodName).setValue(testList2[3])
         showFoodListToday()
         Log.d("MainActivity", "STARTED1")
 
@@ -110,6 +111,10 @@ class MainFragment : Fragment() {
 
                     R.id.WriteFoodButton ->{
                         binding.root.findNavController().navigate(R.id.action_mainFragment_to_writeFragment)
+                    }
+
+                    R.id.homeScreenButton ->{
+
                     }
                 }
             }
@@ -198,6 +203,8 @@ class MainFragment : Fragment() {
             }
 
             adapter = FoodAdapter(foodList, this)
+            binding.amountLoggedTV.text = "You have logged ${foodList.size} items"
+            foodListSize = foodList.size
             Log.d("MainActivity", "before")
 
 
@@ -243,6 +250,8 @@ class MainFragment : Fragment() {
         fun removeItemInList(name : String){
             Log.d("MainActivity", "$name")
             dbRef.child(year).child(month).child(day).child(name).ref.removeValue()
+
+
         }
 
 

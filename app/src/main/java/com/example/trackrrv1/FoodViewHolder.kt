@@ -1,5 +1,6 @@
 package com.example.trackrrv1
 
+import android.util.Log
 import android.view.View
 import androidx.core.net.toUri
 import androidx.recyclerview.widget.RecyclerView
@@ -20,12 +21,23 @@ class FoodViewHolder(val binding: ListItemLayoutBinding) : RecyclerView.ViewHold
         val sugar = currentFood.sugar
         val protein = currentFood.protein
         val carb = currentFood.carbohydrate
+        val time = currentFood.timeLogged
+        var hour = time.hour
+        val isAM = if (hour < 12){"AM"} else {"PM"}
+        if(isAM == "PM"){
+            hour -= 12
+        }
+        val minutes = time.minute
+        val timeString = "$hour:$minutes \n$isAM"
+
 //TODO CHANGE THE NAMES
         binding.CalorieTextView.text = "$calories"
         binding.nutrientTV3.text = "Fat: ${fat}g"
         binding.NameTextView.text = name
         binding.nutrientTV1.text = "Protein: ${protein}g"
         binding.nutrientTV2.text = "Carbs: ${carb}g"
+        binding.nutrientTV4.text = "Sugar: ${sugar}g"
+        binding.timeLoggedTV.text = timeString
         Glide.with(itemView).load(currentFood.imageUriString.toUri()).into(binding.FoodImageView);
 
 //        binding.AuthorTextView.text = author.toString()
@@ -34,7 +46,6 @@ class FoodViewHolder(val binding: ListItemLayoutBinding) : RecyclerView.ViewHold
         ////TODO bind these after making your xml
 
 //        Glide.with(itemView).load(currentFood.imageUri).into(binding.BookImageView);
-
     }
 
 

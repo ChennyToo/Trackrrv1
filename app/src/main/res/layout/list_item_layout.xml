@@ -6,6 +6,7 @@
     android:layout_height="370dp"
     android:layout_marginLeft="18dp"
     android:layout_marginRight="18dp"
+    android:layout_marginTop="25dp"
 
     >
 
@@ -125,7 +126,7 @@
         app:layout_constraintStart_toEndOf="@+id/nutrientTV3"
         app:layout_constraintTop_toBottomOf="@+id/nutrientTV2"
         app:layout_constraintBottom_toBottomOf="@id/cardBG1"
-        tools:text="Fat is here" />
+        tools:text="Sugar is here" />
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/FoodImageView"
@@ -204,6 +205,21 @@
         app:lottie_autoPlay="false"
         app:lottie_loop="false"
         app:lottie_rawRes="@raw/main_customizelottie" />
+
+    <TextView
+        android:id="@+id/timeLoggedTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="6:30 PM"
+        android:gravity="center"
+        android:textSize="25dp"
+        android:fontFamily="@font/archivo_semibold"
+        app:layout_constraintTop_toTopOf="@id/customizeAnimation"
+        app:layout_constraintStart_toEndOf="@id/customizeAnimation"
+        app:layout_constraintBottom_toBottomOf="@id/customizeAnimation"
+        android:elevation="6dp"
+        />
+
 
 
 

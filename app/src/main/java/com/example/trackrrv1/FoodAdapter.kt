@@ -41,6 +41,9 @@ class FoodAdapter(var foods: MutableList<Food>, myFragment: MainFragment) :
             View.OnClickListener { view ->
                 when (view.id) {
                     R.id.CustomizeFoodItemButton -> {
+                        Log.d("1MainActivity", "1Registering")
+                        Log.d("1MainActivity", "2${holder.binding.CustomizeFoodItemButton.text}")
+                        Log.d("1MainActivity", "3${holder.bindingAdapterPosition}")
                         //Code that ensures there is only one open list item at a time
                         if (pastHolder != null && pastHolder != holder && pastHolder!!.binding.CustomizeFoodItemButton.text == "opened") {
                             if (pastHolder!!.binding.customizeAnimation.speed < 0) {
@@ -68,6 +71,7 @@ class FoodAdapter(var foods: MutableList<Food>, myFragment: MainFragment) :
 
                             holder.binding.TrashFoodItemButton.visibility = View.VISIBLE
                             holder.binding.WriteFoodItemButton.visibility = View.VISIBLE
+                            Log.d("1MainActivity", "IsVISIBLE")
                         }
 
                         //IF IT IS OPEN
@@ -82,6 +86,8 @@ class FoodAdapter(var foods: MutableList<Food>, myFragment: MainFragment) :
 
                             holder.binding.TrashFoodItemButton.visibility = View.INVISIBLE
                             holder.binding.WriteFoodItemButton.visibility = View.INVISIBLE
+                            Log.d("1MainActivity", "IsNotVISIBLE")
+
                         }
                         holder.binding.CustomizeFoodItemButton.isClickable = false //Prevents user from pressing the button to glitch out the animation by making them wait
 
@@ -92,6 +98,10 @@ class FoodAdapter(var foods: MutableList<Food>, myFragment: MainFragment) :
                             }
                         }
                         pastHolder = holder //Assign past holder AFTER everything has occured because holder changes greatly throughout
+                        Log.d("1MainActivity", "4${pastHolder!!.bindingAdapterPosition}")
+
+
+
 
 
                     }
@@ -102,6 +112,7 @@ class FoodAdapter(var foods: MutableList<Food>, myFragment: MainFragment) :
                     }
 
                     R.id.TrashFoodItemButton -> {
+                        Log.d("MainActivity", "${holder.bindingAdapterPosition}")
                         holder.binding.TrashFoodItemButton.isClickable = false //Ensures that they do not run the same function again
                         holder.binding.customizeAnimation.reverseAnimationSpeed()//Animation must always be reversed as the customize button is OPEN
                         holder.binding.customizeAnimation.playAnimation()
@@ -124,6 +135,8 @@ class FoodAdapter(var foods: MutableList<Food>, myFragment: MainFragment) :
                                     )
                                     parentFragment.binding.mainClickBlocker.visibility =
                                         View.INVISIBLE//Click privilage is back
+                                    parentFragment.binding.amountLoggedTV.text = "You have logged ${foods.size} items"
+                                    Log.d("MainActivity", "${foods.forEach { food ->  Log.d("MainActivity", "$food")}}")
                                 }
                             }
                         }
