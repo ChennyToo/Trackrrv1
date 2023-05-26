@@ -1,12 +1,14 @@
 package com.example.trackrrv1
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.navArgs
 import com.example.trackrrv1.databinding.FragmentLogInBinding
 import com.example.trackrrv1.databinding.FragmentWriteBinding
 import com.google.firebase.database.DatabaseReference
@@ -16,18 +18,26 @@ import java.time.LocalDateTime
 
 
 class WriteFragment : Fragment() {
+    private val foodArgs by navArgs<WriteFragmentArgs>()
 
     lateinit var dbRef: DatabaseReference
     private var _binding: FragmentWriteBinding? = null
     private val binding get() = _binding!!
     private val viewModel: FoodViewModel by activityViewModels()
+    private var isEditState = false
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        isEditState = false
+//        Log.d("Main", "${foodArgs.foodItemPassedInFromEdit}")
+
+
+
         dbRef = Firebase.database.reference
         _binding = FragmentWriteBinding.inflate(inflater, container, false)
+
         val buttonsClickListener: View.OnClickListener =
             View.OnClickListener { view ->
                 when(view.id){
@@ -37,6 +47,11 @@ class WriteFragment : Fragment() {
             }
         binding.LogButton.setOnClickListener(buttonsClickListener)
         binding.BackButton.setOnClickListener(buttonsClickListener)
+        if (foodArgs.foodItemPassedInFromEdit != null){
+            isEditState = true
+            changeToEditState(foodArgs.foodItemPassedInFromEdit)
+        }
+
         (activity as MainActivity?)!!.endTransition()//finish the transition after everything else is done
 
         // Inflate the layout for this fragment
@@ -52,13 +67,36 @@ class WriteFragment : Fragment() {
         val imageUrl = "https://www.iconsdb.com/icons/preview/red/x-mark-3-xxl.png"
         val newFood = Food(name?: "", calorie?: 0, fat?: 0, 0,
             0, protein?: 0, carb?: 0, LocalDateTime.now(), imageUrl)
-        dbRef.child(LocalDateTime.now().year.toString())
-            .child(LocalDateTime.now().month.toString())
-            .child(LocalDateTime.now().dayOfMonth.toString())
-            .child(name!!).setValue(newFood).addOnSuccessListener {
-            MainFragment.refreshScreen = true
+
+        if(isEditState){
+            //TODO FIND HOW TO UPDATE
+            dbRef.child(LocalDateTime.now().year.toString())
+                .child(LocalDateTime.now().month.toString())
+                .child(LocalDateTime.now().dayOfMonth.toString())
+                .child(foodArgs.foodItemPassedInFromEdit.foodName).updateChildren(
+                    newFood.toMap()).addOnSuccessListener {
+                    MainFragment.refreshScreen = true
+                }
         }
+
+        else{
+            dbRef.child(LocalDateTime.now().year.toString())
+                .child(LocalDateTime.now().month.toString())
+                .child(LocalDateTime.now().dayOfMonth.toString())
+                .child(name!!).setValue(newFood).addOnSuccessListener {
+                    MainFragment.refreshScreen = true
+                }
+        }
+
         binding.root.findNavController().navigate(R.id.action_writeFragment_to_mainFragment)
+    }
+
+    fun changeToEditState(foodItem : Food){
+        binding.NameEdit.setText(foodItem.foodName)
+        binding.CalorieEdit.setText(foodItem.calories.toString())
+        binding.ProteinEdit.setText(foodItem.protein.toString())
+        binding.CarbEdit.setText(foodItem.carbohydrate.toString())
+        binding.FatEdit.setText(foodItem.fat.toString())
     }
 
     override fun onDestroyView() {

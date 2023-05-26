@@ -114,13 +114,10 @@ class FoodAdapter(var foods: MutableList<Food>, myFragment: MainFragment) :
 
                         parentFragment.lifecycleScope.launch {
                             delay(Constants.transitionStartTime)
-                            parentFragment.binding.root.findNavController().navigate(R.id.action_mainFragment_to_writeFragment)
-                        }
+                            val navigateToWriteFragWithFood = MainFragmentDirections.actionMainFragmentToWriteFragment(food)
+                            parentFragment.binding.root.findNavController().navigate(navigateToWriteFragWithFood)                        }
 
-                        val navigateToWriteFrag = MainFragmentDirections.actionMainFragmentToWriteFragment(
-                            holder.binding.NameTextView.text.toString(),
 
-                        )
 
 
                     }

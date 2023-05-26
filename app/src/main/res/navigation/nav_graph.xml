@@ -37,6 +37,9 @@
         <action
             android:id="@+id/action_writeFragment_to_mainFragment"
             app:destination="@id/mainFragment" />
+        <argument
+            android:name="foodItemPassedInFromEdit"
+            app:argType="com.example.trackrrv1.Food" />
     </fragment>
     <fragment
         android:id="@+id/homeFragment"
