@@ -140,6 +140,7 @@ class FoodAdapter(var foods: MutableList<Food>, myFragment: MainFragment) :
                                     //TODO May have to utilize positional change if code breaks
                                     MainFragment.removeItemInList(foods[holder.bindingAdapterPosition].foodName)//Purpose is to remove from Firebase
                                     foods.removeAt(holder.bindingAdapterPosition)//Remove from the list
+                                    parentFragment.setIfNoImageIcon(foods.size)//If last item is deleted, set the no items icon
                                     notifyItemRemoved(holder.bindingAdapterPosition)//Tells the adapter that something was removed
 //                                    notifyDataSetChanged()//Another method that is less likely to break but at the cost of not doing the shifting animation
                                     notifyItemRangeChanged(//Makes everything after the adapter shift position

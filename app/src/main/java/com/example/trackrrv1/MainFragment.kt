@@ -60,6 +60,7 @@ class MainFragment : Fragment() {
         firstClick = true
         binding.TakePhotoButton.hide()
         binding.WriteFoodButton.hide()
+        setTopTimeOfDay(LocalDateTime.now().hour)
         var previouslyClickedIcon = binding.mainButtonAll
 
 
@@ -296,6 +297,7 @@ class MainFragment : Fragment() {
             binding.amountLoggedTV.text = "You have logged ${foodList.size} items"
             foodListSize = foodList.size
 
+
             binding.recyclerView.recycledViewPool.setMaxRecycledViews(
                 0,
                 0
@@ -407,6 +409,7 @@ class MainFragment : Fragment() {
                 morningFoodList.add(foodList[i])
             }
         }
+        setIfNoImageIcon(morningFoodList.size)
         adapter = FoodAdapter(morningFoodList, this)
         binding.recyclerView.recycledViewPool.setMaxRecycledViews(
             0,
@@ -422,6 +425,7 @@ class MainFragment : Fragment() {
                 afternoonFoodList.add(foodList[i])
             }
         }
+        setIfNoImageIcon(afternoonFoodList.size)
         adapter = FoodAdapter(afternoonFoodList, this)
         binding.recyclerView.recycledViewPool.setMaxRecycledViews(
             0,
@@ -438,6 +442,7 @@ fun showNightList() {
             nightFoodList.add(foodList[i])
         }
     }
+    setIfNoImageIcon(nightFoodList.size)
     adapter = FoodAdapter(nightFoodList, this)
     binding.recyclerView.recycledViewPool.setMaxRecycledViews(
         0,
@@ -447,6 +452,7 @@ fun showNightList() {
 }
 
 fun showAllList() {
+    setIfNoImageIcon(foodList.size)
     adapter = FoodAdapter(foodList, this)
     binding.recyclerView.recycledViewPool.setMaxRecycledViews(
         0,
@@ -476,6 +482,32 @@ fun removeNavButtonFunctionality() {
         }
     }
 
+    fun setTopTimeOfDay(hour : Int){
+        if (hour >= Constants.nightStartHour || hour < Constants.morningStartHour){
+            binding.mainTop.setBackgroundResource(R.drawable.main_topthree)
+        }
+
+        else if (hour >= Constants.afternoonStartHour){
+            binding.mainTop.setBackgroundResource(R.drawable.main_toptwo)
+        }
+
+        else {
+            binding.mainTop.setBackgroundResource(R.drawable.main_topone)
+        }
+    }
+
+    fun setIfNoImageIcon(sizeOfList: Int){
+        if (sizeOfList < 1){
+            binding.mainNoImageIcon.visibility = View.VISIBLE
+            binding.mainNoFoodText.visibility = View.VISIBLE
+        }
+
+        else {
+            binding.mainNoImageIcon.visibility = View.INVISIBLE
+            binding.mainNoFoodText.visibility = View.INVISIBLE
+        }
+    }
+
 
 companion object {
     lateinit var dbRef: DatabaseReference
@@ -488,8 +520,6 @@ companion object {
     fun removeItemInList(name: String) {
         Log.d("MainActivity", "$name")
         dbRef.child(year).child(month).child(day).child(name).ref.removeValue()
-
-
     }
 
 

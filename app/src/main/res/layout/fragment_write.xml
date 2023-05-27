@@ -12,6 +12,9 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="48dp"
         android:hint="Name Here"
+        android:inputType="textPersonName"
+        android:imeOptions="actionDone"
+        android:maxLines="1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
@@ -21,6 +24,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="48dp"
         android:hint="Calorie Here"
+        android:inputType="phone"
+        android:digits="1234567890"
+        android:imeOptions="actionDone"
+        android:maxLines="1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/NameEdit" />
@@ -32,6 +39,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="48dp"
         android:hint="Protein Here"
+        android:inputType="phone"
+        android:digits="1234567890"
+        android:imeOptions="actionDone"
+        android:maxLines="1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/CalorieEdit" />
@@ -42,6 +53,10 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="48dp"
         android:hint="Carb Here"
+        android:inputType="phone"
+        android:digits="1234567890"
+        android:imeOptions="actionDone"
+        android:maxLines="1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/ProteinEdit" />
@@ -52,9 +67,27 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="48dp"
         android:hint="Fat Here"
+        android:inputType="phone"
+        android:digits="1234567890"
+        android:imeOptions="actionDone"
+        android:maxLines="1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/CarbEdit" />
+
+    <EditText
+        android:id="@+id/SugarEdit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="48dp"
+        android:hint="Sugar Here"
+        android:inputType="phone"
+        android:digits="1234567890"
+        android:imeOptions="actionDone"
+        android:maxLines="1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/FatEdit" />
 
     <Button
         android:id="@+id/LogButton"
@@ -64,7 +97,7 @@
         android:layout_marginTop="48dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/FatEdit" />
+        app:layout_constraintTop_toBottomOf="@+id/SugarEdit" />
 
     <Button
         android:id="@+id/BackButton"

@@ -42,7 +42,7 @@ class WriteFragment : Fragment() {
             View.OnClickListener { view ->
                 when(view.id){
                     R.id.LogButton -> {
-                        LogAndNavigate()
+                        checkFieldValidity()
                     }
                     R.id.BackButton -> binding.root.findNavController().navigate(R.id.action_writeFragment_to_mainFragment)
                 }
@@ -61,15 +61,15 @@ class WriteFragment : Fragment() {
 
     fun LogAndNavigate(){
         val name = binding.NameEdit.text.toString()
-        val calorie = binding.CalorieEdit.text.toString().toInt()
-        val protein = binding.ProteinEdit.text.toString().toInt()
-        val carb = binding.CarbEdit.text.toString().toInt()
-        val fat = binding.FatEdit.text.toString().toInt()
+        val calorie = if (binding.CalorieEdit.text.toString().isEmpty()){0} else {binding.CalorieEdit.text.toString().toInt()}
+        val protein = if (binding.ProteinEdit.text.toString().isEmpty()){0} else {binding.ProteinEdit.text.toString().toInt()}
+        val carb = if (binding.CarbEdit.text.toString().isEmpty()){0} else {binding.CarbEdit.text.toString().toInt()}
+        val fat = if (binding.FatEdit.text.toString().isEmpty()){0} else {binding.FatEdit.text.toString().toInt()}
+        val sugar = if (binding.SugarEdit.text.toString().isEmpty()){0} else {binding.SugarEdit.text.toString().toInt()}
         val imageUrl = "https://www.iconsdb.com/icons/preview/red/x-mark-3-xxl.png"
         val time = if(isEditState){foodArgs.foodItemPassedInFromEdit.timeLogged} else { LocalDateTime.now()}
-        val newFood = Food(name?: "", calorie?: 0, fat?: 0, 0,
+        val newFood = Food(name?: "", calorie?: 0, fat?: 0, sugar,
             0, protein?: 0, carb?: 0, time, imageUrl)
-//TODO ADD IN SUGAR FIELD AND VARIABLE
         if(isEditState){
             //TODO FIND HOW TO UPDATE
 //            dbRef.child(LocalDateTime.now().year.toString())
@@ -119,6 +119,25 @@ class WriteFragment : Fragment() {
         binding.ProteinEdit.setText(foodItem.protein.toString())
         binding.CarbEdit.setText(foodItem.carbohydrate.toString())
         binding.FatEdit.setText(foodItem.fat.toString())
+    }
+
+    fun checkFieldValidity(){
+        val name = binding.NameEdit.text.toString()
+        if (name.contains(".")
+            || name.contains("#")
+            || name.contains("$")
+            || name.contains("[")
+            || name.contains("]")
+            || name.isEmpty()){
+            displayErrorToUser()
+        }
+        else {
+            LogAndNavigate()
+        }
+    }
+
+    fun displayErrorToUser(){
+        Log.d("WriteFragment", "displayErrorToUser name field has bad characters")
     }
 
     override fun onDestroyView() {
