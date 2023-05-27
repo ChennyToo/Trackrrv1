@@ -7,14 +7,14 @@ import com.google.firebase.database.Exclude
 import kotlinx.parcelize.Parcelize
 import java.time.LocalDateTime
 @Parcelize
-data class Food (val foodName : String,
-                 val calories : Int,
-                 val fat : Int,
-                 val sugar: Int,
-                 val sodium : Int,
-                 val protein: Int,
-                 val carbohydrate: Int,
-                 val timeLogged: LocalDateTime,
+data class Food (val foodName : String = "empty",
+                 val calories : Int = 0,
+                 val fat : Int = 0,
+                 val sugar: Int = 0,
+                 val sodium : Int = 0,
+                 val protein: Int = 0,
+                 val carbohydrate: Int = 0,
+                 val timeLogged: LocalDateTime = LocalDateTime.now(),
                  val imageUriString: String = "https://nutritionix-api.s3.amazonaws.com/5460f139a7f2fb4538e920ae.jpeg"
                  ) : Parcelable {
     @Exclude

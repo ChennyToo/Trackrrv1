@@ -16,6 +16,9 @@ class Constants {
         var HCField1Type : String = "sodium" //keep same name as FireBase
         var HCField2Type : String = "carbohydrate"//FieldType is used for Home Screen nutrition boxes
         var HCField3Type : String = "sugar"
+        var morningStartHour = 4
+        var afternoonStartHour = 13
+        var nightStartHour = 18
 
     }
 }
