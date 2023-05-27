@@ -5,14 +5,10 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.animation.TranslateAnimation
 import androidx.constraintlayout.widget.ConstraintLayout
-import androidx.constraintlayout.widget.ConstraintSet
-import androidx.core.view.marginTop
 import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import com.airbnb.lottie.LottieAnimationView
@@ -24,14 +20,10 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.cancel
-import kotlinx.coroutines.coroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.time.LocalDateTime
-import java.time.Month
-import kotlin.properties.Delegates
 
 
 class MainFragment : Fragment() {
@@ -83,7 +75,7 @@ class MainFragment : Fragment() {
         var timee8 = LocalDateTime.of(2023, 5, 27, 18, 30)
         var timee9 = LocalDateTime.of(2023, 5, 27, 20, 30)
         var timee10 = LocalDateTime.of(2023, 5, 27, 22, 30)
-        var timee11 = LocalDateTime.of(2023, 5, 27, 24, 30)
+        var timee11 = LocalDateTime.of(2023, 5, 27, 23, 30)
 
         var testList2: MutableList<Food> = mutableListOf(
             Food("A", 2000, 30, 33, 44, 55, 66, timee),
@@ -99,28 +91,28 @@ class MainFragment : Fragment() {
             Food("K", 20, 30, 33, 44, 55, 66, timee11),
         )
 
-        dbRef.child(year).child(month).child("27").child(testList2[0].foodName)
-            .setValue(testList2[0])
-        dbRef.child(year).child(month).child("27").child(testList2[1].foodName)
-            .setValue(testList2[1])
-        dbRef.child(year).child(month).child("26").child(testList2[2].foodName)
-            .setValue(testList2[2])
-        dbRef.child(year).child(month).child("26").child(testList2[3].foodName)
-            .setValue(testList2[3])
-        dbRef.child(year).child(month).child("26").child(testList2[4].foodName)
-            .setValue(testList2[4])
-        dbRef.child(year).child(month).child("26").child(testList2[5].foodName)
-            .setValue(testList2[5])
-        dbRef.child(year).child(month).child("26").child(testList2[6].foodName)
-            .setValue(testList2[6])
-        dbRef.child(year).child(month).child("26").child(testList2[7].foodName)
-            .setValue(testList2[7])
-        dbRef.child(year).child(month).child("26").child(testList2[5].foodName)
-            .setValue(testList2[8])
-        dbRef.child(year).child(month).child("26").child(testList2[6].foodName)
-            .setValue(testList2[9])
-        dbRef.child(year).child(month).child("26").child(testList2[7].foodName)
-            .setValue(testList2[10])
+//        dbRef.child(year).child(month).child(day).child(testList2[0].foodName)
+//            .setValue(testList2[0])
+//        dbRef.child(year).child(month).child(day).child(testList2[1].foodName)
+//            .setValue(testList2[1])
+//        dbRef.child(year).child(month).child(day).child(testList2[2].foodName)
+//            .setValue(testList2[2])
+//        dbRef.child(year).child(month).child(day).child(testList2[3].foodName)
+//            .setValue(testList2[3])
+//        dbRef.child(year).child(month).child(day).child(testList2[4].foodName)
+//            .setValue(testList2[4])
+//        dbRef.child(year).child(month).child(day).child(testList2[5].foodName)
+//            .setValue(testList2[5])
+//        dbRef.child(year).child(month).child(day).child(testList2[6].foodName)
+//            .setValue(testList2[6])
+//        dbRef.child(year).child(month).child(day).child(testList2[7].foodName)
+//            .setValue(testList2[7])
+//        dbRef.child(year).child(month).child(day).child(testList2[8].foodName)
+//            .setValue(testList2[8])
+//        dbRef.child(year).child(month).child(day).child(testList2[9].foodName)
+//            .setValue(testList2[9])
+//        dbRef.child(year).child(month).child(day).child(testList2[10].foodName)
+//            .setValue(testList2[10])
         showFoodListToday(true)
 
 
@@ -142,7 +134,7 @@ class MainFragment : Fragment() {
                     }
 
                     R.id.TakePhotoButton -> {
-                        removeAllButtonFunctionality()
+                        removeNavButtonFunctionality()
                         (activity as MainActivity?)!!.startTransition()//begins screen transition
                         lifecycleScope.launch {
                             delay(Constants.transitionStartTime)
@@ -152,7 +144,7 @@ class MainFragment : Fragment() {
                     }
 
                     R.id.WriteFoodButton -> {
-                        removeAllButtonFunctionality()
+                        removeNavButtonFunctionality()
                         (activity as MainActivity?)!!.startTransition()//begins screen transition
                         lifecycleScope.launch {
                             delay(Constants.transitionStartTime)
@@ -163,7 +155,7 @@ class MainFragment : Fragment() {
                     }
 
                     R.id.homeScreenButton -> {
-                        removeAllButtonFunctionality()
+                        removeNavButtonFunctionality()
                         (activity as MainActivity?)!!.startTransition()//begins screen transition
                         lifecycleScope.launch {
                             delay(Constants.transitionStartTime)
@@ -175,6 +167,7 @@ class MainFragment : Fragment() {
 
                     R.id.main_ButtonMorning -> {
                         if (previouslyClickedIcon != binding.mainButtonMorning) {
+                            setIconClickCooldown()
                             previouslyClickedIcon = binding.mainButtonMorning
                             IconClickResponse(R.id.main_ButtonMorning)
                         }
@@ -182,6 +175,7 @@ class MainFragment : Fragment() {
 
                     R.id.main_ButtonAfternoon -> {
                         if (previouslyClickedIcon != binding.mainButtonAfternoon) {
+                            setIconClickCooldown()
                             previouslyClickedIcon = binding.mainButtonAfternoon
                             IconClickResponse(R.id.main_ButtonAfternoon)
                         }
@@ -189,6 +183,7 @@ class MainFragment : Fragment() {
 
                     R.id.main_ButtonNight -> {
                         if (previouslyClickedIcon != binding.mainButtonNight) {
+                            setIconClickCooldown()
                             previouslyClickedIcon = binding.mainButtonNight
                             IconClickResponse(R.id.main_ButtonNight)
                         }
@@ -196,6 +191,7 @@ class MainFragment : Fragment() {
 
                     R.id.main_ButtonAll -> {
                         if (previouslyClickedIcon != binding.mainButtonAll) {
+                            setIconClickCooldown()
                             previouslyClickedIcon = binding.mainButtonAll
                             IconClickResponse(R.id.main_ButtonAll)
                         }
@@ -351,7 +347,11 @@ class MainFragment : Fragment() {
             } else if (State == 2) {
                 showAfternoonList()
             } else if (State == 3) {
-
+                showNightList()
+            } else if (State == 4) {
+                showAllList()
+            } else {
+                Log.d("MainFragment", "updateFoodListValues State Mismatch")
             }
         }
     }
@@ -401,20 +401,13 @@ class MainFragment : Fragment() {
     }
 
     fun showMorningList() {
-        Log.d("MainFragment", "${foodList}")
         var morningFoodList = mutableListOf<Food>()
         for (i in 0 until foodList.size) {
-            Log.d(
-                "MainFragment",
-                "${foodList[i].timeLogged.hour} AND ${Constants.morningStartHour} AND ${Constants.afternoonStartHour}"
-            )
-
             if (foodList[i].timeLogged.hour >= Constants.morningStartHour && foodList[i].timeLogged.hour < Constants.afternoonStartHour) {
                 morningFoodList.add(foodList[i])
             }
         }
         adapter = FoodAdapter(morningFoodList, this)
-        Log.d("MainFragment", "${morningFoodList}")
         binding.recyclerView.recycledViewPool.setMaxRecycledViews(
             0,
             0
@@ -423,31 +416,82 @@ class MainFragment : Fragment() {
     }
 
     fun showAfternoonList() {
-
+        var afternoonFoodList = mutableListOf<Food>()
+        for (i in 0 until foodList.size) {
+            if (foodList[i].timeLogged.hour >= Constants.afternoonStartHour && foodList[i].timeLogged.hour < Constants.nightStartHour) {
+                afternoonFoodList.add(foodList[i])
+            }
+        }
+        adapter = FoodAdapter(afternoonFoodList, this)
+        binding.recyclerView.recycledViewPool.setMaxRecycledViews(
+            0,
+            0
+        ) //prevents bug where some items may disappear by setting the view to be invisible
+        binding.recyclerView.adapter = adapter
     }
 
-    fun removeAllButtonFunctionality() {
-        binding.homeScreenButton.isClickable = false
-        binding.WriteFoodButton.isClickable = false
-        binding.TakePhotoButton.isClickable = false
+
+fun showNightList() {
+    var nightFoodList = mutableListOf<Food>()
+    for (i in 0 until foodList.size) {
+        if (foodList[i].timeLogged.hour >= Constants.nightStartHour || foodList[i].timeLogged.hour < Constants.morningStartHour) {
+            nightFoodList.add(foodList[i])
+        }
     }
+    adapter = FoodAdapter(nightFoodList, this)
+    binding.recyclerView.recycledViewPool.setMaxRecycledViews(
+        0,
+        0
+    ) //prevents bug where some items may disappear by setting the view to be invisible
+    binding.recyclerView.adapter = adapter
+}
 
+fun showAllList() {
+    adapter = FoodAdapter(foodList, this)
+    binding.recyclerView.recycledViewPool.setMaxRecycledViews(
+        0,
+        0
+    ) //prevents bug where some items may disappear by setting the view to be invisible
+    binding.recyclerView.adapter = adapter
+}
 
-    companion object {
-        lateinit var dbRef: DatabaseReference
-        var systemTime = LocalDateTime.now()
-        var year = systemTime.year.toString()
-        var month = systemTime.month.toString()
-        var day = systemTime.dayOfMonth.toString()
-        var refreshScreen = false
+fun removeNavButtonFunctionality() {
+    binding.homeScreenButton.isClickable = false
+    binding.WriteFoodButton.isClickable = false
+    binding.TakePhotoButton.isClickable = false
+}
 
-        fun removeItemInList(name: String) {
-            Log.d("MainActivity", "$name")
-            dbRef.child(year).child(month).child(day).child(name).ref.removeValue()
-
+    fun setIconClickCooldown(){
+        lifecycleScope.launch(Dispatchers.Main) {
+            binding.mainButtonMorning.isClickable = false
+            binding.mainButtonAfternoon.isClickable = false
+            binding.mainButtonNight.isClickable = false
+            binding.mainButtonAll.isClickable = false
+            delay(Constants.main_iconCooldownTime)
+            binding.mainButtonMorning.isClickable = true
+            binding.mainButtonAfternoon.isClickable = true
+            binding.mainButtonNight.isClickable = true
+            binding.mainButtonAll.isClickable = true
 
         }
+    }
+
+
+companion object {
+    lateinit var dbRef: DatabaseReference
+    var systemTime = LocalDateTime.now()
+    var year = systemTime.year.toString()
+    var month = systemTime.month.toString()
+    var day = systemTime.dayOfMonth.toString()
+    var refreshScreen = false
+
+    fun removeItemInList(name: String) {
+        Log.d("MainActivity", "$name")
+        dbRef.child(year).child(month).child(day).child(name).ref.removeValue()
 
 
     }
+
+
+}
 }

@@ -6,6 +6,7 @@ class Constants {
         var transitionStartTime : Long = 400L//Upon finishing starttime, that is when navigation should occur
         var transitionEndTime : Long = 400L
         var main_customizeAnimationTime : Long = 800L
+        var main_iconCooldownTime : Long = 300L
         var calorieIntake : Int = 200
         var proteinIntake : Int = 50//update based on user preference
         var carbIntake : Int = 300
@@ -17,8 +18,9 @@ class Constants {
         var HCField2Type : String = "carbohydrate"//FieldType is used for Home Screen nutrition boxes
         var HCField3Type : String = "sugar"
         var morningStartHour = 4
-        var afternoonStartHour = 13
+        var afternoonStartHour = 12
         var nightStartHour = 18
+
 
     }
 }

@@ -69,7 +69,7 @@ class WriteFragment : Fragment() {
         val time = if(isEditState){foodArgs.foodItemPassedInFromEdit.timeLogged} else { LocalDateTime.now()}
         val newFood = Food(name?: "", calorie?: 0, fat?: 0, 0,
             0, protein?: 0, carb?: 0, time, imageUrl)
-
+//TODO ADD IN SUGAR FIELD AND VARIABLE
         if(isEditState){
             //TODO FIND HOW TO UPDATE
 //            dbRef.child(LocalDateTime.now().year.toString())
