@@ -41,7 +41,9 @@ class WriteFragment : Fragment() {
         val buttonsClickListener: View.OnClickListener =
             View.OnClickListener { view ->
                 when(view.id){
-                    R.id.LogButton -> LogAndNavigate()
+                    R.id.LogButton -> {
+                        LogAndNavigate()
+                    }
                     R.id.BackButton -> binding.root.findNavController().navigate(R.id.action_writeFragment_to_mainFragment)
                 }
             }
@@ -65,18 +67,39 @@ class WriteFragment : Fragment() {
         val carb = binding.CarbEdit.text.toString().toInt()
         val fat = binding.FatEdit.text.toString().toInt()
         val imageUrl = "https://www.iconsdb.com/icons/preview/red/x-mark-3-xxl.png"
+        val time = if(isEditState){foodArgs.foodItemPassedInFromEdit.timeLogged} else { LocalDateTime.now()}
         val newFood = Food(name?: "", calorie?: 0, fat?: 0, 0,
-            0, protein?: 0, carb?: 0, LocalDateTime.now(), imageUrl)
+            0, protein?: 0, carb?: 0, time, imageUrl)
 
         if(isEditState){
             //TODO FIND HOW TO UPDATE
+//            dbRef.child(LocalDateTime.now().year.toString())
+//                .child(LocalDateTime.now().month.toString())
+//                .child(foodArgs.foodItemPassedInFromEdit.timeLogged.dayOfMonth.toString())
+//                .child(foodArgs.foodItemPassedInFromEdit.foodName).updateChildren(
+//                    newFood.toMap()).addOnSuccessListener {
+//                    MainFragment.refreshScreen = true
+//                }
+
             dbRef.child(LocalDateTime.now().year.toString())
                 .child(LocalDateTime.now().month.toString())
-                .child(LocalDateTime.now().dayOfMonth.toString())
-                .child(foodArgs.foodItemPassedInFromEdit.foodName).updateChildren(
-                    newFood.toMap()).addOnSuccessListener {
+                .child(foodArgs.foodItemPassedInFromEdit.timeLogged.dayOfMonth.toString())//Editing a food item while changing days will update yesterday's date
+                .child(foodArgs.foodItemPassedInFromEdit.foodName)
+                .ref.removeValue()
+
+            Log.d("mew", "${foodArgs.foodItemPassedInFromEdit.foodName}")
+            dbRef.child(LocalDateTime.now().year.toString())
+                .child(LocalDateTime.now().month.toString())
+                .child(foodArgs.foodItemPassedInFromEdit.timeLogged.dayOfMonth.toString())
+                .child(name).setValue(newFood).addOnSuccessListener {
                     MainFragment.refreshScreen = true
                 }
+
+
+
+
+
+
         }
 
         else{

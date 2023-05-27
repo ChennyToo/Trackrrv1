@@ -23,12 +23,15 @@ class FoodViewModel : ViewModel() {
     private val _response = MutableLiveData<MutableList<Food>>()
         val response: LiveData<MutableList<Food>>
             get() = _response
-    var listOfFoodsFetched = mutableListOf<Food>()
     var dbRef = Firebase.database.reference
-    var systemTime = LocalDateTime.now()
-    var year = systemTime.year.toString()
-    var month = systemTime.month.toString()
-    val day = systemTime.dayOfMonth.toString()
+    val systemTime //Time variables are getters because time always changes
+        get() = LocalDateTime.now()
+    val year
+        get() = systemTime.year.toString()
+    val month
+        get() = systemTime.month.toString()
+    val day
+        get() = systemTime.dayOfMonth.toString()
 
 
     var currentFoodNumber = 0
@@ -73,7 +76,7 @@ class FoodViewModel : ViewModel() {
     }
 
 
-    fun getCalorieToday(){
+    fun getCalorieToday(){//Obtains total amount of calories eaten today from Firebase
         dbRef.get().addOnSuccessListener { snapshot ->
             var foodSnapShot = snapshot.child(year).child(month).child(
                 MainFragment.day
@@ -84,11 +87,11 @@ class FoodViewModel : ViewModel() {
                 cal += calorie
             }
             todayCalorie = cal
-            HomeFragment.checkCalories = true
+            HomeFragment.checkCalories = true //Tells the HomeFragment to start the calorie progress bar animation
         }
     }
 
-    fun getFoods(code : Long){
+    fun getFoods(code : Long){//Barcode scanner gets the number ID and requests to API
         val request = FoodApi.FoodApi.getFoods(code, "3018c32b", "cb2bb40afcee0aaeb8e01060a5abf237")
     request.enqueue(object : Callback<FoodsResponse> {
             override fun onFailure(call: Call<FoodsResponse>, t: Throwable) {
@@ -111,14 +114,12 @@ class FoodViewModel : ViewModel() {
 
                     val newFood = Food(name?: "", calorie?: 0, fat?: 0, sugar?: 0,
                         sodium?: 0, protein?: 0, carbohydrate?: 0, LocalDateTime.now(), imageUriString)
-//                    listOfFoodsFetched.add(newFood)
                     dbRef = Firebase.database.reference
                     dbRef.child(year).child(month).child(day).child(name!!).setValue(newFood).addOnSuccessListener {
-                        MainFragment.refreshScreen = true
+                        MainFragment.refreshScreen = true//Tells MainFragment to refresh when item has been added
                     }
                     currentFoodNumber++
                 }
-//                _response.value = listOfFoodsFetched
             }
 
 

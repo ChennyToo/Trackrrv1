@@ -23,12 +23,16 @@ class FoodViewHolder(val binding: ListItemLayoutBinding) : RecyclerView.ViewHold
         val carb = currentFood.carbohydrate
         val time = currentFood.timeLogged
         var hour = time.hour
-        val isAM = if (hour < 12){"AM"} else {"PM"}
-        if(isAM == "PM"){
+        val isAM = if (hour < 12){"AM"} else {"PM"} //Format the time logic
+        if(isAM == "PM"){//Subtract 12 because PM is 12 hours ahead of AM
             hour -= 12
         }
-        val minutes = time.minute
-        val timeString = "$hour:$minutes \n$isAM"
+        if(hour == 0){//No such thing as 00:12 PM, it is written as 12:12 PM
+            hour = 12
+        }
+        val hourString = if (hour.toString().length == 1){"0$hour"} else {hour.toString()}//Includes the zero placeholder if one digit
+        val minuteString = if(time.minute.toString().length == 1){"0${time.minute}"} else {time.minute}
+        val timeString = "$hourString:$minuteString \n$isAM"
 
 //TODO CHANGE THE NAMES
         binding.CalorieTextView.text = "$calories"
@@ -39,13 +43,6 @@ class FoodViewHolder(val binding: ListItemLayoutBinding) : RecyclerView.ViewHold
         binding.nutrientTV4.text = "Sugar: ${sugar}g"
         binding.timeLoggedTV.text = timeString
         Glide.with(itemView).load(currentFood.imageUriString.toUri()).into(binding.FoodImageView);
-
-//        binding.AuthorTextView.text = author.toString()
-//        binding.SubtitleTextView.text = subtitle.toString()
-//        binding.TitleTextView.text = title
-        ////TODO bind these after making your xml
-
-//        Glide.with(itemView).load(currentFood.imageUri).into(binding.BookImageView);
     }
 
 

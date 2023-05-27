@@ -6,7 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.animation.TranslateAnimation
+import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.constraintlayout.widget.ConstraintSet
 import androidx.core.view.marginTop
+import androidx.core.view.updateLayoutParams
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
@@ -60,12 +63,11 @@ class MainFragment : Fragment() {
         year = viewModel.year
         month = viewModel.month
         day = viewModel.day
-
-
         isUp = false
         firstClick = true
         binding.TakePhotoButton.hide()
         binding.WriteFoodButton.hide()
+        var previouslyClickedIcon = binding.mainButtonAll
 
 
         var fabani : LottieAnimationView = binding.animationView
@@ -83,8 +85,8 @@ class MainFragment : Fragment() {
             Food("J", 20, 30, 33, 44, 55, 66, systemTime)
         )
 
-//        dbRef.child(year).child(month).child("26").child(testList2[0].foodName).setValue(testList2[0])
-//        dbRef.child(year).child(month).child("26").child(testList2[1].foodName).setValue(testList2[1])
+//        dbRef.child(year).child(month).child("27").child(testList2[0].foodName).setValue(testList2[0])
+//        dbRef.child(year).child(month).child("27").child(testList2[1].foodName).setValue(testList2[1])
 //        dbRef.child(year).child(month).child("26").child(testList2[2].foodName).setValue(testList2[2])
 //        dbRef.child(year).child(month).child("26").child(testList2[3].foodName).setValue(testList2[3])
 //        dbRef.child(year).child(month).child("26").child(testList2[4].foodName).setValue(testList2[4])
@@ -92,7 +94,6 @@ class MainFragment : Fragment() {
 //        dbRef.child(year).child(month).child("26").child(testList2[6].foodName).setValue(testList2[6])
 //        dbRef.child(year).child(month).child("26").child(testList2[7].foodName).setValue(testList2[7])
         showFoodListToday()
-        Log.d("MainActivity", "STARTED1")
 
 
 
@@ -116,7 +117,7 @@ class MainFragment : Fragment() {
 
                     }
                     R.id.TakePhotoButton ->{
-                        binding.mainClickBlocker.visibility = View.VISIBLE
+                        binding.mainClickBlocker.visibility = View.VISIBLE//No need to change back to invisible because user is navigating
                         (activity as MainActivity?)!!.startTransition()//begins screen transition
                         lifecycleScope.launch {
                             delay(Constants.transitionStartTime)
@@ -147,12 +148,47 @@ class MainFragment : Fragment() {
                         }
 
                     }
+
+                    R.id.main_ButtonMorning ->{
+                        if(previouslyClickedIcon != binding.mainButtonMorning) {
+                            previouslyClickedIcon = binding.mainButtonMorning
+                            IconClickResponse(R.id.main_ButtonMorning)
+                        }
+                    }
+
+                    R.id.main_ButtonAfternoon ->{
+                        if(previouslyClickedIcon != binding.mainButtonAfternoon) {
+                            previouslyClickedIcon = binding.mainButtonAfternoon
+                            IconClickResponse(R.id.main_ButtonAfternoon)
+                        }
+                    }
+
+                    R.id.main_ButtonNight ->{
+                        if(previouslyClickedIcon != binding.mainButtonNight) {
+                            previouslyClickedIcon = binding.mainButtonNight
+                            IconClickResponse(R.id.main_ButtonNight)
+                        }
+                    }
+
+                    R.id.main_ButtonAll ->{
+                        if(previouslyClickedIcon != binding.mainButtonAll) {
+                            previouslyClickedIcon = binding.mainButtonAll
+                            IconClickResponse(R.id.main_ButtonAll)
+                        }
+                    }
+
+
                 }
             }
         binding.NewFoodButton.setOnClickListener(buttonsClickListener)
         binding.TakePhotoButton.setOnClickListener(buttonsClickListener)
         binding.WriteFoodButton.setOnClickListener(buttonsClickListener)
         binding.homeScreenButton.setOnClickListener(buttonsClickListener)
+        binding.mainButtonMorning.setOnClickListener(buttonsClickListener)
+        binding.mainButtonAfternoon.setOnClickListener(buttonsClickListener)
+        binding.mainButtonNight.setOnClickListener(buttonsClickListener)
+        binding.mainButtonAll.setOnClickListener(buttonsClickListener)
+
 
         val childEventListener = object : ChildEventListener {
             override fun onChildAdded(snapshot: DataSnapshot, previousChildName: String?) {
@@ -265,6 +301,18 @@ class MainFragment : Fragment() {
         val second = (foodItem.child("second").value as Long).toInt()
         return LocalDateTime.of(year, monthValue, day, hour, minute, second)
     }
+
+    fun IconClickResponse(Id : Int){
+        binding.iconClickAnimation.updateLayoutParams<ConstraintLayout.LayoutParams> {
+            startToStart = Id
+            bottomToBottom = Id
+            topToTop = Id
+            endToEnd = Id
+        }
+        binding.iconClickAnimation.playAnimation()
+    }
+
+
 
 
 

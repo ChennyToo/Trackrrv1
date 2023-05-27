@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
     }
 
 
-    override fun onBackPressed() {
+    override fun onBackPressed() {//Removes back button functionality
         
     }
 
@@ -38,7 +38,8 @@ class MainActivity : AppCompatActivity() {
         transition.playAnimation()
         lifecycleScope.launch(){
                 delay(Constants.transitionStartTime)
-                transition.pauseAnimation()
+                transition.pauseAnimation()//Pausing animation must be at the time the transition fully covers screen,
+                                            // end transition should be called once Fragment is done loading
             }
         }
 
