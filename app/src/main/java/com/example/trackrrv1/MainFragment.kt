@@ -461,7 +461,7 @@ fun showAllList() {
     binding.recyclerView.adapter = adapter
 }
 
-fun removeNavButtonFunctionality() {
+private fun removeNavButtonFunctionality() {
     binding.homeScreenButton.isClickable = false
     binding.WriteFoodButton.isClickable = false
     binding.TakePhotoButton.isClickable = false

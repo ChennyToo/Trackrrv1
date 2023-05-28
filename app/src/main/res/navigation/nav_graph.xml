@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/settingsFragment">
+    app:startDestination="@id/settingsCustomizeHomeFragment">
 
     <fragment
         android:id="@+id/mainFragment"
@@ -69,5 +69,17 @@
         android:id="@+id/settingsFragment"
         android:name="com.example.trackrrv1.SettingsFragment"
         android:label="fragment_settings"
-        tools:layout="@layout/fragment_settings" />
+        tools:layout="@layout/fragment_settings" >
+        <action
+            android:id="@+id/action_settingsFragment_to_settingsCustomizeHomeFragment"
+            app:destination="@id/settingsCustomizeHomeFragment" />
+        <action
+            android:id="@+id/action_settingsFragment_to_homeFragment"
+            app:destination="@id/homeFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/settingsCustomizeHomeFragment"
+        android:name="com.example.trackrrv1.SettingsCustomizeHomeFragment"
+        android:label="fragment_settings_customize_home"
+        tools:layout="@layout/fragment_settings_customize_home" />
 </navigation>

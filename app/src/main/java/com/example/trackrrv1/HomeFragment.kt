@@ -70,10 +70,25 @@ class HomeFragment : Fragment() {
                                 .navigate(R.id.action_homeFragment_to_mainFragment)
                         }
                     }
+
+                    R.id.homeButtonSettings->{
+                        (activity as MainActivity?)!!.startTransition()
+                        removeAllButtonFunctionality()
+                        lifecycleScope.launch() {
+                            delay(Constants.transitionStartTime)
+                            binding.root.findNavController()
+                                .navigate(R.id.action_homeFragment_to_settingsFragment)
+                        }
+                    }
+                    R.id.homeButtonGoals ->{
+                        //TODO Fill when needed
+                    }
                 }
             }
         binding.homeButtonLogFood.setOnClickListener(buttonsClickListener)
         binding.homeButtonCalendar.setOnClickListener(buttonsClickListener)
+        binding.homeButtonSettings.setOnClickListener(buttonsClickListener)
+        binding.homeButtonGoals.setOnClickListener(buttonsClickListener)
 
 
         return binding.root
@@ -83,6 +98,8 @@ class HomeFragment : Fragment() {
         //TODO add buttons as needed
         binding.homeButtonLogFood.setOnClickListener(null)
         binding.homeButtonCalendar.setOnClickListener(null)
+        binding.homeButtonSettings.setOnClickListener(null)
+        binding.homeButtonGoals.setOnClickListener(null)
     }
 
     fun populateFields() {
