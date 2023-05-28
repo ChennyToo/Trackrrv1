@@ -6,88 +6,281 @@
     android:layout_height="match_parent"
     tools:context=".WriteFragment">
 
+    <ImageView
+        android:id="@+id/writeBackground"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/write_background"
+        />
+
+    <ImageView
+        android:id="@+id/writeCardBG"
+        android:layout_width="360dp"
+        android:layout_height="790dp"
+        android:background="@drawable/write_card"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <ImageView
+        android:id="@+id/writeBottom"
+        android:layout_width="360dp"
+        android:layout_height="515dp"
+        android:background="@drawable/write_bottom"
+        app:layout_constraintBottom_toBottomOf="@id/writeCardBG"
+        app:layout_constraintEnd_toEndOf="@id/writeCardBG"
+        app:layout_constraintStart_toStartOf="@id/writeCardBG"/>
+
+    <ImageView
+        android:id="@+id/writeTop"
+        android:layout_width="360dp"
+        android:layout_height="326dp"
+        android:background="@drawable/write_top"
+        app:layout_constraintStart_toStartOf="@id/writeCardBG"
+        app:layout_constraintEnd_toEndOf="@id/writeCardBG"
+        app:layout_constraintTop_toTopOf="@id/writeCardBG"/>
+
+    <ImageView
+        android:id="@+id/writeDivider"
+        android:layout_width="390dp"
+        android:layout_height="72dp"
+        android:background="@drawable/write_divider"
+        android:layout_marginBottom="100dp"
+        app:layout_constraintTop_toTopOf="@id/writeCardBG"
+        app:layout_constraintBottom_toBottomOf="@id/writeCardBG"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <ImageView
+        android:id="@+id/writeEditBG"
+        android:layout_width="315dp"
+        android:layout_height="333dp"
+        android:background="@drawable/write_editboxesbg"
+        android:layout_marginBottom="40dp"
+        app:layout_constraintStart_toStartOf="@id/writeCardBG"
+        app:layout_constraintEnd_toEndOf="@id/writeCardBG"
+        app:layout_constraintBottom_toBottomOf="@id/writeCardBG"
+        app:layout_constraintTop_toTopOf="@id/writeBottom"/>
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/writeFoodImage"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:elevation="3dp"
+        android:src="@drawable/ic_baseline_menu_book_24"
+        android:layout_marginBottom="50dp"
+        app:layout_constraintBottom_toBottomOf="@id/writeTop"
+        app:layout_constraintEnd_toEndOf="@id/writeTop"
+        app:layout_constraintStart_toStartOf="@id/writeTop"
+        app:layout_constraintTop_toTopOf="@id/writeTop" />
+
+    <ImageButton
+        android:id="@+id/writeHomeScreenButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/homeicon"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="20dp"
+        app:layout_constraintStart_toEndOf="@id/writeFoodImage"
+        app:layout_constraintEnd_toEndOf="@id/writeTop"
+        app:layout_constraintTop_toTopOf="@id/writeTop"
+        android:elevation="5dp"
+        />
+
+
+
+    <TextView
+        android:id="@+id/writeCaloriesTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Calories"
+        android:textSize="18dp"
+        android:layout_marginStart="30dp"
+        android:fontFamily="@font/archivo_semibold"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@id/writeSodiumTV"
+        app:layout_constraintStart_toStartOf="@id/writeEditBG"
+        app:layout_constraintTop_toTopOf="@id/writeEditBG"/>
+
+    <TextView
+        android:id="@+id/writeSodiumTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sodium"
+        android:textSize="18dp"
+
+        android:fontFamily="@font/archivo_semibold"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@id/writeProteinTV"
+        app:layout_constraintStart_toStartOf="@id/writeCaloriesTV"
+        app:layout_constraintTop_toBottomOf="@id/writeCaloriesTV"/>
+
+    <TextView
+        android:id="@+id/writeProteinTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Protein"
+        android:textSize="18dp"
+
+        android:fontFamily="@font/archivo_semibold"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@id/writeCarbTV"
+        app:layout_constraintStart_toStartOf="@id/writeSodiumTV"
+        app:layout_constraintTop_toBottomOf="@id/writeSodiumTV"/>
+
+    <TextView
+        android:id="@+id/writeCarbTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Carbohydrate"
+        android:textSize="18dp"
+
+        android:fontFamily="@font/archivo_semibold"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@id/writeFatTV"
+
+        app:layout_constraintStart_toStartOf="@id/writeProteinTV"
+        app:layout_constraintTop_toBottomOf="@id/writeProteinTV"/>
+    <TextView
+        android:id="@+id/writeFatTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Fat"
+        android:textSize="18dp"
+
+        android:fontFamily="@font/archivo_semibold"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@id/writeSugarTV"
+        app:layout_constraintStart_toStartOf="@id/writeCarbTV"
+        app:layout_constraintTop_toBottomOf="@id/writeCarbTV"/>
+
+    <TextView
+        android:id="@+id/writeSugarTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sugar"
+        android:textSize="18dp"
+
+        android:fontFamily="@font/archivo_semibold"
+        android:textColor="@color/white"
+        app:layout_constraintStart_toStartOf="@id/writeFatTV"
+        app:layout_constraintTop_toBottomOf="@id/writeFatTV"
+        app:layout_constraintBottom_toBottomOf="@id/writeEditBG"
+        />
     <EditText
         android:id="@+id/NameEdit"
-        android:layout_width="wrap_content"
+        android:layout_width="200dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
-        android:hint="Name Here"
+        android:hint="Food Name Here"
         android:inputType="textPersonName"
         android:imeOptions="actionDone"
+        android:textSize="22dp"
         android:maxLines="1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:gravity="center"
+        android:fontFamily="@font/archivo_semibold"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="@id/writeTop"
+        app:layout_constraintStart_toStartOf="@id/writeTop"
+        app:layout_constraintEnd_toEndOf="@id/writeTop"
+        app:layout_constraintTop_toBottomOf="@id/writeFoodImage"/>
+
+
     <EditText
         android:id="@+id/CalorieEdit"
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
-        android:hint="Calorie Here"
+        android:hint="Big Mac"
         android:inputType="phone"
         android:digits="1234567890"
         android:imeOptions="actionDone"
         android:maxLines="1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/NameEdit" />
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="@id/writeEditBG"
+        app:layout_constraintStart_toEndOf="@id/writeCarbTV"
+        app:layout_constraintBottom_toBottomOf="@id/writeCaloriesTV"
+        app:layout_constraintTop_toTopOf="@id/writeCaloriesTV" />
+    <EditText
+        android:id="@+id/SodiumEdit"
+        android:layout_width="100dp"
+        android:layout_height="wrap_content"
+        android:hint="Salt"
+        android:inputType="phone"
+        android:digits="1234567890"
+        android:imeOptions="actionDone"
+        android:maxLines="1"
+        android:gravity="center"
+
+        app:layout_constraintEnd_toEndOf="@id/CalorieEdit"
+        app:layout_constraintStart_toStartOf="@id/CalorieEdit"
+        app:layout_constraintBottom_toBottomOf="@id/writeSodiumTV"
+        app:layout_constraintTop_toTopOf="@id/writeSodiumTV" />
 
 
     <EditText
         android:id="@+id/ProteinEdit"
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
-        android:hint="Protein Here"
+        android:hint="Steak"
         android:inputType="phone"
         android:digits="1234567890"
         android:imeOptions="actionDone"
         android:maxLines="1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/CalorieEdit" />
+        android:gravity="center"
+
+        app:layout_constraintEnd_toEndOf="@id/CalorieEdit"
+        app:layout_constraintStart_toStartOf="@id/CalorieEdit"
+        app:layout_constraintBottom_toBottomOf="@id/writeProteinTV"
+        app:layout_constraintTop_toTopOf="@+id/writeProteinTV" />
 
     <EditText
         android:id="@+id/CarbEdit"
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
-        android:hint="Carb Here"
+        android:hint="Bread"
         android:inputType="phone"
         android:digits="1234567890"
         android:imeOptions="actionDone"
         android:maxLines="1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/ProteinEdit" />
+        android:gravity="center"
+
+        app:layout_constraintEnd_toEndOf="@id/CalorieEdit"
+        app:layout_constraintStart_toStartOf="@id/CalorieEdit"
+        app:layout_constraintTop_toTopOf="@+id/writeCarbTV"
+        app:layout_constraintBottom_toBottomOf="@id/writeCarbTV"
+        />
 
     <EditText
         android:id="@+id/FatEdit"
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
-        android:hint="Fat Here"
+        android:hint="Butter"
         android:inputType="phone"
         android:digits="1234567890"
         android:imeOptions="actionDone"
         android:maxLines="1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/CarbEdit" />
+        android:gravity="center"
+
+        app:layout_constraintEnd_toEndOf="@id/CalorieEdit"
+        app:layout_constraintStart_toStartOf="@id/CalorieEdit"
+        app:layout_constraintBottom_toBottomOf="@id/writeFatTV"
+        app:layout_constraintTop_toTopOf="@+id/writeFatTV" />
 
     <EditText
         android:id="@+id/SugarEdit"
-        android:layout_width="wrap_content"
+        android:layout_width="100dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="48dp"
-        android:hint="Sugar Here"
+        android:hint="Cake"
         android:inputType="phone"
         android:digits="1234567890"
         android:imeOptions="actionDone"
         android:maxLines="1"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/FatEdit" />
+        android:gravity="center"
+        app:layout_constraintEnd_toEndOf="@id/CalorieEdit"
+        app:layout_constraintStart_toStartOf="@id/CalorieEdit"
+        app:layout_constraintBottom_toBottomOf="@id/writeSugarTV"
+        app:layout_constraintTop_toTopOf="@+id/writeSugarTV" />
 
     <Button
         android:id="@+id/LogButton"
@@ -99,13 +292,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/SugarEdit" />
 
-    <Button
-        android:id="@+id/BackButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="BACK"
-        app:layout_constraintEnd_toStartOf="@+id/NameEdit"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/NameEdit" />
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

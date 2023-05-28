@@ -44,11 +44,11 @@ class WriteFragment : Fragment() {
                     R.id.LogButton -> {
                         checkFieldValidity()
                     }
-                    R.id.BackButton -> binding.root.findNavController().navigate(R.id.action_writeFragment_to_mainFragment)
+                    R.id.writeHomeScreenButton -> binding.root.findNavController().navigate(R.id.action_writeFragment_to_mainFragment)
                 }
             }
         binding.LogButton.setOnClickListener(buttonsClickListener)
-        binding.BackButton.setOnClickListener(buttonsClickListener)
+        binding.writeHomeScreenButton.setOnClickListener(buttonsClickListener)
         if (foodArgs.foodItemPassedInFromEdit.foodName != "empty"){
             isEditState = true
             changeToEditState(foodArgs.foodItemPassedInFromEdit)
