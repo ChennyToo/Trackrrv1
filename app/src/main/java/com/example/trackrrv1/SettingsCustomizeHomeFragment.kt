@@ -37,7 +37,7 @@ class SettingsCustomizeHomeFragment : Fragment() {
 
     fun initializeDragAndDrop(){
         binding.customizeHomeSodiumNode.setOnLongClickListener {
-            val clipText = "This is our ClipData Text"
+            val clipText = "Sodium"
             val item = ClipData.Item(clipText)
             val mineTypes = arrayOf(ClipDescription.MIMETYPE_TEXT_PLAIN)
             val data = ClipData(clipText, mineTypes, item)
@@ -45,11 +45,11 @@ class SettingsCustomizeHomeFragment : Fragment() {
             val dragShadowBuilder = View.DragShadowBuilder(it)
             it.startDragAndDrop(data, dragShadowBuilder, it, 0)
 
-            it.visibility = View.VISIBLE
+            it.visibility = View.INVISIBLE
             true
         }
 
-        val dragListener = View.OnDragListener { v, event ->
+        val dragListener = View.OnDragListener { parameter1, event -> //parameter1 refers to the views assigned to the dragListener
             when (event.action){
                 DragEvent.ACTION_DRAG_STARTED ->{
                     Log.d("Settings", "STARTED")
@@ -72,16 +72,15 @@ class SettingsCustomizeHomeFragment : Fragment() {
                 DragEvent.ACTION_DROP ->{
                     Log.d("Settings", "DROP")
                     val item = event.clipData.getItemAt(0)
-                    val dragData = item.text
-                    Toast.makeText(this.context, dragData, Toast.LENGTH_SHORT).show()
+                    val dragData = item.text //the text data that the node carries (i.e sodium)
 
                     requireView().invalidate()
 
                     val v = event.localState as ImageView
-                    val owner = v.parent as ViewGroup
+                    val owner = v.parent as ConstraintLayout //original view that held the node
                     owner.removeView(v)
-                    val destination = view as ConstraintLayout//The drop place
-                    destination.addView(v)
+                    var view = parameter1 as ConstraintLayout //destination view that will hold the node
+                    view.addView(v)
                     v.visibility = View.VISIBLE
                     true
                 }
@@ -89,6 +88,8 @@ class SettingsCustomizeHomeFragment : Fragment() {
                 DragEvent.ACTION_DRAG_ENDED ->{
                     Log.d("Settings", "ENDED")
                     requireView().invalidate()
+                    val v = event.localState as ImageView //v in this case would be the node
+                    v.visibility = View.VISIBLE
                     true
                 }
 
