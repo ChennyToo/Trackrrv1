@@ -81,5 +81,12 @@
         android:id="@+id/settingsCustomizeHomeFragment"
         android:name="com.example.trackrrv1.SettingsCustomizeHomeFragment"
         android:label="fragment_settings_customize_home"
-        tools:layout="@layout/fragment_settings_customize_home" />
+        tools:layout="@layout/fragment_settings_customize_home" >
+        <action
+            android:id="@+id/action_settingsCustomizeHomeFragment_to_settingsFragment"
+            app:destination="@id/settingsFragment" />
+        <action
+            android:id="@+id/action_settingsCustomizeHomeFragment_self"
+            app:destination="@id/settingsCustomizeHomeFragment" />
+    </fragment>
 </navigation>

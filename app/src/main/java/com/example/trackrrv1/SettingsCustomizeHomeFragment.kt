@@ -10,23 +10,34 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
-import android.widget.LinearLayout
-import android.widget.Toast
 import androidx.constraintlayout.widget.ConstraintLayout
-import com.example.trackrrv1.databinding.FragmentLogInBinding
+import androidx.lifecycle.lifecycleScope
+import androidx.navigation.findNavController
 import com.example.trackrrv1.databinding.FragmentSettingsCustomizeHomeBinding
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 
 class SettingsCustomizeHomeFragment : Fragment() {
     private var _binding: FragmentSettingsCustomizeHomeBinding? = null
     private val binding get() = _binding!!
+    var Position1Value : String = ""
+    var Position2Value : String = ""
+    var Position3Value : String = ""
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
         _binding = FragmentSettingsCustomizeHomeBinding.inflate(inflater, container, false)
         initializeDragAndDrop()
+        binding.customizeHomeConfirmButton.setOnClickListener {
+            updateHomeNutrientsAndNavigateBack()
+        }
+        binding.customizeHomeRefreshButton.setOnClickListener {
+            resetValuesAndNodesBackToOriginal()
+        }
         // Inflate the layout for this fragment
 
 
@@ -37,7 +48,55 @@ class SettingsCustomizeHomeFragment : Fragment() {
 
     fun initializeDragAndDrop(){
         binding.customizeHomeSodiumNode.setOnLongClickListener {
-            val clipText = "Sodium"
+            val clipText = "sodium"
+            val item = ClipData.Item(clipText)
+            val mineTypes = arrayOf(ClipDescription.MIMETYPE_TEXT_PLAIN)
+            val data = ClipData(clipText, mineTypes, item)
+
+            val dragShadowBuilder = View.DragShadowBuilder(it)
+            it.startDragAndDrop(data, dragShadowBuilder, it, 0)
+
+            it.visibility = View.INVISIBLE
+            true
+        }
+        binding.customizeHomeProteinNode.setOnLongClickListener {
+            val clipText = "protein"
+            val item = ClipData.Item(clipText)
+            val mineTypes = arrayOf(ClipDescription.MIMETYPE_TEXT_PLAIN)
+            val data = ClipData(clipText, mineTypes, item)
+
+            val dragShadowBuilder = View.DragShadowBuilder(it)
+            it.startDragAndDrop(data, dragShadowBuilder, it, 0)
+
+            it.visibility = View.INVISIBLE
+            true
+        }
+        binding.customizeHomeCarbNode.setOnLongClickListener {
+            val clipText = "carbohydrate"
+            val item = ClipData.Item(clipText)
+            val mineTypes = arrayOf(ClipDescription.MIMETYPE_TEXT_PLAIN)
+            val data = ClipData(clipText, mineTypes, item)
+
+            val dragShadowBuilder = View.DragShadowBuilder(it)
+            it.startDragAndDrop(data, dragShadowBuilder, it, 0)
+
+            it.visibility = View.INVISIBLE
+            true
+        }
+        binding.customizeHomeFatNode.setOnLongClickListener {
+            val clipText = "fat"
+            val item = ClipData.Item(clipText)
+            val mineTypes = arrayOf(ClipDescription.MIMETYPE_TEXT_PLAIN)
+            val data = ClipData(clipText, mineTypes, item)
+
+            val dragShadowBuilder = View.DragShadowBuilder(it)
+            it.startDragAndDrop(data, dragShadowBuilder, it, 0)
+
+            it.visibility = View.INVISIBLE
+            true
+        }
+        binding.customizeHomeSugarNode.setOnLongClickListener {
+            val clipText = "sugar"
             val item = ClipData.Item(clipText)
             val mineTypes = arrayOf(ClipDescription.MIMETYPE_TEXT_PLAIN)
             val data = ClipData(clipText, mineTypes, item)
@@ -49,7 +108,7 @@ class SettingsCustomizeHomeFragment : Fragment() {
             true
         }
 
-        val dragListener = View.OnDragListener { parameter1, event -> //parameter1 refers to the views assigned to the dragListener
+        val dragListener = View.OnDragListener { nodeHolder, event -> //parameter1 refers to the views assigned to the dragListener
             when (event.action){
                 DragEvent.ACTION_DRAG_STARTED ->{
                     Log.d("Settings", "STARTED")
@@ -76,20 +135,32 @@ class SettingsCustomizeHomeFragment : Fragment() {
 
                     requireView().invalidate()
 
-                    val v = event.localState as ImageView
-                    val owner = v.parent as ConstraintLayout //original view that held the node
-                    owner.removeView(v)
-                    var view = parameter1 as ConstraintLayout //destination view that will hold the node
-                    view.addView(v)
-                    v.visibility = View.VISIBLE
+                    val node = event.localState as ImageView
+
+                    val owner = node.parent as ConstraintLayout //original view that held the node
+                    owner.removeView(node)
+
+                    var destination = nodeHolder as ConstraintLayout //destination view that will hold the node
+                    destination.addView(node)
+                    destination.setOnDragListener(null)//removes ability for more nodes to be placed one the spot is held
+                    setNodeHolderValue(nodeHolder, dragData.toString())//updates one of the three positions with the food value (i.e Position1 = "sodium" if sodium node is passed into holder1)
+                    node.visibility = View.VISIBLE
                     true
                 }
 
-                DragEvent.ACTION_DRAG_ENDED ->{
+                DragEvent.ACTION_DRAG_ENDED ->{//Make it so that when the node is in a holder and is dragged outside, it goes back to it's parent holder
                     Log.d("Settings", "ENDED")
+                    val node = event.localState as ImageView //v in this case would be the node
+//                    if (node.parent == binding.customizeNodeHolder1){
+//                        val owner = node.parent as ConstraintLayout //original view that held the node
+//                        owner.removeView(node)
+//
+//                        var originalSpot = binding.sodiumHolder as ConstraintLayout //destination view that will hold the node
+//                        originalSpot.addView(node)
+//                    }
+
                     requireView().invalidate()
-                    val v = event.localState as ImageView //v in this case would be the node
-                    v.visibility = View.VISIBLE
+                    node.visibility = View.VISIBLE
                     true
                 }
 
@@ -99,8 +170,55 @@ class SettingsCustomizeHomeFragment : Fragment() {
                 }
             }
         }
-        binding.layoutnode1.setOnDragListener(dragListener)
-        binding.layoutnode2.setOnDragListener(dragListener)
+        binding.customizeNodeHolder1.setOnDragListener(dragListener)
+        binding.customizeNodeHolder2.setOnDragListener(dragListener)
+        binding.customizeNodeHolder3.setOnDragListener(dragListener)
+    }
+
+    fun setNodeHolderValue(destination : ConstraintLayout, value : String){
+        if(destination == binding.customizeNodeHolder1){
+            Position1Value = value
+            Log.d("CustomizeHome", "$value")
+        }
+
+        else if(destination == binding.customizeNodeHolder2){
+            Position2Value = value
+            Log.d("CustomizeHome", "$value")
+        }
+
+        else if (destination == binding.customizeNodeHolder3){
+            Position3Value = value
+            Log.d("CustomizeHome", "$value")
+        }
+
+        else{
+            Log.d("CustomizeHome", "getNodeHolderValues no valid destination")
+        }
+    }
+
+    fun updateHomeNutrientsAndNavigateBack(){
+        if (!(Position1Value.isEmpty() || Position2Value.isEmpty() || Position3Value.isEmpty())) {//If all three fields are holding a nutrient, user is allowed to set settings and navigate
+            Constants.HCField1Type = Position1Value
+            Constants.HCField2Type = Position2Value
+            Constants.HCField3Type = Position3Value
+            (activity as MainActivity?)!!.startTransition() //How to call methods in MainActivity
+//            removeAllButtonFunctionality() //prevents the user from clicking once navigation starts
+            lifecycleScope.launch() {
+                delay(Constants.transitionStartTime)
+                binding.root.findNavController()
+                    .navigate(R.id.action_settingsCustomizeHomeFragment_to_settingsFragment)
+            }
+        }
+
+        else {
+            Log.d("CustomizeHome", "updateHomeNutrients ERROR Atleast One position value is empty")
+        }
+    }
+
+    fun resetValuesAndNodesBackToOriginal(){
+        binding.root.findNavController()
+            .navigate(R.id.action_settingsCustomizeHomeFragment_self)
+
     }
 
 

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#4A3B3B"
+    android:background="@drawable/customize_homebg"
     tools:context=".SettingsCustomizeHomeFragment">
 
     <!-- TODO: Update blank fragment layout -->
@@ -12,35 +12,54 @@
 
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/layoutnode1"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
+        android:id="@+id/customizeNodeHolder1"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
         android:background="#C52EBD"
-        android:layout_marginTop="400dp"
+        app:layout_constraintEnd_toStartOf="@id/customizeNodeHolder3"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         >
 
-<!--        <ImageView-->
-<!--            android:id="@+id/dropSpace1"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:background="@drawable/cal_dropdownbg"-->
-<!--            app:layout_constraintBottom_toBottomOf="parent"-->
-<!--            app:layout_constraintEnd_toEndOf="parent"-->
-<!--            app:layout_constraintStart_toStartOf="parent"-->
-<!--            app:layout_constraintTop_toTopOf="parent" />-->
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/customizeNodeHolder3"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:background="#C52EBD"
+        app:layout_constraintStart_toEndOf="@id/customizeNodeHolder1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        >
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/customizeNodeHolder2"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:background="#C52EBD"
+        app:layout_constraintStart_toEndOf="@id/customizeNodeHolder1"
+        app:layout_constraintEnd_toStartOf="@id/customizeNodeHolder3"
+        app:layout_constraintTop_toBottomOf="@id/customizeNodeHolder1"
+        >
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/sodiumHolder"
-        android:layout_width="300dp"
-        android:layout_height="300dp"
+        android:layout_width="150dp"
+        android:layout_height="100dp"
         android:background="#366E9F"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="300dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/proteinHolder"
+        app:layout_constraintBottom_toTopOf="@id/carbHolder"
         >
 
         <ImageView
@@ -55,6 +74,137 @@
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/proteinHolder"
+        android:layout_width="150dp"
+        android:layout_height="100dp"
+        android:background="#366E9F"
+        app:layout_constraintTop_toTopOf="@id/sodiumHolder"
+        app:layout_constraintBottom_toBottomOf="@id/sodiumHolder"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/sodiumHolder"
+        >
+
+        <ImageView
+            android:id="@+id/customizeHomeProteinNode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/cal_dropdownbg"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/carbHolder"
+        android:layout_width="150dp"
+        android:layout_height="100dp"
+        android:background="#366E9F"
+        app:layout_constraintTop_toBottomOf="@id/sodiumHolder"
+        app:layout_constraintBottom_toTopOf="@id/sugarHolder"
+        app:layout_constraintEnd_toEndOf="@id/sodiumHolder"
+        app:layout_constraintStart_toStartOf="@id/sodiumHolder"
+        >
+
+        <ImageView
+            android:id="@+id/customizeHomeCarbNode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/cal_dropdownbg"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/fatHolder"
+        android:layout_width="150dp"
+        android:layout_height="100dp"
+        android:background="#366E9F"
+        app:layout_constraintTop_toTopOf="@id/carbHolder"
+        app:layout_constraintBottom_toBottomOf="@id/carbHolder"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/carbHolder"
+        >
+
+        <ImageView
+            android:id="@+id/customizeHomeFatNode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/cal_dropdownbg"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/sugarHolder"
+        android:layout_width="150dp"
+        android:layout_height="100dp"
+        android:background="#366E9F"
+        android:layout_marginBottom="200dp"
+        app:layout_constraintTop_toBottomOf="@id/carbHolder"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@id/fatHolder"
+        app:layout_constraintStart_toStartOf="@id/carbHolder"
+        >
+
+        <ImageView
+            android:id="@+id/customizeHomeSugarNode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/cal_dropdownbg"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <Button
+        android:id="@+id/customizeHomeConfirmButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Confirm"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/sugarHolder"
+        app:layout_constraintBottom_toBottomOf="parent"
+        />
+
+    <Button
+        android:id="@+id/customizeHomeRefreshButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="refresh"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/customizeHomeConfirmButton" />
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/customizeHomeHolder1Animation"
+        android:layout_width="150dp"
+        android:layout_height="100dp"
+        app:lottie_rawRes="@raw/holderanimate"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
+        android:elevation="5dp"
+        app:layout_constraintStart_toStartOf="@id/customizeNodeHolder1"
+        app:layout_constraintEnd_toEndOf="@id/customizeNodeHolder1"
+        app:layout_constraintBottom_toBottomOf="@id/customizeNodeHolder1"
+        app:layout_constraintTop_toTopOf="@id/customizeNodeHolder1"/>
 
 
 
