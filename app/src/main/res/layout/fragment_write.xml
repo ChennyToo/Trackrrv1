@@ -76,15 +76,24 @@
         app:layout_constraintStart_toStartOf="@id/writeTop"
         app:layout_constraintTop_toTopOf="@id/writeTop" />
 
+    <ImageView
+        android:id="@+id/writeAvatarFrame"
+        android:layout_width="210dp"
+        android:layout_height="210dp"
+        android:background="@drawable/write_avatarborder"
+        android:elevation="4dp"
+        app:layout_constraintBottom_toBottomOf="@id/writeFoodImage"
+        app:layout_constraintTop_toTopOf="@id/writeFoodImage"
+        app:layout_constraintStart_toStartOf="@id/writeFoodImage"
+        app:layout_constraintEnd_toEndOf="@id/writeFoodImage"/>
     <ImageButton
-        android:id="@+id/writeHomeScreenButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/homeicon"
+        android:id="@+id/writeBackScreenButton"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:background="@drawable/write_backarrow"
         android:layout_marginTop="20dp"
-        android:layout_marginRight="20dp"
-        app:layout_constraintStart_toEndOf="@id/writeFoodImage"
-        app:layout_constraintEnd_toEndOf="@id/writeTop"
+        app:layout_constraintStart_toStartOf="@id/writeCardBG"
+        app:layout_constraintEnd_toStartOf="@id/writeFoodImage"
         app:layout_constraintTop_toTopOf="@id/writeTop"
         android:elevation="5dp"
         />
@@ -282,15 +291,38 @@
         app:layout_constraintBottom_toBottomOf="@id/writeSugarTV"
         app:layout_constraintTop_toTopOf="@+id/writeSugarTV" />
 
-    <Button
-        android:id="@+id/LogButton"
+<!--    <ImageView-->
+<!--        android:id="@+id/LogButtonImage"-->
+<!--        android:layout_width="315dp"-->
+<!--        android:layout_height="52dp"-->
+<!--        android:background="@drawable/write_logbutton"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/writeEditBG"-->
+<!--        app:layout_constraintBottom_toBottomOf="@id/writeCardBG"-->
+<!--        app:layout_constraintStart_toStartOf="@id/writeCardBG"-->
+<!--        app:layout_constraintEnd_toEndOf="@id/writeCardBG"/>-->
+
+    <TextView
+        android:id="@+id/LogButtonTV"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="LOG"
-        android:layout_marginTop="48dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/SugarEdit" />
+        android:text="Log"
+        android:textSize="22dp"
+        android:textColor="@color/white"
+        android:fontFamily="@font/archivo_semibold"
+        app:layout_constraintEnd_toEndOf="@id/LogButton"
+        app:layout_constraintStart_toStartOf="@id/LogButton"
+        app:layout_constraintTop_toTopOf="@id/LogButton"
+        app:layout_constraintBottom_toBottomOf="@id/LogButton"/>
+
+    <ImageButton
+        android:id="@+id/LogButton"
+        android:layout_width="315dp"
+        android:layout_height="52dp"
+        android:background="@drawable/write_logbutton"
+        app:layout_constraintTop_toBottomOf="@id/writeEditBG"
+        app:layout_constraintBottom_toBottomOf="@id/writeCardBG"
+        app:layout_constraintStart_toStartOf="@id/writeCardBG"
+        app:layout_constraintEnd_toEndOf="@id/writeCardBG" />
 
 
 

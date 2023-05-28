@@ -96,6 +96,7 @@ class CameraFragment : Fragment() {
             }
 
         binding.BackCameraButton.setOnClickListener(buttonsClickListener)
+        (activity as MainActivity?)!!.endTransition()//End the transition once everything else has been initialized
 
         // Inflate the layout for this fragment
         return binding.root
