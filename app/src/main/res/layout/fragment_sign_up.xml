@@ -6,35 +6,260 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".SignUpFragment">
 
-    <EditText
-        android:id="@+id/signupNamefield"
+    <ImageView
+        android:id="@+id/signupBG"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/signup_bg"/>
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/signupFoodAnimation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="Username"
-        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginBottom="280dp"
+        app:lottie_rawRes="@raw/signup_foodanimation"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/signupPasswordField"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+
+    <ImageView
+        android:id="@+id/signupSignUpCard"
+        android:layout_width="380dp"
+        android:layout_height="390dp"
+        android:background="@drawable/signup_card"
+        android:layout_marginLeft="15dp"
+        android:layout_marginBottom="95dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <ImageView
+        android:id="@+id/signupUsernameFieldBG"
+        android:layout_width="322dp"
+        android:layout_height="60dp"
+        android:background="@drawable/login_fieldcard"
+        android:layout_marginTop="60dp"
+        app:layout_constraintTop_toTopOf="@id/signupSignUpCard"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        android:id="@+id/signupUsernameTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/archivo_semibold"
+        android:text="Username"
+        android:textSize="20dp"
+        android:textColor="#666680"
+        android:layout_marginBottom="5dp"
+        app:layout_constraintStart_toStartOf="@id/signupUsernameFieldBG"
+        app:layout_constraintBottom_toTopOf="@id/signupUsernameFieldBG"/>
+
+    <ImageView
+        android:id="@+id/signupPasswordFieldBG"
+        android:layout_width="322dp"
+        android:layout_height="60dp"
+        android:background="@drawable/login_fieldcard"
+        android:layout_marginTop="50dp"
+        app:layout_constraintTop_toBottomOf="@id/signupUsernameFieldBG"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        android:id="@+id/signupPasswordTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/archivo_semibold"
+        android:text="Password"
+        android:textSize="20dp"
+        android:textColor="#666680"
+        android:layout_marginBottom="5dp"
+        app:layout_constraintStart_toStartOf="@id/signupPasswordFieldBG"
+        app:layout_constraintBottom_toTopOf="@id/signupPasswordFieldBG"/>
+
+    <ImageView
+        android:id="@+id/signupUsernameIcon"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:background="@drawable/signup_personicon"
+        android:layout_marginLeft="10dp"
+        app:layout_constraintStart_toStartOf="@id/signupUsernameFieldBG"
+        app:layout_constraintTop_toTopOf="@id/signupUsernameFieldBG"
+        app:layout_constraintBottom_toBottomOf="@id/signupUsernameFieldBG"/>
+
+    <ImageView
+        android:id="@+id/signupPasswordIcon"
+        android:layout_width="50dp"
+        android:layout_height="45dp"
+        android:background="@drawable/signup_lockicon"
+        android:layout_marginLeft="10dp"
+        app:layout_constraintStart_toStartOf="@id/signupPasswordFieldBG"
+        app:layout_constraintTop_toTopOf="@id/signupPasswordFieldBG"
+        app:layout_constraintBottom_toBottomOf="@id/signupPasswordFieldBG"/>
+
+    <ImageView
+        android:id="@+id/signupConfirmPasswordFieldBG"
+        android:layout_width="322dp"
+        android:layout_height="60dp"
+        android:background="@drawable/login_fieldcard"
+        android:layout_marginTop="50dp"
+        app:layout_constraintTop_toBottomOf="@id/signupPasswordFieldBG"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <TextView
+        android:id="@+id/signupConfirmPasswordTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:fontFamily="@font/archivo_semibold"
+        android:text="Confirm Password"
+        android:textSize="20dp"
+        android:textColor="#666680"
+        android:layout_marginBottom="5dp"
+        app:layout_constraintStart_toStartOf="@id/signupConfirmPasswordFieldBG"
+        app:layout_constraintBottom_toTopOf="@id/signupConfirmPasswordFieldBG"/>
+
+
+    <ImageView
+        android:id="@+id/signupConfirmPasswordIcon"
+        android:layout_width="50dp"
+        android:layout_height="45dp"
+        android:background="@drawable/signup_lockicontwo"
+        android:layout_marginLeft="10dp"
+        app:layout_constraintStart_toStartOf="@id/signupConfirmPasswordFieldBG"
+        app:layout_constraintTop_toTopOf="@id/signupConfirmPasswordFieldBG"
+        app:layout_constraintBottom_toBottomOf="@id/signupConfirmPasswordFieldBG"/>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <EditText
+        android:id="@+id/signupNamefield"
+        android:layout_width="240dp"
+        android:layout_height="wrap_content"
+        android:hint="SodiumStopper52"
+        android:textColor="@color/signupDarkgreen"
+        android:textColorHint="@color/LightGray"
+        android:fontFamily="@font/archivo_semibold"
+        android:background="@android:color/transparent"
+        android:inputType="textPersonName"
+        android:imeOptions="actionDone"
+        android:maxLines="1"
+        android:layout_marginLeft="10dp"
+        app:layout_constraintTop_toTopOf="@id/signupUsernameFieldBG"
+        app:layout_constraintStart_toEndOf="@id/signupUsernameIcon"
+        app:layout_constraintBottom_toBottomOf="@id/signupUsernameFieldBG"
         />
 
     <EditText
         android:id="@+id/signupPasswordField"
-        android:layout_width="wrap_content"
+        android:layout_width="240dp"
         android:layout_height="wrap_content"
-        android:hint="Password"
-        app:layout_constraintTop_toBottomOf="@id/signupNamefield"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:hint="2518"
+        android:textColor="@color/signupDarkgreen"
+        android:textColorHint="@color/LightGray"
+        android:fontFamily="@font/archivo_semibold"
+        android:background="@android:color/transparent"
+        android:inputType="textPersonName"
+        android:imeOptions="actionDone"
+        android:maxLines="1"
+        android:layout_marginLeft="10dp"
+        app:layout_constraintTop_toTopOf="@id/signupPasswordFieldBG"
+        app:layout_constraintStart_toEndOf="@id/signupPasswordIcon"
+        app:layout_constraintBottom_toBottomOf="@id/signupPasswordFieldBG"
         />
 
-    <Button
-        android:id="@+id/signupButton"
-        android:layout_width="wrap_content"
+    <EditText
+        android:id="@+id/signupConfirmPasswordField"
+        android:layout_width="240dp"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/signupPasswordField"
+        android:hint="2518"
+        android:textColor="@color/signupDarkgreen"
+        android:textColorHint="@color/LightGray"
+        android:fontFamily="@font/archivo_semibold"
+        android:background="@android:color/transparent"
+        android:inputType="textPersonName"
+        android:imeOptions="actionDone"
+        android:maxLines="1"
+        android:layout_marginLeft="10dp"
+        app:layout_constraintTop_toTopOf="@id/signupConfirmPasswordFieldBG"
+        app:layout_constraintStart_toEndOf="@id/signupConfirmPasswordIcon"
+        app:layout_constraintBottom_toBottomOf="@id/signupConfirmPasswordFieldBG"
+        />
+
+
+
+    <ImageButton
+        android:id="@+id/signupButton"
+        android:layout_width="360dp"
+        android:layout_height="60dp"
+        android:background="@drawable/signup_signupbutton"
+        android:layout_marginTop="30dp"
+        app:layout_constraintTop_toBottomOf="@id/signupSignUpCard"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="40dp"/>
+        />
+
+    <TextView
+        android:id="@+id/signupButtonTV"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sign Up!"
+        android:textColor="@color/white"
+        android:fontFamily="@font/archivo_semibold"
+        android:textSize="20dp"
+        android:layout_marginBottom="7dp"
+        app:layout_constraintEnd_toEndOf="@id/signupButton"
+        app:layout_constraintTop_toTopOf="@id/signupButton"
+        app:layout_constraintStart_toStartOf="@id/signupButton"
+        app:layout_constraintBottom_toBottomOf="@id/signupButton"
+        />
+    <ImageView
+        android:id="@+id/signupBackArrow"
+        android:layout_width="24dp"
+        android:layout_height="50dp"
+        android:background="@drawable/settings_arrow"
+        android:backgroundTint="@color/signupDarkgreen"
+        android:rotation="180"
+        android:layout_marginLeft="50dp"
+        android:layout_marginBottom="50dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <Button
+        android:id="@+id/signupBackButton"
+        android:layout_width="50dp"
+        android:layout_height="60dp"
+        android:alpha="0"
+        app:layout_constraintStart_toStartOf="@id/signupBackArrow"
+        app:layout_constraintEnd_toEndOf="@id/signupBackArrow"
+        app:layout_constraintTop_toTopOf="@id/signupBackArrow"
+        app:layout_constraintBottom_toBottomOf="@id/signupBackArrow"/>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

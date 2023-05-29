@@ -10,6 +10,7 @@
     <color name="salmon">#DA7B7A</color>
     <color name="LightGray">#A2A2B5</color>
     <color name="loginDarkBlue">#38585C</color>
+    <color name="signupDarkgreen">#385C42</color>
 
 
 </resources>
