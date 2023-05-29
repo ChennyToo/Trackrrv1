@@ -9,6 +9,7 @@
     <color name="white">#FFFFFFFF</color>
     <color name="salmon">#DA7B7A</color>
     <color name="LightGray">#A2A2B5</color>
+    <color name="loginDarkBlue">#38585C</color>
 
 
 </resources>
