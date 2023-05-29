@@ -15,6 +15,8 @@ import kotlinx.coroutines.launch
 class SettingsFragment : Fragment() {
     private var _binding: FragmentSettingsBinding? = null
     private val binding get() = _binding!!
+    var dbRef = Constants.userDatabaseReference
+
 
 
     override fun onCreateView(
@@ -24,6 +26,7 @@ class SettingsFragment : Fragment() {
         // Inflate the layout for this fragment
         _binding = FragmentSettingsBinding.inflate(inflater, container, false)
         populateButtonsFunctionality()
+        binding.settingsNameTV.text = Constants.username
 
 
 

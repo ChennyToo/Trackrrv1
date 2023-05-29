@@ -51,7 +51,6 @@ class MainFragment : Fragment() {
     ): View? {
         Log.d("MainActivity", "CreatedView")
         _binding = FragmentMainBinding.inflate(inflater, container, false)
-        dbRef = Constants.userDatabaseReference
         systemTime = viewModel.systemTime
         year = viewModel.year
         month = viewModel.month
@@ -62,7 +61,7 @@ class MainFragment : Fragment() {
         binding.WriteFoodButton.hide()
         setTopTimeOfDay(LocalDateTime.now().hour)
         var previouslyClickedIcon = binding.mainButtonAll
-
+        dbRef = Constants.userDatabaseReference
 
         var fabani: LottieAnimationView = binding.animationView
         fabani.loop(false)
@@ -510,7 +509,7 @@ private fun removeNavButtonFunctionality() {
 
 
 companion object {
-    lateinit var dbRef: DatabaseReference
+    var dbRef: DatabaseReference = Constants.userDatabaseReference
     var systemTime = LocalDateTime.now()
     var year = systemTime.year.toString()
     var month = systemTime.month.toString()

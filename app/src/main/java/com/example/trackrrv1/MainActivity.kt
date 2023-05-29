@@ -14,6 +14,8 @@ import androidx.navigation.fragment.findNavController
 import com.airbnb.lottie.LottieAnimationView
 import com.example.trackrrv1.databinding.ActivityMainBinding
 import com.example.trackrrv1.databinding.FragmentMainBinding
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.cancel
@@ -30,9 +32,9 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = ActivityMainBinding.inflate(layoutInflater)
-//        var userPref = applicationContext.getSharedPreferences("UserPref", Context.MODE_PRIVATE)
-//        userPref.edit().remove("username").apply()
-        //Way to remove value from sharedpreferences, can be used to log out
+        var userPref = applicationContext.getSharedPreferences("UserPref", Context.MODE_PRIVATE)
+        userPref.edit().remove("username").apply()
+//        Way to remove value from sharedpreferences, can be used to log out
 
 
         Constants.username = applicationContext.getSharedPreferences("UserPref", Context.MODE_PRIVATE).getString("username", "empty") ?: "empty"//is there was no username set before, the default value is "empty"
@@ -44,6 +46,7 @@ class MainActivity : AppCompatActivity() {
             graph.setStartDestination(R.id.homeFragment)
             val navController = navHostFragment.findNavController()
             navController.setGraph(graph, intent.extras)
+            Constants.userDatabaseReference = Firebase.database.reference.child(Constants.username)
         }
 
         window.decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION,)
