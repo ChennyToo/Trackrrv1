@@ -46,13 +46,13 @@ class SettingsFragment : Fragment() {
                     }
 
                     R.id.settingsCustomizeHomeButton ->{
-                        (activity as MainActivity?)!!.startTransition()
+//                        (activity as MainActivity?)!!.startTransition()
                         removeAllButtonFunctionality()
-                        lifecycleScope.launch() {
-                            delay(Constants.transitionStartTime)
+//                        lifecycleScope.launch() {
+//                            delay(Constants.transitionStartTime)
                             binding.root.findNavController()
                                 .navigate(R.id.action_settingsFragment_to_settingsCustomizeHomeFragment)
-                        }
+//                        }
                     }
                 }
             }
