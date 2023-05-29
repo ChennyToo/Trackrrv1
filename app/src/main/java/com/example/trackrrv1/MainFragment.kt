@@ -51,7 +51,7 @@ class MainFragment : Fragment() {
     ): View? {
         Log.d("MainActivity", "CreatedView")
         _binding = FragmentMainBinding.inflate(inflater, container, false)
-        dbRef = Firebase.database.reference
+        dbRef = Constants.userDatabaseReference
         systemTime = viewModel.systemTime
         year = viewModel.year
         month = viewModel.month

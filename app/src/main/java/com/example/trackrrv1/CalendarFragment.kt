@@ -28,7 +28,7 @@ class CalendarFragment : Fragment() {
     val binding get() = _binding!!
     private val viewModel: FoodViewModel by activityViewModels()
     private val calViewModel: CalendarViewModel by activityViewModels()
-    lateinit var dbRef: DatabaseReference
+    var dbRef: DatabaseReference = Constants.userDatabaseReference
     val formatters = DateTimeFormatter.ofPattern("dd.MM.uuuu")
     val now = LocalDate.now()
     lateinit var Thread1 : Job //Each thread is meant to animate the nutrition progress bar
@@ -45,7 +45,7 @@ class CalendarFragment : Fragment() {
         _binding = FragmentCalendarBinding.inflate(inflater, container, false)
         didProgressThreadsCreated = false
         density = getResources().getDisplayMetrics().density
-        dbRef = Firebase.database.reference
+        dbRef = Constants.userDatabaseReference
         displayDataForDate(now)
         displayDaysOfMonth(now.monthValue)
 

@@ -23,7 +23,7 @@ class FoodViewModel : ViewModel() {
     private val _response = MutableLiveData<MutableList<Food>>()
         val response: LiveData<MutableList<Food>>
             get() = _response
-    var dbRef = Firebase.database.reference
+    var dbRef = Firebase.database.reference.child(Constants.username)
     val systemTime //Time variables are getters because time always changes
         get() = LocalDateTime.now()
     val year

@@ -37,7 +37,7 @@ class WriteFragment : Fragment() {
 //        Log.d("Main", "${foodArgs.foodItemPassedInFromEdit}")
 
 
-        dbRef = Firebase.database.reference
+        dbRef = Firebase.database.reference.child(Constants.username)
         _binding = FragmentWriteBinding.inflate(inflater, container, false)
 
         val buttonsClickListener: View.OnClickListener =

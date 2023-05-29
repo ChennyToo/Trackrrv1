@@ -1,8 +1,13 @@
 package com.example.trackrrv1
 
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
+
 class Constants {
     companion object{
         //TODO Implement Shared preferences so settings save
+        var username : String = "empty"
+        var userDatabaseReference = Firebase.database.reference.child(username)
         var transitionStartTime : Long = 400L//Upon finishing starttime, that is when navigation should occur
         var transitionEndTime : Long = 400L
         var main_customizeAnimationTime : Long = 800L

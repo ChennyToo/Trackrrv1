@@ -1,5 +1,7 @@
 package com.example.trackrrv1
 
+import android.content.Context
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -8,6 +10,7 @@ import android.view.Window
 import android.view.WindowManager
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.airbnb.lottie.LottieAnimationView
 import com.example.trackrrv1.databinding.ActivityMainBinding
 import com.example.trackrrv1.databinding.FragmentMainBinding
@@ -23,11 +26,25 @@ class MainActivity : AppCompatActivity() {
     private val binding get() = _binding!!
     lateinit var transition : LottieAnimationView
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
- 
+        _binding = ActivityMainBinding.inflate(layoutInflater)
+//        var userPref = applicationContext.getSharedPreferences("UserPref", Context.MODE_PRIVATE)
+//        userPref.edit().remove("username").apply()
+        //Way to remove value from sharedpreferences, can be used to log out
 
 
+        Constants.username = applicationContext.getSharedPreferences("UserPref", Context.MODE_PRIVATE).getString("username", "empty") ?: "empty"//is there was no username set before, the default value is "empty"
+        Log.d("MainActivity", "${Constants.username}")
+        if (Constants.username != "empty"){//If the user has already logged in on said device, they will start on home screen. If not, default starting position is login screen
+            val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment)
+            val inflater = navHostFragment!!.findNavController().navInflater
+            val graph = inflater.inflate(R.navigation.nav_graph)
+            graph.setStartDestination(R.id.homeFragment)
+            val navController = navHostFragment.findNavController()
+            navController.setGraph(graph, intent.extras)
+        }
 
         window.decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION,)
         window.decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION,)
@@ -37,7 +54,7 @@ class MainActivity : AppCompatActivity() {
 
 
 
-        _binding = ActivityMainBinding.inflate(layoutInflater)
+
         transition = binding.transitionAnimation
         transition.frame = 0
         transition.pauseAnimation()

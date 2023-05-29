@@ -10,12 +10,10 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import com.example.trackrrv1.databinding.FragmentHomeBinding
-import kotlinx.coroutines.Delay
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.util.Locale
-import kotlin.concurrent.thread
 
 class HomeFragment : Fragment() {
     private var _binding: FragmentHomeBinding? = null
@@ -52,6 +50,7 @@ class HomeFragment : Fragment() {
             View.OnClickListener { view ->
                 when (view.id) {
                     R.id.homeButtonCalendar -> {
+                        binding.homeButtonCalendar.setBackgroundResource(R.drawable.clickedhomebuttonbg)
                         (activity as MainActivity?)!!.startTransition() //How to call methods in MainActivity
                         removeAllButtonFunctionality() //prevents the user from clicking once navigation starts
                         lifecycleScope.launch() {
@@ -62,6 +61,7 @@ class HomeFragment : Fragment() {
                     }
 
                     R.id.homeButtonLogFood -> {
+                        binding.homeButtonLogFood.setBackgroundResource(R.drawable.clickedhomebuttonbg)
                         (activity as MainActivity?)!!.startTransition()
                         removeAllButtonFunctionality()
                         lifecycleScope.launch() {
@@ -72,6 +72,7 @@ class HomeFragment : Fragment() {
                     }
 
                     R.id.homeButtonSettings->{
+                        binding.homeButtonSettings.setBackgroundResource(R.drawable.clickedhomebuttonbg)
                         (activity as MainActivity?)!!.startTransition()
                         removeAllButtonFunctionality()
                         lifecycleScope.launch() {
