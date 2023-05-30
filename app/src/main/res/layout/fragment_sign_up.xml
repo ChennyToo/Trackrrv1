@@ -13,7 +13,7 @@
         android:background="@drawable/signup_bg"/>
 
     <com.airbnb.lottie.LottieAnimationView
-        android:id="@+id/signupFoodAnimation"
+        android:id="@+id/signupAnimation"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="280dp"
