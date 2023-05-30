@@ -98,6 +98,19 @@
         android:elevation="5dp"
         />
 
+    <ImageButton
+        android:id="@+id/writeGalleryButton"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:background="@drawable/write_photoicon"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="15dp"
+        app:layout_constraintStart_toEndOf="@id/writeFoodImage"
+        app:layout_constraintEnd_toEndOf="@id/writeTop"
+        app:layout_constraintTop_toTopOf="@id/writeTop"
+        android:elevation="5dp"
+        />
+
 
 
     <TextView
