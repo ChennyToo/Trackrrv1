@@ -2,6 +2,8 @@ package com.example.trackrrv1
 
 import android.content.ClipData
 import android.content.ClipDescription
+import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.util.Log
 import android.view.DragEvent
@@ -232,6 +234,17 @@ class SettingsCustomizeHomeFragment : Fragment() {
             Constants.HCField1Type = Position1Value
             Constants.HCField2Type = Position2Value
             Constants.HCField3Type = Position3Value
+
+            //Update sharedPreferences here
+            var sharedPref = requireActivity().getSharedPreferences("UserPref", Context.MODE_PRIVATE)
+            var editor: SharedPreferences.Editor = sharedPref.edit()
+            editor.putString("HCField1", Position1Value)
+            editor.putString("HCField2", Position2Value)
+            editor.putString("HCField3", Position3Value)
+            editor.commit()
+
+
+
             (activity as MainActivity?)!!.startTransition() //How to call methods in MainActivity
 //            removeAllButtonFunctionality() //prevents the user from clicking once navigation starts
             lifecycleScope.launch() {

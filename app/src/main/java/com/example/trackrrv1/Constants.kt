@@ -1,5 +1,6 @@
 package com.example.trackrrv1
 
+import android.content.Context
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
@@ -20,6 +21,8 @@ class Constants {
         var monthList : List<String> = listOf("January", "February", "March",
             "April", "May", "June", "July", "August", "September", "October", "November", "December")
         var calProgressAnimationDuration = 500L
+
+
         var HCField1Type : String = "sodium" //keep same name as FireBase
         var HCField2Type : String = "carbohydrate"//FieldType is used for Home Screen nutrition boxes
         var HCField3Type : String = "sugar"

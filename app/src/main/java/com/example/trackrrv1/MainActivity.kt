@@ -32,6 +32,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = ActivityMainBinding.inflate(layoutInflater)
+        setSettings()
         var userPref = applicationContext.getSharedPreferences("UserPref", Context.MODE_PRIVATE)
         userPref.edit().remove("username").apply()
 //        Way to remove value from sharedpreferences, can be used to log out
@@ -85,6 +86,14 @@ class MainActivity : AppCompatActivity() {
             transition.resumeAnimation()
         }
     }
+
+    fun setSettings(){
+        Constants.HCField1Type = applicationContext.getSharedPreferences("UserPref", Context.MODE_PRIVATE).getString("HCField1", "sodium") ?: "sodium"
+        Constants.HCField2Type = applicationContext.getSharedPreferences("UserPref", Context.MODE_PRIVATE).getString("HCField2", "carbohydrate") ?: "carbohydrate"
+        Constants.HCField3Type = applicationContext.getSharedPreferences("UserPref", Context.MODE_PRIVATE).getString("HCField3", "sugar") ?: "sugar"
+    }
+
+
 
 
 }

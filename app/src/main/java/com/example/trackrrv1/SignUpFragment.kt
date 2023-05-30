@@ -24,21 +24,33 @@ class SignUpFragment : Fragment() {
     ): View? {
         _binding = FragmentSignUpBinding.inflate(inflater, container, false)
         binding.signupButton.setOnClickListener {
-            val username = if (binding.signupNamefield.text.toString().isEmpty()){"empty"} else {binding.signupNamefield.text.toString()}
-            val password = binding.signupPasswordField.text.toString()
+            val username = if (binding.signupNamefield.text.toString().isEmpty()) {
+                "empty"
+            } else {
+                binding.signupNamefield.text.toString()
+            }
+            val password = if (binding.signupPasswordField.text.toString().isEmpty()) {
+                "empty"
+            } else {
+                binding.signupPasswordField.text.toString()
+            }
+            val confirmpassword =
+                if (binding.signupConfirmPasswordField.text.toString().isEmpty()) {
+                    "empty"
+                } else {
+                    binding.signupConfirmPasswordField.text.toString()
+                }
             dbRef.get().addOnSuccessListener { snapshot ->
                 var credentialSnapShot = snapshot.child(username).value
-                if (credentialSnapShot == null){//Is name is not taken yet
+                if (credentialSnapShot == null && password == confirmpassword && password != "empty" && username != "empty") {//Is name is not taken yet
+                    //Additionally, passwords must match, username and password must not be empty
                     dbRef.child(username).child("Password").setValue(password)
                     binding.root.findNavController()
                         .navigate(R.id.action_signUpFragment_to_logInFragment)
-                }
-
-                else {//If name exists
-                    Log.d("LogIn", "Name already exists")
+                } else {//If name exists
+                    Log.d("LogIn", "Cannot sign up, ensure all fields are correct and filled + name isnt taken")
                 }
             }
-
 
 
         }
