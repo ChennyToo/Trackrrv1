@@ -187,6 +187,7 @@
         android:imeOptions="actionDone"
         android:textSize="22dp"
         android:maxLines="1"
+        android:maxLength="16"
         android:gravity="center"
         android:fontFamily="@font/archivo_semibold"
         android:textColor="@color/white"
@@ -205,6 +206,7 @@
         android:digits="1234567890"
         android:imeOptions="actionDone"
         android:maxLines="1"
+        android:maxLength="5"
         android:gravity="center"
         app:layout_constraintEnd_toEndOf="@id/writeEditBG"
         app:layout_constraintStart_toEndOf="@id/writeCarbTV"
@@ -219,6 +221,8 @@
         android:digits="1234567890"
         android:imeOptions="actionDone"
         android:maxLines="1"
+        android:maxLength="5"
+
         android:gravity="center"
 
         app:layout_constraintEnd_toEndOf="@id/CalorieEdit"
@@ -236,8 +240,8 @@
         android:digits="1234567890"
         android:imeOptions="actionDone"
         android:maxLines="1"
+        android:maxLength="5"
         android:gravity="center"
-
         app:layout_constraintEnd_toEndOf="@id/CalorieEdit"
         app:layout_constraintStart_toStartOf="@id/CalorieEdit"
         app:layout_constraintBottom_toBottomOf="@id/writeProteinTV"
@@ -252,6 +256,7 @@
         android:digits="1234567890"
         android:imeOptions="actionDone"
         android:maxLines="1"
+        android:maxLength="5"
         android:gravity="center"
 
         app:layout_constraintEnd_toEndOf="@id/CalorieEdit"
@@ -269,6 +274,8 @@
         android:digits="1234567890"
         android:imeOptions="actionDone"
         android:maxLines="1"
+        android:maxLength="5"
+
         android:gravity="center"
 
         app:layout_constraintEnd_toEndOf="@id/CalorieEdit"
@@ -285,6 +292,8 @@
         android:digits="1234567890"
         android:imeOptions="actionDone"
         android:maxLines="1"
+        android:maxLength="5"
+
         android:gravity="center"
         app:layout_constraintEnd_toEndOf="@id/CalorieEdit"
         app:layout_constraintStart_toStartOf="@id/CalorieEdit"

@@ -114,7 +114,7 @@ class FoodViewModel : ViewModel() {
 
                     val newFood = Food(name?: "", calorie?: 0, fat?: 0, sugar?: 0,
                         sodium?: 0, protein?: 0, carbohydrate?: 0, LocalDateTime.now(), imageUriString)
-                    dbRef = Firebase.database.reference
+                    dbRef = Constants.userDatabaseReference
                     dbRef.child(year).child(month).child(day).child(name!!).setValue(newFood).addOnSuccessListener {
                         MainFragment.refreshScreen = true//Tells MainFragment to refresh when item has been added
                     }

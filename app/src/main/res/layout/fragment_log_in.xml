@@ -114,6 +114,8 @@
         android:inputType="textPersonName"
         android:imeOptions="actionDone"
         android:maxLines="1"
+        android:maxLength="16"
+
         android:layout_marginLeft="10dp"
         app:layout_constraintTop_toTopOf="@id/loginUsernameFieldBG"
         app:layout_constraintBottom_toBottomOf="@id/loginUsernameFieldBG"
@@ -132,6 +134,7 @@
         android:inputType="textPersonName"
         android:imeOptions="actionDone"
         android:maxLines="1"
+        android:maxLength="16"
         android:layout_marginLeft="10dp"
         app:layout_constraintTop_toTopOf="@id/loginPasswordFieldBG"
         app:layout_constraintStart_toEndOf="@id/loginPasswordIcon"

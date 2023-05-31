@@ -170,6 +170,8 @@
         android:inputType="textPersonName"
         android:imeOptions="actionDone"
         android:maxLines="1"
+        android:maxLength="16"
+
         android:layout_marginLeft="10dp"
         app:layout_constraintTop_toTopOf="@id/signupUsernameFieldBG"
         app:layout_constraintStart_toEndOf="@id/signupUsernameIcon"
@@ -188,6 +190,9 @@
         android:inputType="textPersonName"
         android:imeOptions="actionDone"
         android:maxLines="1"
+        android:maxLength="16"
+
+
         android:layout_marginLeft="10dp"
         app:layout_constraintTop_toTopOf="@id/signupPasswordFieldBG"
         app:layout_constraintStart_toEndOf="@id/signupPasswordIcon"
@@ -206,6 +211,7 @@
         android:inputType="textPersonName"
         android:imeOptions="actionDone"
         android:maxLines="1"
+        android:maxLength="16"
         android:layout_marginLeft="10dp"
         app:layout_constraintTop_toTopOf="@id/signupConfirmPasswordFieldBG"
         app:layout_constraintStart_toEndOf="@id/signupConfirmPasswordIcon"
