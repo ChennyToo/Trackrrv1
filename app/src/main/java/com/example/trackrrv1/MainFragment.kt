@@ -19,6 +19,8 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
@@ -51,6 +53,7 @@ class MainFragment : Fragment() {
     ): View? {
         Log.d("MainActivity", "CreatedView")
         _binding = FragmentMainBinding.inflate(inflater, container, false)
+        FoodViewHolder.parentFragment = this
         systemTime = viewModel.systemTime
         year = viewModel.year
         month = viewModel.month
@@ -515,10 +518,12 @@ companion object {
     var month = systemTime.month.toString()
     var day = systemTime.dayOfMonth.toString()
     var refreshScreen = false
+    var mStorageRef: StorageReference =  FirebaseStorage.getInstance().getReference("uploads")
 
     fun removeItemInList(name: String) {
         Log.d("MainActivity", "$name")
         dbRef.child(year).child(month).child(day).child(name).ref.removeValue()
+        //TODO Remove image from Storage as well
     }
 
 

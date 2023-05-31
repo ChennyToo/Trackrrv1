@@ -32,42 +32,45 @@ import java.time.LocalDateTime
 class WriteFragment : Fragment() {
     private val foodArgs by navArgs<WriteFragmentArgs>()
 
-    lateinit var dbRef: DatabaseReference
+    var dbRef: DatabaseReference = Constants.userDatabaseReference
     private var _binding: FragmentWriteBinding? = null
     private val binding get() = _binding!!
     private val viewModel: FoodViewModel by activityViewModels()
     private var isEditState = false
     private var mStorageRef: StorageReference =  FirebaseStorage.getInstance().getReference("uploads")
+    lateinit var foodName : String
+    lateinit var foodTimeIdentifier : String
+    lateinit var imageUri : Uri
     private var imagePickerActivityResult: ActivityResultLauncher<Intent> =
     // lambda expression to receive a result back, here we
         // receive single item(photo) on selection
         registerForActivityResult( ActivityResultContracts.StartActivityForResult()) { result ->
             if (result != null) {
                 // getting URI of selected Image
-                val imageUri: Uri? = result.data?.data
+                imageUri = result.data?.data!!
+                Glide.with(this).load(imageUri).into(binding.writeFoodImage)
+                //Add in image locally first then upload to Firebase?
 
-                // val fileName = imageUri?.pathSegments?.last()
 
-                // extract the file name with extension
-                // Upload Task with upload to directory 'file'
-                // and name of the file remains same
-                val uploadTask = mStorageRef.child("1").putFile(imageUri!!)
+                //Delete task is meant to remove any existing images on that picture incase they want to update the food image
+//                val deleteTask = mStorageRef.child("${Constants.username}/${foodName}${foodTimeIdentifier}").delete()
+//                val uploadTask = mStorageRef.child("${Constants.username}/${foodName}${foodTimeIdentifier}").putFile(imageUri!!)
 
                 // On success, download the file URL and display it
-                uploadTask.addOnSuccessListener {
+//                uploadTask.addOnSuccessListener {
                     // using glide library to display the image
-                    mStorageRef.child("1").downloadUrl.addOnSuccessListener {
-                        Glide.with(this)
-                            .load(it)
-                            .into(binding.writeFoodImage)
-
-                        Log.d("Firebase", "download passed")
-                    }.addOnFailureListener {
-                        Log.d("Firebase", "Failed in downloading")
-                    }
-                }.addOnFailureListener {
-                    Log.d("Firebase", "Image Upload fail")
-                }
+//                    mStorageRef.child("2").downloadUrl.addOnSuccessListener {
+//                        Glide.with(this)
+//                            .load(it)
+//                            .into(binding.writeFoodImage)
+//
+//                        Log.d("Firebase", "download passed")
+//                    }.addOnFailureListener {
+//                        Log.d("Firebase", "Failed in downloading")
+//                    }
+//                }.addOnFailureListener {
+//                    Log.d("Firebase", "Image Upload fail")
+//                }
             }
         }
 
@@ -81,7 +84,7 @@ class WriteFragment : Fragment() {
 //        Log.d("Main", "${foodArgs.foodItemPassedInFromEdit}")
 
 
-        dbRef = Firebase.database.reference.child(Constants.username)
+//        dbRef = Firebase.database.reference.child(Constants.username)
         _binding = FragmentWriteBinding.inflate(inflater, container, false)
 
         val buttonsClickListener: View.OnClickListener =
@@ -134,6 +137,7 @@ class WriteFragment : Fragment() {
 
     fun LogAndNavigate() {
         val name = binding.NameEdit.text.toString()
+        foodName = name
         val calorie = if (binding.CalorieEdit.text.toString().isEmpty()) {
             0
         } else {
@@ -165,6 +169,7 @@ class WriteFragment : Fragment() {
         } else {
             LocalDateTime.now()
         }
+        foodTimeIdentifier = "${time.hour}${time.minute}"
         val newFood = Food(
             name ?: "", calorie ?: 0, fat ?: 0, sugar,
             0, protein ?: 0, carb ?: 0, time, imageUrl
@@ -185,7 +190,6 @@ class WriteFragment : Fragment() {
                 .child(foodArgs.foodItemPassedInFromEdit.foodName)
                 .ref.removeValue()
 
-            Log.d("mew", "${foodArgs.foodItemPassedInFromEdit.foodName}")
             dbRef.child(LocalDateTime.now().year.toString())
                 .child(LocalDateTime.now().month.toString())
                 .child(foodArgs.foodItemPassedInFromEdit.timeLogged.dayOfMonth.toString())
@@ -202,6 +206,15 @@ class WriteFragment : Fragment() {
                     MainFragment.refreshScreen = true
                 }
         }
+        //Add the image that user uploaded to Firebase storage, the delete line is meant to remove an image if they had already set one previously
+        val deleteTask = mStorageRef.child("${Constants.username}/${foodName}${foodTimeIdentifier}").delete()
+        val uploadTask = mStorageRef.child("${Constants.username}/${foodName}${foodTimeIdentifier}").putFile(imageUri!!)
+//        dbRef.child(LocalDateTime.now().year.toString())
+//            .child(LocalDateTime.now().month.toString())
+//            .child(LocalDateTime.now().dayOfMonth.toString())
+//            .child(name!!).child("StorageUri").setValue("${Constants.username}/${foodName}${foodTimeIdentifier}")
+
+
         (activity as MainActivity?)!!.startTransition()
         lifecycleScope.launch() {
             delay(Constants.transitionStartTime)

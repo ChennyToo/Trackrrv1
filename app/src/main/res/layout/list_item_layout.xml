@@ -134,7 +134,7 @@
                 android:layout_height="110dp"
                 android:layout_marginRight="180dp"
                 android:elevation="3dp"
-                android:src="@drawable/ic_baseline_menu_book_24"
+                android:src="@drawable/dots"
                 app:layout_constraintBottom_toBottomOf="@id/cardBG2"
                 app:layout_constraintEnd_toEndOf="@id/cardBG2"
                 app:layout_constraintStart_toStartOf="@id/cardBG2"

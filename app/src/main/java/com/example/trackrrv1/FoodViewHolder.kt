@@ -3,9 +3,13 @@ package com.example.trackrrv1
 import android.util.Log
 import android.view.View
 import androidx.core.net.toUri
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.trackrrv1.databinding.ListItemLayoutBinding
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class FoodViewHolder(val binding: ListItemLayoutBinding) : RecyclerView.ViewHolder(binding.root) {
     private lateinit var currentFood: Food
@@ -33,6 +37,8 @@ class FoodViewHolder(val binding: ListItemLayoutBinding) : RecyclerView.ViewHold
         val hourString = if (hour.toString().length == 1){"0$hour"} else {hour.toString()}//Includes the zero placeholder if one digit
         val minuteString = if(time.minute.toString().length == 1){"0${time.minute}"} else {time.minute}
         val timeString = "$hourString:$minuteString \n$isAM"
+        val foodTimeIdentifier = "${time.hour}${time.minute}"
+        val foodStorageID = "${Constants.username}/${currentFood.foodName}${foodTimeIdentifier}"
 
 //TODO CHANGE THE NAMES
         binding.CalorieTextView.text = "$calories"
@@ -42,7 +48,30 @@ class FoodViewHolder(val binding: ListItemLayoutBinding) : RecyclerView.ViewHold
         binding.nutrientTV2.text = "Carbs: ${carb}g"
         binding.nutrientTV4.text = "Sugar: ${sugar}g"
         binding.timeLoggedTV.text = timeString
-        Glide.with(itemView).load(currentFood.imageUriString.toUri()).into(binding.FoodImageView);
+
+
+
+        bindImageFromFirebase(foodStorageID)
+//        Glide.with(itemView).load(currentFood.imageUriString.toUri()).into(binding.FoodImageView);
+    }
+
+    fun bindImageFromFirebase(id : String){
+        //Below code gets the image from Firebase Storage and loads it into the respective food item
+        MainFragment.mStorageRef.child(id).downloadUrl.addOnSuccessListener {
+            Glide.with(parentFragment!!)
+                .load(it)
+                .into(binding.FoodImageView)
+            Log.d("FoodViewHolder", "download passed")
+        }.addOnFailureListener {//Recursive code that will constantly try and attempt to get the image from Storage even after failing to get it the first time
+            parentFragment!!.lifecycleScope.launch {
+                delay(500L)
+                bindImageFromFirebase(id)
+            }
+        }
+    }
+
+    companion object{
+        var parentFragment : Fragment? = null
     }
 
 
