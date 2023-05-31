@@ -36,7 +36,6 @@ class FoodViewModel : ViewModel() {
         get() = systemTime.dayOfMonth.toString()
 
 
-    var currentFoodNumber = 0
     var todayCalorie = 0
     val field1value = MutableLiveData(-1)
     val field2value = MutableLiveData(-1)
@@ -121,7 +120,6 @@ class FoodViewModel : ViewModel() {
                     dbRef.child(year).child(month).child(day).child(name!!).setValue(newFood).addOnSuccessListener {
                         MainFragment.refreshScreen = true//Tells MainFragment to refresh when item has been added
                     }
-                    currentFoodNumber++
                 }
             }
 

@@ -15,7 +15,7 @@ data class Food (val foodName : String = "empty",
                  val protein: Int = 0,
                  val carbohydrate: Int = 0,
                  val timeLogged: LocalDateTime = LocalDateTime.now(),
-                 val imageUriString: String = "https://www.iconsdb.com/icons/preview/red/x-mark-3-xxl.png"
+                 var imageUriString: String = ""
                  ) : Parcelable {
     @Exclude
 

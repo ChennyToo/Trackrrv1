@@ -60,15 +60,10 @@ class FoodViewHolder(val binding: ListItemLayoutBinding) : RecyclerView.ViewHold
         binding.nutrientTV4.text = "Sugar: ${sugar}g"
         binding.timeLoggedTV.text = timeString
 
-        if (currentFood.imageUriString != "https://www.iconsdb.com/icons/preview/red/x-mark-3-xxl.png") {
+        if (currentFood.imageUriString != "") {
             Log.d("FoodViewHolder", "${currentFood.imageUriString}")
             Glide.with(itemView).load(currentFood.imageUriString.toUri())
                 .into(binding.FoodImageView);
-            val uploadTask =
-                MainFragment.mStorageRef.child("${foodStorageID}")
-                    .putFile(currentFood.imageUriString.toUri()).addOnFailureListener{
-                        Log.d("FoodViewHolder", "Failed")
-                    }
         }
         else {
             bindImageFromFirebase(foodStorageID, 500L)

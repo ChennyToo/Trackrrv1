@@ -12,6 +12,7 @@ import android.widget.Gallery
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.core.net.toUri
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
@@ -166,7 +167,8 @@ class WriteFragment : Fragment() {
         } else {
             binding.SugarEdit.text.toString().toInt()
         }
-        val imageUrl = "https://www.iconsdb.com/icons/preview/red/x-mark-3-xxl.png"
+        //Issue
+
         val time = if (isEditState) {
             foodArgs.foodItemPassedInFromEdit.timeLogged
         } else {
@@ -175,7 +177,7 @@ class WriteFragment : Fragment() {
         foodTimeIdentifier = "${time.hour}${time.minute}"
         val newFood = Food(
             name ?: "", calorie ?: 0, fat ?: 0, sugar,
-            0, protein ?: 0, carb ?: 0, time, imageUrl
+            0, protein ?: 0, carb ?: 0, time, ""
         )
         if (isEditState) {
             //TODO FIND HOW TO UPDATE
@@ -212,6 +214,8 @@ class WriteFragment : Fragment() {
 
         if(didChangeImage) {//if the user did not select an image for the food item, dont attempt to upload to Firebase
             //Add the image that user uploaded to Firebase storage, the delete line is meant to remove an image if they had already set one previously
+           newFood.imageUriString = ""
+            Log.d("WriteFragment", "Image changed")
             val deleteTask =
                 mStorageRef.child("${Constants.username}/${foodName}${foodTimeIdentifier}").delete()
             val uploadTask =
@@ -233,11 +237,26 @@ class WriteFragment : Fragment() {
     }
 
     fun changeToEditState(foodItem: Food) {
+        if (foodItem.imageUriString != ""){
+            Glide.with(this).load(foodItem.imageUriString.toUri())
+                .into(binding.writeFoodImage)
+        }
+
+        else{
+            mStorageRef.child("${Constants.username}/${foodItem.foodName}${foodItem.timeLogged.hour}${foodItem.timeLogged.minute}").downloadUrl.addOnSuccessListener {
+                Glide.with(this)
+                    .load(it)
+                    .into(binding.writeFoodImage)
+                Log.d("FoodViewHolder", "download passed")
+            }
+        }
         binding.NameEdit.setText(foodItem.foodName)
         binding.CalorieEdit.setText(foodItem.calories.toString())
         binding.ProteinEdit.setText(foodItem.protein.toString())
         binding.CarbEdit.setText(foodItem.carbohydrate.toString())
         binding.FatEdit.setText(foodItem.fat.toString())
+        binding.SugarEdit.setText(foodItem.sugar.toString())
+        binding.SodiumEdit.setText(foodItem.sodium.toString())
     }
 
     fun checkFieldValidity() {
