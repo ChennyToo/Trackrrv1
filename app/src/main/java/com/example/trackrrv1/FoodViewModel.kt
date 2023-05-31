@@ -42,6 +42,7 @@ class FoodViewModel : ViewModel() {
     val field2value = MutableLiveData(-1)
     val field3value = MutableLiveData(-1)
     var foodFromCamera = MutableLiveData(Food())
+//    var refreshMainFragment = MutableLiveData(0)
 
     fun resetFields(){
         field1value.value = -1

@@ -193,7 +193,8 @@ class WriteFragment : Fragment() {
                     .putFile(imageUri!!)
         }
 
-        if (isEditState) {
+        if (isEditState) {//Note that we are passing the value to Firebase and then navigating
+                        //If Firebase does not get the updated information in time and navigates prematurely, then the new food item will not display on screen
             //TODO FIND HOW TO UPDATE
 //            dbRef.child(LocalDateTime.now().year.toString())
 //                .child(LocalDateTime.now().month.toString())
@@ -213,7 +214,13 @@ class WriteFragment : Fragment() {
                 .child(LocalDateTime.now().month.toString())
                 .child(foodArgs.foodItemPassedInFromEdit.timeLogged.dayOfMonth.toString())
                 .child(name).setValue(newFood).addOnSuccessListener {
-                    MainFragment.refreshScreen = true
+                    (activity as MainActivity?)!!.startTransition()
+                    lifecycleScope.launch() {
+                        delay(Constants.transitionStartTime)
+                        binding.root.findNavController().navigate(R.id.action_writeFragment_to_mainFragment)
+                    }
+                }.addOnFailureListener {
+                    Log.d("WriteFragment", "Item failed to update Firebase")
                 }
 
 
@@ -222,7 +229,13 @@ class WriteFragment : Fragment() {
                 .child(LocalDateTime.now().month.toString())
                 .child(LocalDateTime.now().dayOfMonth.toString())
                 .child(name!!).setValue(newFood).addOnSuccessListener {
-                    MainFragment.refreshScreen = true
+                    (activity as MainActivity?)!!.startTransition()
+                    lifecycleScope.launch() {
+                        delay(Constants.transitionStartTime)
+                        binding.root.findNavController().navigate(R.id.action_writeFragment_to_mainFragment)
+                    }
+                }.addOnFailureListener {
+                    Log.d("WriteFragment", "Item failed to update Firebase")
                 }
         }
 
@@ -233,11 +246,7 @@ class WriteFragment : Fragment() {
 //            .child(name!!).child("StorageUri").setValue("${Constants.username}/${foodName}${foodTimeIdentifier}")
 
 
-        (activity as MainActivity?)!!.startTransition()
-        lifecycleScope.launch() {
-            delay(Constants.transitionStartTime)
-            binding.root.findNavController().navigate(R.id.action_writeFragment_to_mainFragment)
-        }
+
 
     }
 

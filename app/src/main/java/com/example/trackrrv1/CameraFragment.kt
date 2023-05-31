@@ -1,9 +1,9 @@
 package com.example.trackrrv1
 
 
-
 import android.content.pm.PackageManager
 import android.os.Bundle
+import android.util.Log
 
 import android.view.LayoutInflater
 
@@ -42,9 +42,17 @@ class CameraFragment : Fragment() {
         _binding = FragmentCameraBinding.inflate(inflater, container, false)
         val scannerView = binding.scannerView
         codeScanner = CodeScanner(this.requireContext(), scannerView)
-        if (ContextCompat.checkSelfPermission(this.requireContext(), android.Manifest.permission.CAMERA)
-            == PackageManager.PERMISSION_DENIED){
-            ActivityCompat.requestPermissions(this.requireActivity(), arrayOf(android.Manifest.permission.CAMERA), 1)
+        if (ContextCompat.checkSelfPermission(
+                this.requireContext(),
+                android.Manifest.permission.CAMERA
+            )
+            == PackageManager.PERMISSION_DENIED
+        ) {
+            ActivityCompat.requestPermissions(
+                this.requireActivity(),
+                arrayOf(android.Manifest.permission.CAMERA),
+                1
+            )
         }
 
 
@@ -65,19 +73,13 @@ class CameraFragment : Fragment() {
                 (activity as MainActivity?)!!.startTransition()
                 lifecycleScope.launch() {
                     delay(Constants.transitionStartTime)
-                    var observerInitializationCheck = false //Upon setting an observer, the ViewModel will run the method immediately but instead
-                                                        //We want it to navigate AFTER the ViewModel processes the API data and sets the foodFromCamera variable
-                    viewModel.foodFromCamera.observe(viewLifecycleOwner) {food ->//We make initializationCheck variable to let it run once without doing anything then the second time actually navigates
-                        if (observerInitializationCheck) {
+                    viewModel.foodFromCamera.observe(viewLifecycleOwner) { food -> //Upon setting an observer, the ViewModel will run the method immediately but instead
+                        if (viewModel.foodFromCamera.value!!.foodName != "empty") {//We want it to navigate AFTER the ViewModel processes the API data and sets the foodFromCamera variable
                             val navigateToWriteFragWithFood =
                                 CameraFragmentDirections.actionCameraFragmentToWriteFragment(food)
                             binding.root.findNavController().navigate(navigateToWriteFragWithFood)
                         }
-                        else {
-                            observerInitializationCheck = true
-                        }
                     }
-
 
 
                 }
@@ -85,8 +87,10 @@ class CameraFragment : Fragment() {
         }
         codeScanner.errorCallback = ErrorCallback { // or ErrorCallback.SUPPRESS
             requireActivity().runOnUiThread {
-                Toast.makeText(this.requireContext(), "Camera initialization error: ${it.message}",
-                    Toast.LENGTH_LONG).show()
+                Toast.makeText(
+                    this.requireContext(), "Camera initialization error: ${it.message}",
+                    Toast.LENGTH_LONG
+                ).show()
             }
         }
 
@@ -96,12 +100,13 @@ class CameraFragment : Fragment() {
 
         val buttonsClickListener: View.OnClickListener =
             View.OnClickListener { view ->
-                when(view.id){
+                when (view.id) {
                     R.id.BackCameraButton -> {
                         (activity as MainActivity?)!!.startTransition()
                         lifecycleScope.launch() {
                             delay(Constants.transitionStartTime)
-                            binding.root.findNavController().navigate(R.id.action_cameraFragment_to_mainFragment)
+                            binding.root.findNavController()
+                                .navigate(R.id.action_cameraFragment_to_mainFragment)
                         }
                     }
                 }
@@ -114,15 +119,15 @@ class CameraFragment : Fragment() {
         return binding.root
     }
 
-override fun onResume() {
-    super.onResume()
-    codeScanner.startPreview()
-}
+    override fun onResume() {
+        super.onResume()
+        codeScanner.startPreview()
+    }
 
-override fun onPause() {
-    codeScanner.releaseResources()
-    super.onPause()
-}
+    override fun onPause() {
+        codeScanner.releaseResources()
+        super.onPause()
+    }
 
     override fun onDestroy() {
         super.onDestroy()

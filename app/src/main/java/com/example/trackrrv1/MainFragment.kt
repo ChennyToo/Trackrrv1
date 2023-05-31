@@ -66,6 +66,8 @@ class MainFragment : Fragment() {
         var previouslyClickedIcon = binding.mainButtonAll
         dbRef = Constants.userDatabaseReference
 
+
+
         var fabani: LottieAnimationView = binding.animationView
         fabani.loop(false)
         var timee = LocalDateTime.of(2023, 5, 27, 4, 30)
@@ -117,6 +119,15 @@ class MainFragment : Fragment() {
 //        dbRef.child(year).child(month).child(day).child(testList2[10].foodName)
 //            .setValue(testList2[10])
         showFoodListToday(true)
+//        viewModel.refreshMainFragment.value = viewModel.refreshMainFragment.value?.minus(1)
+//        viewModel.refreshMainFragment.value = -1
+//        viewModel.refreshMainFragment.observe(viewLifecycleOwner) {count ->
+//            Log.d("MainFragment", "Observer Called")
+//            if (count > 0){
+//                Log.d("MainFragment", "Observer Called2")
+//                showFoodListToday(false)
+//            }
+//        }
 
 
         // Inflate the layout for this fragment
@@ -234,7 +245,7 @@ class MainFragment : Fragment() {
         }
 
         dbRef.child(year).child(month).child(day).addChildEventListener(childEventListener)
-        refreshCheckerLoop()
+
 
         return binding.root
     }
@@ -250,19 +261,19 @@ class MainFragment : Fragment() {
         }
     }
 
-    fun refreshCheckerLoop() { //Checks if the screen needs to be refreshed for new foods
-        lifecycleScope.launch(Dispatchers.IO) {
-            while (true) {
-                delay(500L)
-                if (refreshScreen) {
-                    showFoodListToday(false)
-                    refreshScreen = false
-                    break
-                }
-            }
-            this.cancel()//TODO may cause problems
-        }
-    }
+//    fun refreshCheckerLoop() { //Checks if the screen needs to be refreshed for new foods
+//        lifecycleScope.launch(Dispatchers.IO) {
+//            while (true) {
+//                delay(500L)
+//                if (refreshScreen) {
+//                    showFoodListToday(false)
+//                    refreshScreen = false
+//                    break
+//                }
+//            }
+//            this.cancel()//TODO may cause problems
+//        }
+//    }
 
     fun showFoodListToday(isStartUp: Boolean) {
         foodList = mutableListOf<Food>()
@@ -524,7 +535,6 @@ companion object {
     var year = systemTime.year.toString()
     var month = systemTime.month.toString()
     var day = systemTime.dayOfMonth.toString()
-    var refreshScreen = false
     var mStorageRef: StorageReference =  FirebaseStorage.getInstance().getReference("uploads")
 
     fun removeItemInList(name: String) {
