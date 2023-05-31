@@ -41,6 +41,7 @@ class WriteFragment : Fragment() {
     lateinit var foodName : String
     lateinit var foodTimeIdentifier : String
     lateinit var imageUri : Uri
+    var didChangeImage = false
     private var imagePickerActivityResult: ActivityResultLauncher<Intent> =
     // lambda expression to receive a result back, here we
         // receive single item(photo) on selection
@@ -49,6 +50,7 @@ class WriteFragment : Fragment() {
                 // getting URI of selected Image
                 imageUri = result.data?.data!!
                 Glide.with(this).load(imageUri).into(binding.writeFoodImage)
+                didChangeImage = true
                 //Add in image locally first then upload to Firebase?
 
 
@@ -206,9 +208,15 @@ class WriteFragment : Fragment() {
                     MainFragment.refreshScreen = true
                 }
         }
-        //Add the image that user uploaded to Firebase storage, the delete line is meant to remove an image if they had already set one previously
-        val deleteTask = mStorageRef.child("${Constants.username}/${foodName}${foodTimeIdentifier}").delete()
-        val uploadTask = mStorageRef.child("${Constants.username}/${foodName}${foodTimeIdentifier}").putFile(imageUri!!)
+
+        if(didChangeImage) {//if the user did not select an image for the food item, dont attempt to upload to Firebase
+            //Add the image that user uploaded to Firebase storage, the delete line is meant to remove an image if they had already set one previously
+            val deleteTask =
+                mStorageRef.child("${Constants.username}/${foodName}${foodTimeIdentifier}").delete()
+            val uploadTask =
+                mStorageRef.child("${Constants.username}/${foodName}${foodTimeIdentifier}")
+                    .putFile(imageUri!!)
+        }
 //        dbRef.child(LocalDateTime.now().year.toString())
 //            .child(LocalDateTime.now().month.toString())
 //            .child(LocalDateTime.now().dayOfMonth.toString())

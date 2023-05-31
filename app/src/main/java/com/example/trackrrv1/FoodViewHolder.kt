@@ -51,11 +51,11 @@ class FoodViewHolder(val binding: ListItemLayoutBinding) : RecyclerView.ViewHold
 
 
 
-        bindImageFromFirebase(foodStorageID)
+        bindImageFromFirebase(foodStorageID, 500L)
 //        Glide.with(itemView).load(currentFood.imageUriString.toUri()).into(binding.FoodImageView);
     }
 
-    fun bindImageFromFirebase(id : String){
+    fun bindImageFromFirebase(id : String, delayIteration : Long){
         //Below code gets the image from Firebase Storage and loads it into the respective food item
         MainFragment.mStorageRef.child(id).downloadUrl.addOnSuccessListener {
             Glide.with(parentFragment!!)
@@ -63,9 +63,10 @@ class FoodViewHolder(val binding: ListItemLayoutBinding) : RecyclerView.ViewHold
                 .into(binding.FoodImageView)
             Log.d("FoodViewHolder", "download passed")
         }.addOnFailureListener {//Recursive code that will constantly try and attempt to get the image from Storage even after failing to get it the first time
+            Log.d("FoodViewHolder", "download failed, retrying")
             parentFragment!!.lifecycleScope.launch {
-                delay(500L)
-                bindImageFromFirebase(id)
+                delay(delayIteration)
+                bindImageFromFirebase(id, delayIteration + 500L)
             }
         }
     }
