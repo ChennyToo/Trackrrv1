@@ -174,11 +174,25 @@ class WriteFragment : Fragment() {
         } else {
             LocalDateTime.now()
         }
+        val uriStringFromCameraOrEdit = foodArgs.foodItemPassedInFromEdit.imageUriString
+
         foodTimeIdentifier = "${time.hour}${time.minute}"
         val newFood = Food(
             name ?: "", calorie ?: 0, fat ?: 0, sugar,
-            0, protein ?: 0, carb ?: 0, time, ""
+            0, protein ?: 0, carb ?: 0, time, uriStringFromCameraOrEdit
         )
+
+        if(didChangeImage) {//if the user did not select an image for the food item, dont attempt to upload to Firebase
+            //Add the image that user uploaded to Firebase storage, the delete line is meant to remove an image if they had already set one previously
+            newFood.imageUriString = ""
+            Log.d("WriteFragment", "Image changed")
+            val deleteTask =
+                mStorageRef.child("${Constants.username}/${foodName}${foodTimeIdentifier}").delete()
+            val uploadTask =
+                mStorageRef.child("${Constants.username}/${foodName}${foodTimeIdentifier}")
+                    .putFile(imageUri!!)
+        }
+
         if (isEditState) {
             //TODO FIND HOW TO UPDATE
 //            dbRef.child(LocalDateTime.now().year.toString())
@@ -212,16 +226,7 @@ class WriteFragment : Fragment() {
                 }
         }
 
-        if(didChangeImage) {//if the user did not select an image for the food item, dont attempt to upload to Firebase
-            //Add the image that user uploaded to Firebase storage, the delete line is meant to remove an image if they had already set one previously
-           newFood.imageUriString = ""
-            Log.d("WriteFragment", "Image changed")
-            val deleteTask =
-                mStorageRef.child("${Constants.username}/${foodName}${foodTimeIdentifier}").delete()
-            val uploadTask =
-                mStorageRef.child("${Constants.username}/${foodName}${foodTimeIdentifier}")
-                    .putFile(imageUri!!)
-        }
+
 //        dbRef.child(LocalDateTime.now().year.toString())
 //            .child(LocalDateTime.now().month.toString())
 //            .child(LocalDateTime.now().dayOfMonth.toString())

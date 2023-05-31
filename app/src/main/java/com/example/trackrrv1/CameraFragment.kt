@@ -4,7 +4,6 @@ package com.example.trackrrv1
 
 import android.content.pm.PackageManager
 import android.os.Bundle
-import android.util.Log
 
 import android.view.LayoutInflater
 
@@ -20,7 +19,6 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import com.budiyev.android.codescanner.AutoFocusMode
 import com.budiyev.android.codescanner.CodeScanner
-import com.budiyev.android.codescanner.CodeScannerView
 import com.budiyev.android.codescanner.DecodeCallback
 import com.budiyev.android.codescanner.ErrorCallback
 import com.budiyev.android.codescanner.ScanMode
@@ -67,7 +65,21 @@ class CameraFragment : Fragment() {
                 (activity as MainActivity?)!!.startTransition()
                 lifecycleScope.launch() {
                     delay(Constants.transitionStartTime)
-                    binding.root.findNavController().navigate(R.id.action_cameraFragment_to_mainFragment)
+                    var observerInitializationCheck = false //Upon setting an observer, the ViewModel will run the method immediately but instead
+                                                        //We want it to navigate AFTER the ViewModel processes the API data and sets the foodFromCamera variable
+                    viewModel.foodFromCamera.observe(viewLifecycleOwner) {food ->//We make initializationCheck variable to let it run once without doing anything then the second time actually navigates
+                        if (observerInitializationCheck) {
+                            val navigateToWriteFragWithFood =
+                                CameraFragmentDirections.actionCameraFragmentToWriteFragment(food)
+                            binding.root.findNavController().navigate(navigateToWriteFragWithFood)
+                        }
+                        else {
+                            observerInitializationCheck = true
+                        }
+                    }
+
+
+
                 }
             }
         }

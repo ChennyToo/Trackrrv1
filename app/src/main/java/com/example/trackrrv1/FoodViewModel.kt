@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModel
+import androidx.navigation.findNavController
 import com.google.firebase.database.ChildEventListener
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -40,6 +41,7 @@ class FoodViewModel : ViewModel() {
     val field1value = MutableLiveData(-1)
     val field2value = MutableLiveData(-1)
     val field3value = MutableLiveData(-1)
+    var foodFromCamera = MutableLiveData(Food())
 
     fun resetFields(){
         field1value.value = -1
@@ -116,10 +118,18 @@ class FoodViewModel : ViewModel() {
 
                     val newFood = Food(name?: "", calorie?: 0, fat?: 0, sugar?: 0,
                         sodium?: 0, protein?: 0, carbohydrate?: 0, LocalDateTime.now(), imageUriString)
-                    dbRef = Constants.userDatabaseReference
-                    dbRef.child(year).child(month).child(day).child(name!!).setValue(newFood).addOnSuccessListener {
-                        MainFragment.refreshScreen = true//Tells MainFragment to refresh when item has been added
-                    }
+                    foodFromCamera.value = newFood
+//                    dbRef = Constants.userDatabaseReference
+//                    dbRef.child(year).child(month).child(day).child(name!!).setValue(newFood).addOnSuccessListener {
+//                        MainFragment.refreshScreen = true//Tells MainFragment to refresh when item has been added
+//                    }
+
+
+
+
+
+
+
                 }
             }
 

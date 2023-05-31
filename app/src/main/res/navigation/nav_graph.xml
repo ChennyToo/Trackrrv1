@@ -19,9 +19,6 @@
         <action
             android:id="@+id/action_mainFragment_to_homeFragment"
             app:destination="@id/homeFragment" />
-        <action
-            android:id="@+id/action_mainFragment_to_goalsFragment"
-            app:destination="@id/goalsFragment" />
     </fragment>
     <fragment
         android:id="@+id/cameraFragment"
@@ -31,6 +28,9 @@
         <action
             android:id="@+id/action_cameraFragment_to_mainFragment"
             app:destination="@id/mainFragment" />
+        <action
+            android:id="@+id/action_cameraFragment_to_writeFragment"
+            app:destination="@id/writeFragment" />
     </fragment>
     <fragment
         android:id="@+id/writeFragment"
@@ -61,6 +61,9 @@
         <action
             android:id="@+id/action_homeFragment_to_logInFragment"
             app:destination="@id/logInFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_goalsFragment"
+            app:destination="@id/goalsFragment" />
     </fragment>
     <fragment
         android:id="@+id/calendarFragment"
