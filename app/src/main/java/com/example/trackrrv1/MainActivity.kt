@@ -1,5 +1,6 @@
 package com.example.trackrrv1
 
+import android.content.ContentResolver
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
@@ -33,8 +34,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setSettings()
-        var userPref = applicationContext.getSharedPreferences("UserPref", Context.MODE_PRIVATE)
-        userPref.edit().remove("username").apply()
+//        var userPref = applicationContext.getSharedPreferences("UserPref", Context.MODE_PRIVATE)
+//        userPref.edit().remove("username").apply()
 //        Way to remove value from sharedpreferences, can be used to log out
 
 
