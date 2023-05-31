@@ -34,8 +34,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setSettings()
-//        var userPref = applicationContext.getSharedPreferences("UserPref", Context.MODE_PRIVATE)
-//        userPref.edit().remove("username").apply()
+        var userPref = applicationContext.getSharedPreferences("UserPref", Context.MODE_PRIVATE)
+        userPref.edit().remove("username").apply()
 //        Way to remove value from sharedpreferences, can be used to log out
 
 
