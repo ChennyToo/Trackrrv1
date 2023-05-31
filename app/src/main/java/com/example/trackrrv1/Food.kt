@@ -15,7 +15,7 @@ data class Food (val foodName : String = "empty",
                  val protein: Int = 0,
                  val carbohydrate: Int = 0,
                  val timeLogged: LocalDateTime = LocalDateTime.now(),
-                 val imageUriString: String = "https://nutritionix-api.s3.amazonaws.com/5460f139a7f2fb4538e920ae.jpeg"
+                 val imageUriString: String = "https://www.iconsdb.com/icons/preview/red/x-mark-3-xxl.png"
                  ) : Parcelable {
     @Exclude
 

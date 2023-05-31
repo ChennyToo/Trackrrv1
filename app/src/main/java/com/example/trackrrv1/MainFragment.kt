@@ -307,6 +307,7 @@ class MainFragment : Fragment() {
             binding.recyclerView.adapter = adapter
             if (isStartUp) {
                 (activity as MainActivity?)!!.endTransition()//starts the ending transition upon onCreateView
+                binding.recyclerView.layoutManager?.scrollToPosition(foodList.size - 1)
             }
             //TODO May have to add condition to determine if transition plays
         }
@@ -418,6 +419,7 @@ class MainFragment : Fragment() {
             0
         ) //prevents bug where some items may disappear by setting the view to be invisible
         binding.recyclerView.adapter = adapter
+        binding.recyclerView.layoutManager?.scrollToPosition(morningFoodList.size - 1)
     }
 
     fun showAfternoonList() {
@@ -434,6 +436,9 @@ class MainFragment : Fragment() {
             0
         ) //prevents bug where some items may disappear by setting the view to be invisible
         binding.recyclerView.adapter = adapter
+        binding.recyclerView.layoutManager?.scrollToPosition(afternoonFoodList.size - 1)
+
+
     }
 
 
@@ -451,6 +456,7 @@ fun showNightList() {
         0
     ) //prevents bug where some items may disappear by setting the view to be invisible
     binding.recyclerView.adapter = adapter
+    binding.recyclerView.layoutManager?.scrollToPosition(nightFoodList.size - 1)
 }
 
 fun showAllList() {
@@ -461,6 +467,7 @@ fun showAllList() {
         0
     ) //prevents bug where some items may disappear by setting the view to be invisible
     binding.recyclerView.adapter = adapter
+    binding.recyclerView.layoutManager?.scrollToPosition(foodList.size - 1)
 }
 
 private fun removeNavButtonFunctionality() {

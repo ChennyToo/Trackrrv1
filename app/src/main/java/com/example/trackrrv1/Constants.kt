@@ -14,7 +14,7 @@ class Constants {
         var transitionEndTime : Long = 400L
         var main_customizeAnimationTime : Long = 800L
         var main_iconCooldownTime : Long = 300L
-        var calorieIntake : Int = 200
+        var calorieIntake : Int = 2000
         var proteinIntake : Int = 50//update based on user preference
         var carbIntake : Int = 300
         var fatIntake : Int = 60

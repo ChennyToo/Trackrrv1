@@ -15,8 +15,7 @@ class FoodViewHolder(val binding: ListItemLayoutBinding) : RecyclerView.ViewHold
     private lateinit var currentFood: Food
 
 
-
-    fun bindFood(food : Food) {
+    fun bindFood(food: Food) {
         currentFood = food
 
         val name = currentFood.foodName
@@ -27,15 +26,27 @@ class FoodViewHolder(val binding: ListItemLayoutBinding) : RecyclerView.ViewHold
         val carb = currentFood.carbohydrate
         val time = currentFood.timeLogged
         var hour = time.hour
-        val isAM = if (hour < 12){"AM"} else {"PM"} //Format the time logic
-        if(isAM == "PM"){//Subtract 12 because PM is 12 hours ahead of AM
+        val isAM = if (hour < 12) {
+            "AM"
+        } else {
+            "PM"
+        } //Format the time logic
+        if (isAM == "PM") {//Subtract 12 because PM is 12 hours ahead of AM
             hour -= 12
         }
-        if(hour == 0){//No such thing as 00:12 PM, it is written as 12:12 PM
+        if (hour == 0) {//No such thing as 00:12 PM, it is written as 12:12 PM
             hour = 12
         }
-        val hourString = if (hour.toString().length == 1){"0$hour"} else {hour.toString()}//Includes the zero placeholder if one digit
-        val minuteString = if(time.minute.toString().length == 1){"0${time.minute}"} else {time.minute}
+        val hourString = if (hour.toString().length == 1) {
+            "0$hour"
+        } else {
+            hour.toString()
+        }//Includes the zero placeholder if one digit
+        val minuteString = if (time.minute.toString().length == 1) {
+            "0${time.minute}"
+        } else {
+            time.minute
+        }
         val timeString = "$hourString:$minuteString \n$isAM"
         val foodTimeIdentifier = "${time.hour}${time.minute}"
         val foodStorageID = "${Constants.username}/${currentFood.foodName}${foodTimeIdentifier}"
@@ -49,33 +60,41 @@ class FoodViewHolder(val binding: ListItemLayoutBinding) : RecyclerView.ViewHold
         binding.nutrientTV4.text = "Sugar: ${sugar}g"
         binding.timeLoggedTV.text = timeString
 
-
-
-        bindImageFromFirebase(foodStorageID, 500L)
-//        Glide.with(itemView).load(currentFood.imageUriString.toUri()).into(binding.FoodImageView);
+        if (currentFood.imageUriString != "https://www.iconsdb.com/icons/preview/red/x-mark-3-xxl.png") {
+            Log.d("FoodViewHolder", "${currentFood.imageUriString}")
+            Glide.with(itemView).load(currentFood.imageUriString.toUri())
+                .into(binding.FoodImageView);
+            val uploadTask =
+                MainFragment.mStorageRef.child("${foodStorageID}")
+                    .putFile(currentFood.imageUriString.toUri()).addOnFailureListener{
+                        Log.d("FoodViewHolder", "Failed")
+                    }
+        }
+        else {
+            bindImageFromFirebase(foodStorageID, 500L)
+        }
     }
 
-    fun bindImageFromFirebase(id : String, delayIteration : Long){
+    fun bindImageFromFirebase(id: String, delayIteration: Long) {
         //Below code gets the image from Firebase Storage and loads it into the respective food item
         MainFragment.mStorageRef.child(id).downloadUrl.addOnSuccessListener {
             Glide.with(parentFragment!!)
                 .load(it)
                 .into(binding.FoodImageView)
             Log.d("FoodViewHolder", "download passed")
-        }.addOnFailureListener {//Recursive code that will constantly try and attempt to get the image from Storage even after failing to get it the first time
-            Log.d("FoodViewHolder", "download failed, retrying")
-            parentFragment!!.lifecycleScope.launch {
-                delay(delayIteration)
-                bindImageFromFirebase(id, delayIteration + 500L)
-            }
         }
+            .addOnFailureListener {//Recursive code that will constantly try and attempt to get the image from Storage even after failing to get it the first time
+                Log.d("FoodViewHolder", "download failed, retrying")
+                parentFragment!!.lifecycleScope.launch {
+                    delay(delayIteration)
+                    bindImageFromFirebase(id, delayIteration + 500L)
+                }
+            }
     }
 
-    companion object{
-        var parentFragment : Fragment? = null
+    companion object {
+        var parentFragment: Fragment? = null
     }
-
-
 
 
 }
