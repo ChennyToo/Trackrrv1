@@ -6,51 +6,98 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".GoalsFragment">
 
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/goalsViewPager"
+        android:layout_width="match_parent"
+        android:layout_height="470dp"
+        app:layout_constraintTop_toTopOf="parent"
+        android:elevation="2dp"
+        >
+
+    </androidx.viewpager2.widget.ViewPager2>
+
+
+
     <ImageView
         android:id="@+id/goalsBG"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@drawable/goals_bg"/>
 
-    <ImageView
-        android:id="@+id/goalsBottom"
+    <TextView
+        android:id="@+id/goalsNutrientLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Calories"
+        android:textSize="40dp"
+        android:textColor="@color/white"
+        android:layout_marginBottom="20dp"
+        app:layout_constraintBottom_toTopOf="@id/goalsWholeBottomScreen"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/goalsWholeBottomScreen"
         android:layout_width="match_parent"
         android:layout_height="420dp"
-        android:background="@drawable/goals_bottom"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
+        >
 
-    <ImageButton
-        android:id="@+id/goalsPlusButton"
-        android:layout_width="130dp"
-        android:layout_height="130dp"
-        android:background="@drawable/goals_plusbutton"
-        app:layout_constraintTop_toTopOf="@id/goalsBottom"
-        app:layout_constraintEnd_toEndOf="@id/goalsBottom"
-        app:layout_constraintStart_toStartOf="@id/goalsBottom"/>
+        <ImageView
+            android:id="@+id/goalsBottom"
+            android:layout_width="match_parent"
+            android:layout_height="420dp"
+            android:background="@drawable/goals_bottom"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
-    <ImageButton
-        android:id="@+id/goalsMinusButton"
-        android:layout_width="130dp"
-        android:layout_height="130dp"
-        android:background="@drawable/goals_minusbutton"
-        app:layout_constraintBottom_toBottomOf="@id/goalsBottom"
-        app:layout_constraintEnd_toEndOf="@id/goalsBottom"
-        app:layout_constraintStart_toStartOf="@id/goalsBottom"/>
+        <ImageButton
+            android:id="@+id/goalsPlusButton"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:layout_marginTop="20dp"
+            android:background="@drawable/goals_plusbutton"
+            app:layout_constraintTop_toTopOf="@id/goalsBottom"
+            app:layout_constraintEnd_toEndOf="@id/goalsBottom"
+            app:layout_constraintStart_toStartOf="@id/goalsBottom"/>
+
+        <TextView
+            android:id="@+id/goalsValueDisplay"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="1000"
+            android:textColor="@color/white"
+            android:fontFamily="@font/archivo_semibold"
+            android:textSize="50dp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/goalsPlusButton"
+            app:layout_constraintBottom_toBottomOf="@id/goalsMinusButton"
+            android:gravity="center"/>
+
+
+        <ImageButton
+            android:id="@+id/goalsMinusButton"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:background="@drawable/goals_minusbutton"
+            android:layout_marginBottom="20dp"
+            app:layout_constraintBottom_toBottomOf="@id/goalsBottom"
+            app:layout_constraintEnd_toEndOf="@id/goalsBottom"
+            app:layout_constraintStart_toStartOf="@id/goalsBottom"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 
 
 
 
 
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/goalsViewPager"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
 
 
 
-    </androidx.viewpager2.widget.ViewPager2>
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>
