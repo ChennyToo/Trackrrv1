@@ -2,7 +2,9 @@ package com.example.trackrrv1
 
 import android.os.Bundle
 import android.util.Log
+import android.view.GestureDetector
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
@@ -15,10 +17,15 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import java.util.Locale
 
-class HomeFragment : Fragment() {
+class HomeFragment : Fragment(), GestureDetector.OnGestureListener {
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
     private val viewModel: FoodViewModel by activityViewModels()
+    lateinit var gestureDetector: GestureDetector
+    private var x1 = 0
+    private var x2 = 0
+    private var y1 = 0
+    private var y2 = 0
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -30,6 +37,8 @@ class HomeFragment : Fragment() {
             populateFields()
         }
         (activity as MainActivity?)!!.endTransition()
+        initiateGestures()
+        initiateButtons()
         lifecycleScope.launch {
             while (!checkCalories) {
                 delay(10L) //repeated checking of when viewModel finishes calculations
@@ -46,63 +55,13 @@ class HomeFragment : Fragment() {
             this.cancel()
         }
 
-        val buttonsClickListener: View.OnClickListener =
-            View.OnClickListener { view ->
-                when (view.id) {
-                    R.id.homeButtonCalendar -> {
-                        binding.homeButtonCalendar.setBackgroundResource(R.drawable.clickedhomebuttonbg)
-                        (activity as MainActivity?)!!.startTransition() //How to call methods in MainActivity
-                        removeAllButtonFunctionality() //prevents the user from clicking once navigation starts
-                        lifecycleScope.launch() {
-                            delay(Constants.transitionStartTime)
-                            binding.root.findNavController()
-                                .navigate(R.id.action_homeFragment_to_calendarFragment)
-                        }
-                    }
 
-                    R.id.homeButtonLogFood -> {
-                        binding.homeButtonLogFood.setBackgroundResource(R.drawable.clickedhomebuttonbg)
-                        (activity as MainActivity?)!!.startTransition()
-                        removeAllButtonFunctionality()
-                        lifecycleScope.launch() {
-                            delay(Constants.transitionStartTime)
-                            binding.root.findNavController()
-                                .navigate(R.id.action_homeFragment_to_mainFragment)
-                        }
-                    }
-
-                    R.id.homeButtonSettings->{
-                        binding.homeButtonSettings.setBackgroundResource(R.drawable.clickedhomebuttonbg)
-                        (activity as MainActivity?)!!.startTransition()
-                        removeAllButtonFunctionality()
-                        lifecycleScope.launch() {
-                            delay(Constants.transitionStartTime)
-                            binding.root.findNavController()
-                                .navigate(R.id.action_homeFragment_to_settingsFragment)
-                        }
-                    }
-                    R.id.homeButtonGoals ->{
-                        binding.homeButtonGoals.setBackgroundResource(R.drawable.clickedhomebuttonbg)
-                        (activity as MainActivity?)!!.startTransition()
-                        removeAllButtonFunctionality()
-                        lifecycleScope.launch() {
-                            delay(Constants.transitionStartTime)
-                            binding.root.findNavController()
-                                .navigate(R.id.action_homeFragment_to_goalsFragment)
-                        }
-                    }
-                }
-            }
-        binding.homeButtonLogFood.setOnClickListener(buttonsClickListener)
-        binding.homeButtonCalendar.setOnClickListener(buttonsClickListener)
-        binding.homeButtonSettings.setOnClickListener(buttonsClickListener)
-        binding.homeButtonGoals.setOnClickListener(buttonsClickListener)
 
 
         return binding.root
     }
 
-    fun removeAllButtonFunctionality() {
+    private fun removeAllButtonFunctionality() {
         //TODO add buttons as needed
         binding.homeButtonLogFood.setOnClickListener(null)
         binding.homeButtonCalendar.setOnClickListener(null)
@@ -110,7 +69,7 @@ class HomeFragment : Fragment() {
         binding.homeButtonGoals.setOnClickListener(null)
     }
 
-    fun populateFields() {
+    private fun populateFields() {
         //TODO Maybe able to have only one observer?
         //Possible to have one observer by having the third field being observed and then
         //update fields 1 + 2 first as those values have already been calculated
@@ -168,7 +127,7 @@ class HomeFragment : Fragment() {
 
     }
 
-    fun getUnit(nutritionName: String): String {
+    private fun getUnit(nutritionName: String): String {
         if (nutritionName.equals("sodium")) {
             return "mg"
         } else if (nutritionName.equals("protein") ||
@@ -185,7 +144,7 @@ class HomeFragment : Fragment() {
     }
 
 
-    fun calculateProgress(): Int {
+    private fun calculateProgress(): Int {
         var calorie = viewModel.todayCalorie
         var progressOutOf100 = (calorie / Constants.calorieIntake.toDouble()) * 100
         if (calorie > Constants.calorieIntake) {
@@ -196,6 +155,67 @@ class HomeFragment : Fragment() {
         return progressOfCircle
     }
 
+    private fun initiateButtons(){
+        val buttonsClickListener: View.OnClickListener =
+            View.OnClickListener { view ->
+                when (view.id) {
+                    R.id.homeButtonCalendar -> {
+                        binding.homeButtonCalendar.setBackgroundResource(R.drawable.clickedhomebuttonbg)
+                        (activity as MainActivity?)!!.startTransition() //How to call methods in MainActivity
+                        removeAllButtonFunctionality() //prevents the user from clicking once navigation starts
+                        lifecycleScope.launch() {
+                            delay(Constants.transitionStartTime)
+                            binding.root.findNavController()
+                                .navigate(R.id.action_homeFragment_to_calendarFragment)
+                        }
+                    }
+
+                    R.id.homeButtonLogFood -> {
+                        binding.homeButtonLogFood.setBackgroundResource(R.drawable.clickedhomebuttonbg)
+                        (activity as MainActivity?)!!.startTransition()
+                        removeAllButtonFunctionality()
+                        lifecycleScope.launch() {
+                            delay(Constants.transitionStartTime)
+                            binding.root.findNavController()
+                                .navigate(R.id.action_homeFragment_to_mainFragment)
+                        }
+                    }
+
+                    R.id.homeButtonSettings -> {
+                        binding.homeButtonSettings.setBackgroundResource(R.drawable.clickedhomebuttonbg)
+                        (activity as MainActivity?)!!.startTransition()
+                        removeAllButtonFunctionality()
+                        lifecycleScope.launch() {
+                            delay(Constants.transitionStartTime)
+                            binding.root.findNavController()
+                                .navigate(R.id.action_homeFragment_to_settingsFragment)
+                        }
+                    }
+
+                    R.id.homeButtonGoals -> {
+                        binding.homeButtonGoals.setBackgroundResource(R.drawable.clickedhomebuttonbg)
+                        (activity as MainActivity?)!!.startTransition()
+                        removeAllButtonFunctionality()
+                        lifecycleScope.launch() {
+                            delay(Constants.transitionStartTime)
+                            binding.root.findNavController()
+                                .navigate(R.id.action_homeFragment_to_goalsFragment)
+                        }
+                    }
+                }
+            }
+        binding.homeButtonLogFood.setOnClickListener(buttonsClickListener)
+        binding.homeButtonCalendar.setOnClickListener(buttonsClickListener)
+        binding.homeButtonSettings.setOnClickListener(buttonsClickListener)
+        binding.homeButtonGoals.setOnClickListener(buttonsClickListener)
+    }
+
+    private fun initiateGestures() {
+        gestureDetector = GestureDetector(activity, this)
+        binding.homeConstraintLayout.setOnTouchListener { v, event -> gestureDetector.onTouchEvent(event) }
+    }
+
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
@@ -204,6 +224,78 @@ class HomeFragment : Fragment() {
 
     companion object {
         var checkCalories = false
+    }
+
+    override fun onDown(e: MotionEvent): Boolean {
+        return true
+    }
+
+    override fun onShowPress(e: MotionEvent) {
+    }
+
+    override fun onSingleTapUp(e: MotionEvent): Boolean {
+        return true
+    }
+
+    override fun onScroll(
+        e1: MotionEvent,
+        e2: MotionEvent,
+        distanceX: Float,
+        distanceY: Float
+    ): Boolean {
+        return true
+    }
+
+    override fun onLongPress(e: MotionEvent) {
+    }
+
+    override fun onFling(
+        e1: MotionEvent,
+        e2: MotionEvent,
+        velocityX: Float,
+        velocityY: Float
+    ): Boolean {
+        var SWIPE_MIN_DISTANCE = 120;
+        var SWIPE_MAX_OFF_PATH = 250;
+        var SWIPE_THRESHOLD_VELOCITY = 200;
+        try {
+            if (Math.abs(e1.y - e2.y) > SWIPE_MAX_OFF_PATH) return false
+            if (e1.x - e2.x > SWIPE_MIN_DISTANCE
+                && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY
+            ) {
+                //Navigate to WriteFragment
+                Log.d("HomeFragment", "Right to Left")
+                (activity as MainActivity?)!!.startTransition()
+                removeAllButtonFunctionality()
+                lifecycleScope.launch() {
+                    delay(Constants.transitionStartTime)
+                    val navigateToWriteFragWithNoFood =
+                        HomeFragmentDirections.actionHomeFragmentToWriteFragment(Food())
+                    binding.root.findNavController().navigate(navigateToWriteFragWithNoFood)
+                    //TODO HERE
+                }
+
+
+
+            } else if (e2.x - e1.x > SWIPE_MIN_DISTANCE
+                && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY
+            ) {
+                //Navigate to CameraFragment
+                Log.d("HomeFragment", "Left to Right")
+                (activity as MainActivity?)!!.startTransition()
+                removeAllButtonFunctionality()
+                lifecycleScope.launch() {
+                    delay(Constants.transitionStartTime)
+                    val navigateToWriteFragWithNoFood =
+                        HomeFragmentDirections.actionHomeFragmentToCameraFragment(Food())
+                    binding.root.findNavController().navigate(navigateToWriteFragWithNoFood)
+                    //TODO HERE
+                }
+            }
+        } catch (e: Exception) {
+            // nothing
+        }
+        return true
     }
 }
 

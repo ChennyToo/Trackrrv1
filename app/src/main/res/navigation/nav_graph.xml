@@ -64,6 +64,12 @@
         <action
             android:id="@+id/action_homeFragment_to_goalsFragment"
             app:destination="@id/goalsFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_writeFragment"
+            app:destination="@id/writeFragment" />
+        <action
+            android:id="@+id/action_homeFragment_to_cameraFragment"
+            app:destination="@id/cameraFragment" />
     </fragment>
     <fragment
         android:id="@+id/calendarFragment"

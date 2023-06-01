@@ -4,7 +4,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".HomeFragment">
+    tools:context=".HomeFragment"
+    android:id="@+id/homeConstraintLayout"
+    >
 
     <!-- TODO: Update blank fragment layout -->
     <ImageView

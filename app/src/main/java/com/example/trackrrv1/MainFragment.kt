@@ -291,7 +291,7 @@ class MainFragment : Fragment() {
                 0,
                 0
             ) //prevents bug where some items may disappear by setting the view to be invisible
-            binding.recyclerView.adapter = adapter
+                 binding.recyclerView.adapter = adapter
                 (activity as MainActivity?)!!.endTransition()//starts the ending transition upon onCreateView
                 binding.recyclerView.layoutManager?.scrollToPosition(foodList.size - 1)
             setIfNoImageIcon(foodList.size)
