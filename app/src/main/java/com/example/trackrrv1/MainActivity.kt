@@ -39,17 +39,17 @@ class MainActivity : AppCompatActivity() {
 //        Way to remove value from sharedpreferences, can be used to log out
 
 
-//        Constants.username = applicationContext.getSharedPreferences("UserPref", Context.MODE_PRIVATE).getString("username", "empty") ?: "empty"//is there was no username set before, the default value is "empty"
-//        Log.d("MainActivity", "${Constants.username}")
-//        if (Constants.username != "empty"){//If the user has already logged in on said device, they will start on home screen. If not, default starting position is login screen
-//            val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment)
-//            val inflater = navHostFragment!!.findNavController().navInflater
-//            val graph = inflater.inflate(R.navigation.nav_graph)
-//            graph.setStartDestination(R.id.homeFragment)
-//            val navController = navHostFragment.findNavController()
-//            navController.setGraph(graph, intent.extras)
-//            Constants.userDatabaseReference = Firebase.database.reference.child(Constants.username)
-//        }
+        Constants.username = applicationContext.getSharedPreferences("UserPref", Context.MODE_PRIVATE).getString("username", "empty") ?: "empty"//is there was no username set before, the default value is "empty"
+        Log.d("MainActivity", "${Constants.username}")
+        if (Constants.username != "empty"){//If the user has already logged in on said device, they will start on home screen. If not, default starting position is login screen
+            val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment)
+            val inflater = navHostFragment!!.findNavController().navInflater
+            val graph = inflater.inflate(R.navigation.nav_graph)
+            graph.setStartDestination(R.id.homeFragment)
+            val navController = navHostFragment.findNavController()
+            navController.setGraph(graph, intent.extras)
+            Constants.userDatabaseReference = Firebase.database.reference.child(Constants.username)
+        }
 
         window.decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION,)
         window.decorView.setSystemUiVisibility(View.SYSTEM_UI_FLAG_HIDE_NAVIGATION,)
@@ -89,9 +89,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun setSettings(){
-        Constants.HCField1Type = applicationContext.getSharedPreferences("UserPref", Context.MODE_PRIVATE).getString("HCField1", "sodium") ?: "sodium"
-        Constants.HCField2Type = applicationContext.getSharedPreferences("UserPref", Context.MODE_PRIVATE).getString("HCField2", "carbohydrate") ?: "carbohydrate"
-        Constants.HCField3Type = applicationContext.getSharedPreferences("UserPref", Context.MODE_PRIVATE).getString("HCField3", "sugar") ?: "sugar"
+        val UserPref = applicationContext.getSharedPreferences("UserPref", Context.MODE_PRIVATE)
+        Constants.HCField1Type = UserPref.getString("HCField1", "sodium") ?: "sodium"
+        Constants.HCField2Type = UserPref.getString("HCField2", "carbohydrate") ?: "carbohydrate"
+        Constants.HCField3Type = UserPref.getString("HCField3", "sugar") ?: "sugar"
+        Constants.calorieIntake = UserPref.getInt("calorieIntake", 2000)
+        Constants.proteinIntake = UserPref.getInt("proteinIntake", 50)
+        Constants.carbIntake = UserPref.getInt("carbIntake", 300)
+        Constants.sodiumIntake = UserPref.getInt("sodiumIntake", 2000)
+        Constants.fatIntake = UserPref.getInt("fatIntake", 60)
+        Constants.sugarIntake = UserPref.getInt("sugarIntake", 30)
     }
 
 

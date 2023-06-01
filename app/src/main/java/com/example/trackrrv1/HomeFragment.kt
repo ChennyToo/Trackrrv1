@@ -82,7 +82,14 @@ class HomeFragment : Fragment() {
                         }
                     }
                     R.id.homeButtonGoals ->{
-                        //TODO Fill when needed
+                        binding.homeButtonGoals.setBackgroundResource(R.drawable.clickedhomebuttonbg)
+                        (activity as MainActivity?)!!.startTransition()
+                        removeAllButtonFunctionality()
+                        lifecycleScope.launch() {
+                            delay(Constants.transitionStartTime)
+                            binding.root.findNavController()
+                                .navigate(R.id.action_homeFragment_to_goalsFragment)
+                        }
                     }
                 }
             }

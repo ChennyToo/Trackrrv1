@@ -11,6 +11,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.findNavController
 import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.widget.ViewPager2
 import com.example.trackrrv1.databinding.FragmentGoalsBinding
@@ -41,8 +42,8 @@ class GoalsFragment : Fragment() {
             R.drawable.goals_carbcard, R.drawable.goals_saltcard,
             R.drawable.goals_fatcard, R.drawable.goals_sugarcard
         )
-
         initializeButtons()
+        binding.goalsValueDisplay.text = editableCalorie.toString()
         val adapter = ViewPagerAdapter(images)
         binding.goalsViewPager.adapter = adapter
         val pager: ViewPager2 = binding.goalsViewPager
@@ -85,6 +86,7 @@ class GoalsFragment : Fragment() {
 
         })
         // Inflate the layout for this fragment
+        (activity as MainActivity?)!!.endTransition()
         return binding.root
     }
 
@@ -104,81 +106,119 @@ class GoalsFragment : Fragment() {
         when (currentPagerPosition) {
             0 -> {
                 binding.goalsNutrientLabel.text = "Calories"
-                binding.goalsValueDisplay.text = "Cal"
+                binding.goalsValueDisplay.text = editableCalorie.toString()
             }
 
             1 -> {
                 binding.goalsNutrientLabel.text = "Protein"
-                binding.goalsValueDisplay.text = "Pro"
+                binding.goalsValueDisplay.text = editableProtein.toString()
             }
 
             2 -> {
                 binding.goalsNutrientLabel.text = "Carbohydrates"
-                binding.goalsValueDisplay.text = "Carb"
+                binding.goalsValueDisplay.text = editableCarb.toString()
             }
 
             3 -> {
                 binding.goalsNutrientLabel.text = "Sodium"
-                binding.goalsValueDisplay.text = "Salt"
-            }
-
-            4 -> {
-                binding.goalsNutrientLabel.text = "Fat"
-                binding.goalsValueDisplay.text = "Fat"
-            }
-
-            5 -> {
-                binding.goalsNutrientLabel.text = "Sugar"
-                binding.goalsValueDisplay.text = "Sugar"
-            }
-        }
-
-
-    }
-
-    private fun initializeButtons(){
-        val buttonsClickListener: View.OnClickListener =
-        View.OnClickListener { view ->
-            when (view.id) {
-                R.id.goalsPlusButton ->{changeNutrientGoalValue(1)}
-                R.id.goalsMinusButton ->{changeNutrientGoalValue(-1)}
-
-            }
-        }
-        binding.goalsPlusButton.setOnClickListener(buttonsClickListener)
-        binding.goalsMinusButton.setOnClickListener(buttonsClickListener)
-    }
-
-    private fun changeNutrientGoalValue(isAdding : Int){
-        when(currentPagerPosition){
-            0 ->{
-                editableCalorie += (100 * isAdding)
-                binding.goalsValueDisplay.text = editableCalorie.toString()
-            }
-            1 ->{
-                editableProtein += (5 * isAdding)
-                binding.goalsValueDisplay.text = editableProtein.toString()
-            }
-
-            2 ->{
-                editableCarb += (5 * isAdding)
-                binding.goalsValueDisplay.text = editableCarb.toString()
-            }
-
-            3 ->{
-                editableSodium += (100 * isAdding)
                 binding.goalsValueDisplay.text = editableSodium.toString()
             }
 
             4 -> {
-                editableFat += (5 * isAdding)
+                binding.goalsNutrientLabel.text = "Fat"
                 binding.goalsValueDisplay.text = editableFat.toString()
+            }
+
+            5 -> {
+                binding.goalsNutrientLabel.text = "Sugar"
+                binding.goalsValueDisplay.text = editableSugar.toString()
+            }
+        }
+
+
+    }
+
+    private fun initializeButtons() {
+        val buttonsClickListener: View.OnClickListener =
+            View.OnClickListener { view ->
+                when (view.id) {
+                    R.id.goalsPlusButton -> {
+                        changeNutrientGoalValue(1)
+                    }
+
+                    R.id.goalsMinusButton -> {
+                        changeNutrientGoalValue(-1)
+                    }
+
+                    R.id.goalsHomeButton -> {
+                        binding.goalsHomeButton.isClickable = false
+                        (activity as MainActivity?)!!.startTransition()
+                        lifecycleScope.launch() {
+                            delay(Constants.transitionStartTime)
+                            binding.root.findNavController()
+                                .navigate(R.id.action_goalsFragment_to_homeFragment)
+                        }
+                    }
+                }
+            }
+        binding.goalsPlusButton.setOnClickListener(buttonsClickListener)
+        binding.goalsMinusButton.setOnClickListener(buttonsClickListener)
+        binding.goalsHomeButton.setOnClickListener(buttonsClickListener)
+    }
+
+    private fun changeNutrientGoalValue(isAdding: Int) {
+        when (currentPagerPosition) {
+            0 -> {
+                if (editableCalorie > 100 || isAdding > 0) {
+                    editableCalorie += (100 * isAdding)
+                    binding.goalsValueDisplay.text = editableCalorie.toString()
+                }
+
 
             }
 
-            5 ->{
-                editableSugar += (5 * isAdding)
-                binding.goalsValueDisplay.text = editableSugar.toString()
+            1 -> {
+                if (editableProtein > 5 || isAdding > 0) {
+                    editableProtein += (5 * isAdding)
+                    binding.goalsValueDisplay.text = editableProtein.toString()
+                }
+
+
+            }
+
+            2 -> {
+                if (editableCarb > 5 || isAdding > 0) {
+                    editableCarb += (5 * isAdding)
+                    binding.goalsValueDisplay.text = editableCarb.toString()
+                }
+
+
+            }
+
+            3 -> {
+                if (editableSodium > 100 || isAdding > 0) {
+                    editableSodium += (100 * isAdding)
+                    binding.goalsValueDisplay.text = editableSodium.toString()
+                }
+
+
+            }
+
+            4 -> {
+                if (editableFat > 5 || isAdding > 0) {
+                    editableFat += (5 * isAdding)
+                    binding.goalsValueDisplay.text = editableFat.toString()
+                }
+
+
+            }
+
+            5 -> {
+                if (editableSugar > 5 || isAdding > 0) {
+                    editableSugar += (5 * isAdding)
+                    binding.goalsValueDisplay.text = editableSugar.toString()
+                }
+
             }
         }
 
@@ -186,11 +226,21 @@ class GoalsFragment : Fragment() {
 
     override fun onStop() {//Upon the Fragment getting exited out via navigation or phone turn off, it will save data to Shared Preferences
         super.onStop()
-    //                var sharedPref = requireActivity().getSharedPreferences("UserPref", Context.MODE_PRIVATE)
-//                var editor: SharedPreferences.Editor = sharedPref.edit()
-//                editor.putString("HCField1", Position1Value)
-//                editor.putString("HCField2", Position2Value)
-//                editor.putString("HCField3", Position3Value)
-//                editor.commit()
+        Constants.calorieIntake = editableCalorie
+        Constants.proteinIntake = editableProtein
+        Constants.carbIntake = editableCarb
+        Constants.sodiumIntake = editableSodium
+        Constants.fatIntake = editableFat
+        Constants.sugarIntake = editableSugar
+
+        var sharedPref = requireActivity().getSharedPreferences("UserPref", Context.MODE_PRIVATE)
+        var editor: SharedPreferences.Editor = sharedPref.edit()
+        editor.putInt("calorieIntake", editableCalorie)
+        editor.putInt("proteinIntake", editableProtein)
+        editor.putInt("carbIntake", editableCarb)
+        editor.putInt("sodiumIntake", editableSodium)
+        editor.putInt("fatIntake", editableFat)
+        editor.putInt("sugarIntake", editableSugar)
+        editor.commit()
     }
 }
