@@ -28,9 +28,14 @@ class GoalsFragment : Fragment() {
         val pager : ViewPager2 = binding.goalsViewPager
 
         pager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
+            override fun onPageScrollStateChanged(state: Int) {//If user starts to slightly move the image, it will call the function with state of 1
+                                                                //Once image is set (user stops moving), it will be called again with state of 2
+                Log.d("GoalsFragment", "State: ${state}")
+                super.onPageScrollStateChanged(state)
+            }
             override fun onPageSelected(position: Int) {
                 //Everytime user scrolls, we can see where the position of the ViewPager we are in
-                Log.d("GoalsFragment", "${position}")
+                Log.d("GoalsFragment", "Position: ${position}")
                 super.onPageSelected(position)
             }
 

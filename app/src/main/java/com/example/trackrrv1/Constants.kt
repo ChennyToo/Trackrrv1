@@ -18,6 +18,8 @@ class Constants {
         var proteinIntake : Int = 50//update based on user preference
         var carbIntake : Int = 300
         var fatIntake : Int = 60
+        var sodiumIntake : Int = 2000
+        var sugarIntake : Int = 30
         var monthList : List<String> = listOf("January", "February", "March",
             "April", "May", "June", "July", "August", "September", "October", "November", "December")
         var calProgressAnimationDuration = 500L
