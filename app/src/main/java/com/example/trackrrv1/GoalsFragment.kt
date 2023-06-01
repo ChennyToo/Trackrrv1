@@ -29,7 +29,8 @@ class GoalsFragment : Fragment() {
 
         pager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
             override fun onPageScrollStateChanged(state: Int) {//If user starts to slightly move the image, it will call the function with state of 1
-                                                                //Once image is set (user stops moving), it will be called again with state of 2
+                                                                //When user stops moving, it will be called again with state of 2
+                                                                //When image stops on screen, it will be called again with state of 0
                 Log.d("GoalsFragment", "State: ${state}")
                 super.onPageScrollStateChanged(state)
             }
