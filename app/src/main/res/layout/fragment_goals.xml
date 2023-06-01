@@ -1,11 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".GoalsFragment">
 
-    <!-- TODO: Update blank fragment layout -->
+    <ImageView
+        android:id="@+id/goalsBG"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/goals_bg"/>
+
+    <ImageView
+        android:id="@+id/goalsBottom"
+        android:layout_width="match_parent"
+        android:layout_height="420dp"
+        android:background="@drawable/goals_bottom"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <ImageButton
+        android:id="@+id/goalsPlusButton"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
+        android:background="@drawable/goals_plusbutton"
+        app:layout_constraintTop_toTopOf="@id/goalsBottom"
+        app:layout_constraintEnd_toEndOf="@id/goalsBottom"
+        app:layout_constraintStart_toStartOf="@id/goalsBottom"/>
+
+    <ImageButton
+        android:id="@+id/goalsMinusButton"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
+        android:background="@drawable/goals_minusbutton"
+        app:layout_constraintBottom_toBottomOf="@id/goalsBottom"
+        app:layout_constraintEnd_toEndOf="@id/goalsBottom"
+        app:layout_constraintStart_toStartOf="@id/goalsBottom"/>
+
+
+
+
+
+
     <androidx.viewpager2.widget.ViewPager2
         android:id="@+id/goalsViewPager"
         android:layout_width="match_parent"
@@ -15,4 +53,4 @@
 
     </androidx.viewpager2.widget.ViewPager2>
 
-</FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
