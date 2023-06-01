@@ -39,15 +39,16 @@ class WriteFragment : Fragment() {
     private val binding get() = _binding!!
     private val viewModel: FoodViewModel by activityViewModels()
     private var isEditState = false
-    private var mStorageRef: StorageReference =  FirebaseStorage.getInstance().getReference("uploads")
-    lateinit var foodName : String
-    lateinit var foodTimeIdentifier : String
-    lateinit var imageUri : Uri
+    private var mStorageRef: StorageReference =
+        FirebaseStorage.getInstance().getReference("uploads")
+    lateinit var foodName: String
+    lateinit var foodTimeIdentifier: String
+    lateinit var imageUri: Uri
     var didChangeImage = false
     private var imagePickerActivityResult: ActivityResultLauncher<Intent> =
     // lambda expression to receive a result back, here we
         // receive single item(photo) on selection
-        registerForActivityResult( ActivityResultContracts.StartActivityForResult()) { result ->
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result != null) {
                 // getting URI of selected Image
                 imageUri = result.data?.data!!
@@ -62,7 +63,7 @@ class WriteFragment : Fragment() {
 
                 // On success, download the file URL and display it
 //                uploadTask.addOnSuccessListener {
-                    // using glide library to display the image
+                // using glide library to display the image
 //                    mStorageRef.child("2").downloadUrl.addOnSuccessListener {
 //                        Glide.with(this)
 //                            .load(it)
@@ -77,7 +78,6 @@ class WriteFragment : Fragment() {
 //                }
             }
         }
-
 
 
     override fun onCreateView(
@@ -108,9 +108,7 @@ class WriteFragment : Fragment() {
                         }
                     }
 
-                    R.id.writeGalleryButton ->{
-
-
+                    R.id.writeGalleryButton -> {
 
 
                         // PICK INTENT picks item from data
@@ -182,7 +180,7 @@ class WriteFragment : Fragment() {
             0, protein ?: 0, carb ?: 0, time, uriStringFromCameraOrEdit
         )
 
-        if(didChangeImage) {//if the user did not select an image for the food item, dont attempt to upload to Firebase
+        if (didChangeImage) {//if the user did not select an image for the food item, dont attempt to upload to Firebase
             //Add the image that user uploaded to Firebase storage, the delete line is meant to remove an image if they had already set one previously
             newFood.imageUriString = ""
             Log.d("WriteFragment", "Image changed")
@@ -193,70 +191,38 @@ class WriteFragment : Fragment() {
                     .putFile(imageUri!!)
         }
 
-        if (isEditState) {//Note that we are passing the value to Firebase and then navigating
-                        //If Firebase does not get the updated information in time and navigates prematurely, then the new food item will not display on screen
-            //TODO FIND HOW TO UPDATE
-//            dbRef.child(LocalDateTime.now().year.toString())
-//                .child(LocalDateTime.now().month.toString())
-//                .child(foodArgs.foodItemPassedInFromEdit.timeLogged.dayOfMonth.toString())
-//                .child(foodArgs.foodItemPassedInFromEdit.foodName).updateChildren(
-//                    newFood.toMap()).addOnSuccessListener {
-//                    MainFragment.refreshScreen = true
-//                }
-
-            dbRef.child(LocalDateTime.now().year.toString())
-                .child(LocalDateTime.now().month.toString())
-                .child(foodArgs.foodItemPassedInFromEdit.timeLogged.dayOfMonth.toString())//Editing a food item while changing days will update yesterday's date
-                .child(foodArgs.foodItemPassedInFromEdit.foodName)
-                .ref.removeValue()
-
-            dbRef.child(LocalDateTime.now().year.toString())
-                .child(LocalDateTime.now().month.toString())
-                .child(foodArgs.foodItemPassedInFromEdit.timeLogged.dayOfMonth.toString())
-                .child(name).setValue(newFood).addOnSuccessListener {
-                    (activity as MainActivity?)!!.startTransition()
-                    lifecycleScope.launch() {
-                        delay(Constants.transitionStartTime)
-                        binding.root.findNavController().navigate(R.id.action_writeFragment_to_mainFragment)
-                    }
-                }.addOnFailureListener {
-                    Log.d("WriteFragment", "Item failed to update Firebase")
+        dbRef.child(LocalDateTime.now().year.toString())
+            .child(LocalDateTime.now().month.toString())
+            .child(foodArgs.foodItemPassedInFromEdit.timeLogged.dayOfMonth.toString())
+            .child(foodArgs.foodItemPassedInFromEdit.foodName)
+            .ref.removeValue()
+        dbRef.child(LocalDateTime.now().year.toString())
+            .child(LocalDateTime.now().month.toString())
+            .child(
+                if (isEditState) {
+                    foodArgs.foodItemPassedInFromEdit.timeLogged.dayOfMonth.toString()
+                } else {
+                    LocalDateTime.now().dayOfMonth.toString()
                 }
-
-
-        } else {
-            dbRef.child(LocalDateTime.now().year.toString())
-                .child(LocalDateTime.now().month.toString())
-                .child(LocalDateTime.now().dayOfMonth.toString())
-                .child(name!!).setValue(newFood).addOnSuccessListener {
-                    (activity as MainActivity?)!!.startTransition()
-                    lifecycleScope.launch() {
-                        delay(Constants.transitionStartTime)
-                        binding.root.findNavController().navigate(R.id.action_writeFragment_to_mainFragment)
-                    }
-                }.addOnFailureListener {
-                    Log.d("WriteFragment", "Item failed to update Firebase")
+            )//Editing a food item while changing days will update yesterday's date
+            .child(name!!).setValue(newFood).addOnSuccessListener {
+                (activity as MainActivity?)!!.startTransition()
+                lifecycleScope.launch() {
+                    delay(Constants.transitionStartTime)
+                    binding.root.findNavController()
+                        .navigate(R.id.action_writeFragment_to_mainFragment)
                 }
-        }
-
-
-//        dbRef.child(LocalDateTime.now().year.toString())
-//            .child(LocalDateTime.now().month.toString())
-//            .child(LocalDateTime.now().dayOfMonth.toString())
-//            .child(name!!).child("StorageUri").setValue("${Constants.username}/${foodName}${foodTimeIdentifier}")
-
-
-
+            }.addOnFailureListener {
+                Log.d("WriteFragment", "Item failed to update Firebase")
+            }
 
     }
 
     fun changeToEditState(foodItem: Food) {
-        if (foodItem.imageUriString != ""){
+        if (foodItem.imageUriString != "") {
             Glide.with(this).load(foodItem.imageUriString.toUri())
                 .into(binding.writeFoodImage)
-        }
-
-        else{
+        } else {
             mStorageRef.child("${Constants.username}/${foodItem.foodName}${foodItem.timeLogged.hour}${foodItem.timeLogged.minute}").downloadUrl.addOnSuccessListener {
                 Glide.with(this)
                     .load(it)
@@ -293,11 +259,10 @@ class WriteFragment : Fragment() {
         Log.d("WriteFragment", "displayErrorToUser name field has bad characters")
     }
 
-    fun disableButtonFunctionality(){
+    fun disableButtonFunctionality() {
         binding.writeBackScreenButton.isClickable = false
         binding.LogButton.isClickable = false
     }
-
 
 
     override fun onDestroyView() {

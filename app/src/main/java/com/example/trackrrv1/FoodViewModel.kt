@@ -41,14 +41,8 @@ class FoodViewModel : ViewModel() {
     val field1value = MutableLiveData(-1)
     val field2value = MutableLiveData(-1)
     val field3value = MutableLiveData(-1)
-    var foodFromCamera = MutableLiveData(Food())
-//    var refreshMainFragment = MutableLiveData(0)
+    var foodFromCamera = MutableLiveData(Food())//Mutable live data because CameraFragment needs to know when the information updates in order to navigate
 
-    fun resetFields(){
-        field1value.value = -1
-        field2value.value = -1
-        field3value.value = -1
-    }
 
     fun getNutritionToday(nutrient : String){
         dbRef.get().addOnSuccessListener { snapshot ->
@@ -107,7 +101,7 @@ class FoodViewModel : ViewModel() {
                 val foodsItemList = foodsResponse?.foodsItemsList ?: listOf()
 
                 for (foodItem in foodsItemList){
-                    val name = foodItem.name
+                    val name = if(foodItem.name!!.length > 16){foodItem.name!!.substring(0, 16)}else{foodItem.name}
                     val calorie = foodItem.calorie
                     val fat = foodItem.fat
                     val sugar = foodItem.sugar
@@ -120,16 +114,6 @@ class FoodViewModel : ViewModel() {
                     val newFood = Food(name?: "", calorie?: 0, fat?: 0, sugar?: 0,
                         sodium?: 0, protein?: 0, carbohydrate?: 0, LocalDateTime.now(), imageUriString)
                     foodFromCamera.value = newFood
-//                    dbRef = Constants.userDatabaseReference
-//                    dbRef.child(year).child(month).child(day).child(name!!).setValue(newFood).addOnSuccessListener {
-//                        MainFragment.refreshScreen = true//Tells MainFragment to refresh when item has been added
-//                    }
-
-
-
-
-
-
 
                 }
             }

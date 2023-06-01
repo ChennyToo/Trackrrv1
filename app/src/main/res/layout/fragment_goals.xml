@@ -6,12 +6,13 @@
     tools:context=".GoalsFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <ViewFlipper
+    <androidx.viewpager2.widget.ViewPager2
+        android:id="@+id/goalsViewPager"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
 
 
-    </ViewFlipper>
+    </androidx.viewpager2.widget.ViewPager2>
 
 </FrameLayout>

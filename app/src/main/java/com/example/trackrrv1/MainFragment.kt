@@ -37,7 +37,6 @@ class MainFragment : Fragment() {
     var firstClick = true
     lateinit var foodList: MutableList<Food>
     lateinit var adapter: FoodAdapter
-    var foodListSize = 0
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -118,16 +117,8 @@ class MainFragment : Fragment() {
 //            .setValue(testList2[9])
 //        dbRef.child(year).child(month).child(day).child(testList2[10].foodName)
 //            .setValue(testList2[10])
-        showFoodListToday(true)
-//        viewModel.refreshMainFragment.value = viewModel.refreshMainFragment.value?.minus(1)
-//        viewModel.refreshMainFragment.value = -1
-//        viewModel.refreshMainFragment.observe(viewLifecycleOwner) {count ->
-//            Log.d("MainFragment", "Observer Called")
-//            if (count > 0){
-//                Log.d("MainFragment", "Observer Called2")
-//                showFoodListToday(false)
-//            }
-//        }
+        showFoodListToday()
+
 
 
         // Inflate the layout for this fragment
@@ -261,21 +252,9 @@ class MainFragment : Fragment() {
         }
     }
 
-//    fun refreshCheckerLoop() { //Checks if the screen needs to be refreshed for new foods
-//        lifecycleScope.launch(Dispatchers.IO) {
-//            while (true) {
-//                delay(500L)
-//                if (refreshScreen) {
-//                    showFoodListToday(false)
-//                    refreshScreen = false
-//                    break
-//                }
-//            }
-//            this.cancel()//TODO may cause problems
-//        }
-//    }
 
-    fun showFoodListToday(isStartUp: Boolean) {
+
+    fun showFoodListToday() {
         foodList = mutableListOf<Food>()
         dbRef.get().addOnSuccessListener { snapshot ->
             var foodSnapShot = snapshot.child(year).child(month).child(day).children
@@ -308,19 +287,14 @@ class MainFragment : Fragment() {
 
             adapter = FoodAdapter(foodList, this)
             binding.amountLoggedTV.text = "You have logged ${foodList.size} items"
-            foodListSize = foodList.size
-
-
             binding.recyclerView.recycledViewPool.setMaxRecycledViews(
                 0,
                 0
             ) //prevents bug where some items may disappear by setting the view to be invisible
             binding.recyclerView.adapter = adapter
-            if (isStartUp) {
                 (activity as MainActivity?)!!.endTransition()//starts the ending transition upon onCreateView
                 binding.recyclerView.layoutManager?.scrollToPosition(foodList.size - 1)
-            }
-            //TODO May have to add condition to determine if transition plays
+            setIfNoImageIcon(foodList.size)
         }
     }
 
@@ -357,7 +331,6 @@ class MainFragment : Fragment() {
 
 //            adapter = FoodAdapter(foodList, this)
 //            binding.amountLoggedTV.text = "You have logged ${foodList.size} items"
-            foodListSize = foodList.size
             if (State == 1) {
                 showMorningList()
             } else if (State == 2) {
