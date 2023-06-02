@@ -367,6 +367,11 @@
         app:layout_constraintBottom_toBottomOf="@id/homeButtonGoals"
         app:layout_constraintStart_toStartOf="@id/homeButtonGoals"/>
 
+    <ImageView
+        android:id="@+id/homeButtonCalendarIcon"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
+        android:background="@drawable/home_calendaricon"
 
 
 

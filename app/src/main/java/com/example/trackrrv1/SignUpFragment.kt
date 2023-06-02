@@ -6,6 +6,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.navigation.findNavController
 import com.example.trackrrv1.databinding.FragmentLogInBinding
 import com.example.trackrrv1.databinding.FragmentSignUpBinding
@@ -42,14 +43,39 @@ class SignUpFragment : Fragment() {
                 }
             dbRef.get().addOnSuccessListener { snapshot ->
                 var credentialSnapShot = snapshot.child(username).value
-                if (credentialSnapShot == null && password == confirmpassword && password != "empty" && username != "empty") {//Is name is not taken yet
-                    //Additionally, passwords must match, username and password must not be empty
-                    dbRef.child(username).child("Password").setValue(password)
-                    binding.root.findNavController()
-                        .navigate(R.id.action_signUpFragment_to_logInFragment)
-                } else {//If name exists
-                    Log.d("LogIn", "Cannot sign up, ensure all fields are correct and filled + name isnt taken")
+                if (credentialSnapShot != null){
+                    Toast.makeText(requireActivity(), "Username taken!", Toast.LENGTH_SHORT).show()
                 }
+
+                else {
+                    if (password != confirmpassword){
+                        Toast.makeText(requireActivity(), "Passwords don't match!", Toast.LENGTH_SHORT).show()
+                    }
+
+                    else {
+                        if (password == "empty" || username == "empty"){
+                            Toast.makeText(requireActivity(), "Don't leave fields blank!", Toast.LENGTH_SHORT).show()
+                        }
+
+                        else {
+                            dbRef.child(username).child("Password").setValue(password)
+                             binding.root.findNavController()
+                             .navigate(R.id.action_signUpFragment_to_logInFragment)
+                            Toast.makeText(requireActivity(), "Account made!", Toast.LENGTH_SHORT).show()
+                        }
+                    }
+                }
+
+//                if (credentialSnapShot == null && password == confirmpassword && password != "empty" && username != "empty") {//Is name is not taken yet
+//                    //Additionally, passwords must match, username and password must not be empty
+//                    dbRef.child(username).child("Password").setValue(password)
+//                    binding.root.findNavController()
+//                        .navigate(R.id.action_signUpFragment_to_logInFragment)
+//                } else {//If name exists
+//                    Log.d("LogIn", "Cannot sign up, ensure all fields are correct and filled + name isnt taken")
+//                }
+
+
             }
 
 

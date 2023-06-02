@@ -161,6 +161,7 @@ class HomeFragment : Fragment(), GestureDetector.OnGestureListener {
                 when (view.id) {
                     R.id.homeButtonCalendar -> {
                         binding.homeButtonCalendar.setBackgroundResource(R.drawable.clickedhomebuttonbg)
+                        binding.homeButtonCalendarTitle.translationY = 20F//Shifts the title downwards to look like the button is getting pressed down
                         (activity as MainActivity?)!!.startTransition() //How to call methods in MainActivity
                         removeAllButtonFunctionality() //prevents the user from clicking once navigation starts
                         lifecycleScope.launch() {
@@ -172,6 +173,7 @@ class HomeFragment : Fragment(), GestureDetector.OnGestureListener {
 
                     R.id.homeButtonLogFood -> {
                         binding.homeButtonLogFood.setBackgroundResource(R.drawable.clickedhomebuttonbg)
+                        binding.homeButtonLogFoodTitle.translationY = 20F
                         (activity as MainActivity?)!!.startTransition()
                         removeAllButtonFunctionality()
                         lifecycleScope.launch() {
@@ -183,6 +185,7 @@ class HomeFragment : Fragment(), GestureDetector.OnGestureListener {
 
                     R.id.homeButtonSettings -> {
                         binding.homeButtonSettings.setBackgroundResource(R.drawable.clickedhomebuttonbg)
+                        binding.homeButtonSettingsTitle.translationY = 20F
                         (activity as MainActivity?)!!.startTransition()
                         removeAllButtonFunctionality()
                         lifecycleScope.launch() {
@@ -194,6 +197,7 @@ class HomeFragment : Fragment(), GestureDetector.OnGestureListener {
 
                     R.id.homeButtonGoals -> {
                         binding.homeButtonGoals.setBackgroundResource(R.drawable.clickedhomebuttonbg)
+                        binding.homeButtonGoalsTitle.translationY = 20F
                         (activity as MainActivity?)!!.startTransition()
                         removeAllButtonFunctionality()
                         lifecycleScope.launch() {

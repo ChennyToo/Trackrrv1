@@ -31,6 +31,7 @@
         android:text="Calories"
         android:textSize="40dp"
         android:textColor="@color/white"
+        android:fontFamily="@font/archivo_semibold"
         android:layout_marginBottom="20dp"
         app:layout_constraintBottom_toTopOf="@id/goalsWholeBottomScreen"
         app:layout_constraintEnd_toEndOf="parent"

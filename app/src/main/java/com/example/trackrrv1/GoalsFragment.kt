@@ -188,6 +188,10 @@ class GoalsFragment : Fragment() {
                     binding.goalsValueDisplay.text = editableProtein.toString()
                 }
 
+                else {
+                    Toast.makeText(requireActivity(), "Can't go lower!", Toast.LENGTH_SHORT).show()
+                }
+
 
             }
 
@@ -195,6 +199,10 @@ class GoalsFragment : Fragment() {
                 if (editableCarb > 5 || isAdding > 0) {
                     editableCarb += (5 * isAdding)
                     binding.goalsValueDisplay.text = editableCarb.toString()
+                }
+
+                else {
+                    Toast.makeText(requireActivity(), "Can't go lower!", Toast.LENGTH_SHORT).show()
                 }
 
 
@@ -206,6 +214,10 @@ class GoalsFragment : Fragment() {
                     binding.goalsValueDisplay.text = editableSodium.toString()
                 }
 
+                else {
+                    Toast.makeText(requireActivity(), "Can't go lower!", Toast.LENGTH_SHORT).show()
+                }
+
 
             }
 
@@ -215,6 +227,10 @@ class GoalsFragment : Fragment() {
                     binding.goalsValueDisplay.text = editableFat.toString()
                 }
 
+                else {
+                    Toast.makeText(requireActivity(), "Can't go lower!", Toast.LENGTH_SHORT).show()
+                }
+
 
             }
 
@@ -222,6 +238,10 @@ class GoalsFragment : Fragment() {
                 if (editableSugar > 5 || isAdding > 0) {
                     editableSugar += (5 * isAdding)
                     binding.goalsValueDisplay.text = editableSugar.toString()
+                }
+
+                else {
+                    Toast.makeText(requireActivity(), "Can't go lower!", Toast.LENGTH_SHORT).show()
                 }
 
             }

@@ -8,6 +8,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
 import com.example.trackrrv1.databinding.FragmentLogInBinding
@@ -43,6 +44,7 @@ class LogInFragment : Fragment() {
                 } else {
                     //TODO Tell user that password or username is not valid
                     Log.d("LogIn", "Invalid credentials")
+                    Toast.makeText(requireActivity(), "Wrong password or username...", Toast.LENGTH_SHORT).show()
                 }
 
 
