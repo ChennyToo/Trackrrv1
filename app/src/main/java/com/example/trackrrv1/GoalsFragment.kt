@@ -17,6 +17,7 @@ import androidx.viewpager.widget.ViewPager
 import androidx.viewpager2.widget.ViewPager2
 import com.example.trackrrv1.databinding.FragmentGoalsBinding
 import com.example.trackrrv1.databinding.FragmentLogInBinding
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -32,6 +33,8 @@ class GoalsFragment : Fragment() {
     var editableSodium = Constants.sodiumIntake
     var editableFat = Constants.fatIntake
     var editableSugar = Constants.sugarIntake
+    private var plusThread : Job? = null
+    private var minusThread : Job? = null
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -144,10 +147,26 @@ class GoalsFragment : Fragment() {
             View.OnClickListener { view ->
                 when (view.id) {
                     R.id.goalsPlusButton -> {
+                        if (plusThread != null) {//You cannot cancel a thread that hasn't been created, this conditional is for the first press
+                            plusThread?.cancel()//If the button is in the pressed state, user clicking will reset the time it takes to go back up to 100 ms
+                        }
+                        binding.goalsPlusButton.setBackgroundResource(R.drawable.goals_plusbuttonselected)
+                        plusThread = lifecycleScope.launch {
+                            delay(100L)//waits 100ms before making the button appear like it popped back up
+                            binding.goalsPlusButton.setBackgroundResource(R.drawable.goals_plusbutton)
+                        }
                         changeNutrientGoalValue(1)
                     }
 
                     R.id.goalsMinusButton -> {
+                        if (minusThread != null) {
+                            minusThread?.cancel()
+                        }
+                        binding.goalsMinusButton.setBackgroundResource(R.drawable.goals_minusbuttonselected)
+                        minusThread = lifecycleScope.launch {
+                            delay(100L)
+                            binding.goalsMinusButton.setBackgroundResource(R.drawable.goals_minusbutton)
+                        }
                         changeNutrientGoalValue(-1)
                     }
 
