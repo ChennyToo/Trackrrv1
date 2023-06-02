@@ -1,19 +1,22 @@
 package com.example.trackrrv1
 
+import android.app.Activity
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
 import android.widget.AdapterView
+import android.widget.ListPopupWindow
+import android.widget.PopupWindow
+import android.widget.Spinner
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import com.example.trackrrv1.databinding.FragmentCalendarBinding
 import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.ktx.database
-import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.delay
@@ -75,6 +78,14 @@ class CalendarFragment : Fragment() {
             activity?.runOnUiThread{
                 binding.monthSpinner.adapter = monthAdapter
                 binding.monthSpinner.setPopupBackgroundResource(R.drawable.cal_spinnerbg) //sets the background
+
+                binding.monthSpinner.setOnTouchListener { view, motionEvent ->
+                    MainActivity.globalActivity.getWindow().setFlags(
+                        FLAG_LAYOUT_NO_LIMITS,
+                        FLAG_LAYOUT_NO_LIMITS
+                    )
+                    false
+                }
                 binding.monthSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
                     override fun onNothingSelected(parent: AdapterView<*>?) {
 
@@ -87,6 +98,7 @@ class CalendarFragment : Fragment() {
                         }
                         initializationCheck++
                     }
+
 
                 }
             }
@@ -221,6 +233,10 @@ class CalendarFragment : Fragment() {
         binding.homeScreenButton.isClickable = false
         binding.monthSpinner.isClickable = false
     }
+
+
+
+
 
 
 

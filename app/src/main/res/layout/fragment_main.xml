@@ -18,6 +18,20 @@
         android:alpha="0"
         android:visibility="invisible"/>
 
+<!--    <com.airbnb.lottie.LottieAnimationView-->
+<!--        android:id="@+id/main_dayCycleTransition"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="700dp"-->
+<!--        android:scaleY="2"-->
+<!--        android:elevation="1dp"-->
+<!--        android:layout_marginTop="250dp"-->
+<!--        app:layout_constraintEnd_toEndOf="parent"-->
+<!--        app:layout_constraintStart_toStartOf="parent"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:lottie_autoPlay="true"-->
+<!--        app:lottie_loop="true"-->
+<!--        app:lottie_rawRes="@raw/screentransition2" />-->
+
     <ImageView
         android:id="@+id/main_top"
         android:layout_width="match_parent"
@@ -26,6 +40,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
+        android:elevation="3dp"
         />
 
     <TextView

@@ -33,6 +33,7 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = ActivityMainBinding.inflate(layoutInflater)
+        globalActivity = this
         setSettings()
 //        var userPref = applicationContext.getSharedPreferences("UserPref", Context.MODE_PRIVATE)
 //        userPref.edit().remove("username").apply()
@@ -99,6 +100,10 @@ class MainActivity : AppCompatActivity() {
         Constants.sodiumIntake = UserPref.getInt("sodiumIntake", 2000)
         Constants.fatIntake = UserPref.getInt("fatIntake", 60)
         Constants.sugarIntake = UserPref.getInt("sugarIntake", 30)
+    }
+
+    companion object{
+        lateinit var globalActivity : AppCompatActivity
     }
 
 
