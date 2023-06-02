@@ -27,7 +27,7 @@
         app:layout_constraintTop_toTopOf="parent"
         app:lottie_autoPlay="false"
         app:lottie_loop="false"
-        app:lottie_rawRes="@raw/greentransition" />
+        app:lottie_rawRes="@raw/orangetransition" />
 
 
 

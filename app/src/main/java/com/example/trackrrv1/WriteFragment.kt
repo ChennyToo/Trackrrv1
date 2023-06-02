@@ -49,7 +49,7 @@ class WriteFragment : Fragment() {
     // lambda expression to receive a result back, here we
         // receive single item(photo) on selection
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
-            if (result != null) {
+            if (result != null && result.data != null) {
                 // getting URI of selected Image
                 imageUri = result.data?.data!!
                 Glide.with(this).load(imageUri).into(binding.writeFoodImage)

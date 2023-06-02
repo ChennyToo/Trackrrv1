@@ -229,39 +229,33 @@
         android:alpha="0"
         />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+    <Button
         android:id="@+id/TakePhotoButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_gravity="bottom|right"
-        app:fabCustomSize="60dp"
         android:layout_marginBottom="80dp"
-        android:layout_marginRight="125dp"
+        android:layout_marginRight="130dp"
         android:contentDescription="hello"
         app:layout_constraintBottom_toBottomOf="@+id/recyclerView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:backgroundTint="#00DA7B7A"
-        android:alpha="255"
-        app:elevation="0dp"
+        android:alpha="0"
 
         />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
+    <Button
         android:id="@+id/WriteFoodButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="60dp"
+        android:layout_height="60dp"
         android:layout_gravity="bottom|right"
-        app:fabCustomSize="60dp"
         android:layout_marginBottom="80dp"
-        android:layout_marginLeft="125dp"
+        android:layout_marginLeft="130dp"
         android:contentDescription="hello"
         app:layout_constraintBottom_toBottomOf="@+id/recyclerView"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:backgroundTint="#00DA7B7A"
-        android:alpha="255"
-        app:elevation="0dp"
+        android:alpha="0"
         />
 
 

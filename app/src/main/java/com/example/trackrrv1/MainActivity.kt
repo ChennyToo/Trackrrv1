@@ -81,9 +81,9 @@ class MainActivity : AppCompatActivity() {
         }
 
 
-    fun endTransition(){
+    fun endTransition(delayTime: Long = Constants.transitionEndTimeQuick){
         lifecycleScope.launch(){
-            delay(Constants.transitionEndTime)
+            delay(delayTime)
             transition.resumeAnimation()
         }
     }

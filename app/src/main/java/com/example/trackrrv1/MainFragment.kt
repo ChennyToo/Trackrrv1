@@ -59,8 +59,8 @@ class MainFragment : Fragment() {
         day = viewModel.day
         isUp = false
         firstClick = true
-        binding.TakePhotoButton.hide()
-        binding.WriteFoodButton.hide()
+        binding.TakePhotoButton.isClickable = false
+        binding.WriteFoodButton.isClickable = false
         setTopTimeOfDay(LocalDateTime.now().hour)
         var previouslyClickedIcon = binding.mainButtonAll
         dbRef = Constants.userDatabaseReference
@@ -244,11 +244,11 @@ class MainFragment : Fragment() {
     fun logFoodGUI() {
         isUp = !isUp
         if (isUp) {
-            binding.TakePhotoButton.show()
-            binding.WriteFoodButton.show()
+            binding.TakePhotoButton.isClickable = true
+            binding.WriteFoodButton.isClickable = true
         } else {
-            binding.TakePhotoButton.hide()
-            binding.WriteFoodButton.hide()
+            binding.TakePhotoButton.isClickable = false
+            binding.WriteFoodButton.isClickable = false
         }
     }
 
@@ -292,7 +292,7 @@ class MainFragment : Fragment() {
                 0
             ) //prevents bug where some items may disappear by setting the view to be invisible
                  binding.recyclerView.adapter = adapter
-                (activity as MainActivity?)!!.endTransition()//starts the ending transition upon onCreateView
+                (activity as MainActivity?)!!.endTransition(Constants.transitionEndTime)//starts the ending transition upon onCreateView
                 binding.recyclerView.layoutManager?.scrollToPosition(foodList.size - 1)
             setIfNoImageIcon(foodList.size)
         }

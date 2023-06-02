@@ -12,6 +12,7 @@ class Constants {
         lateinit var userDatabaseReference : DatabaseReference
         var transitionStartTime : Long = 400L//Upon finishing starttime, that is when navigation should occur
         var transitionEndTime : Long = 400L
+        var transitionEndTimeQuick : Long = 100L
         var main_customizeAnimationTime : Long = 800L
         var main_iconCooldownTime : Long = 300L
         var calorieIntake : Int = 2000

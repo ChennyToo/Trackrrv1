@@ -40,7 +40,7 @@ class CalendarFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        (activity as MainActivity?)!!.endTransition()
+        (activity as MainActivity?)!!.endTransition(Constants.transitionEndTime)
         Log.d("MainActvity", "CREATEDCAL")
         _binding = FragmentCalendarBinding.inflate(inflater, container, false)
         didProgressThreadsCreated = false

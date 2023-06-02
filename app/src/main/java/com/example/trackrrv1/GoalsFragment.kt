@@ -111,27 +111,27 @@ class GoalsFragment : Fragment() {
             }
 
             1 -> {
-                binding.goalsNutrientLabel.text = "Protein"
+                binding.goalsNutrientLabel.text = "Protein(g)"
                 binding.goalsValueDisplay.text = editableProtein.toString()
             }
 
             2 -> {
-                binding.goalsNutrientLabel.text = "Carbohydrates"
+                binding.goalsNutrientLabel.text = "Carbohydrates(g)"
                 binding.goalsValueDisplay.text = editableCarb.toString()
             }
 
             3 -> {
-                binding.goalsNutrientLabel.text = "Sodium"
+                binding.goalsNutrientLabel.text = "Sodium(mg)"
                 binding.goalsValueDisplay.text = editableSodium.toString()
             }
 
             4 -> {
-                binding.goalsNutrientLabel.text = "Fat"
+                binding.goalsNutrientLabel.text = "Fat(g)"
                 binding.goalsValueDisplay.text = editableFat.toString()
             }
 
             5 -> {
-                binding.goalsNutrientLabel.text = "Sugar"
+                binding.goalsNutrientLabel.text = "Sugar(g)"
                 binding.goalsValueDisplay.text = editableSugar.toString()
             }
         }

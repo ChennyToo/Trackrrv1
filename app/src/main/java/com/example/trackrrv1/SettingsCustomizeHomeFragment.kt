@@ -206,6 +206,7 @@ class SettingsCustomizeHomeFragment : Fragment() {
         binding.customizeNodeHolder1.setOnDragListener(dragListener)
         binding.customizeNodeHolder2.setOnDragListener(dragListener)
         binding.customizeNodeHolder3.setOnDragListener(dragListener)
+        (activity as MainActivity?)!!.endTransition()
     }
 
     fun setNodeHolderValue(destination: ConstraintLayout, value: String) {
