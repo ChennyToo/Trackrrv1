@@ -319,25 +319,26 @@
         android:id="@+id/homeButtonCalendarTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
         android:layout_marginBottom="22dp"
         android:fontFamily="@font/archivo_semibold"
         android:text="Calendar"
         android:textColor="@color/white"
         android:textSize="25dp"
+        android:layout_marginRight="3dp"
         app:layout_constraintBottom_toBottomOf="@id/homeButtonCalendar"
+        app:layout_constraintEnd_toEndOf="@id/homeButtonCalendar"
         app:layout_constraintStart_toStartOf="@id/homeButtonCalendar"/>
 
     <TextView
         android:id="@+id/homeButtonLogFoodTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
         android:layout_marginBottom="22dp"
         android:fontFamily="@font/archivo_semibold"
         android:text="Log Food"
         android:textColor="@color/white"
         android:textSize="25dp"
+        app:layout_constraintEnd_toEndOf="@id/homeButtonLogFood"
         app:layout_constraintBottom_toBottomOf="@id/homeButtonLogFood"
         app:layout_constraintStart_toStartOf="@id/homeButtonLogFood"/>
 
@@ -345,12 +346,13 @@
         android:id="@+id/homeButtonSettingsTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
         android:layout_marginBottom="22dp"
         android:fontFamily="@font/archivo_semibold"
         android:text="Settings"
         android:textColor="@color/white"
         android:textSize="25dp"
+        android:layout_marginRight="3dp"
+        app:layout_constraintEnd_toEndOf="@id/homeButtonSettings"
         app:layout_constraintBottom_toBottomOf="@id/homeButtonSettings"
         app:layout_constraintStart_toStartOf="@id/homeButtonSettings"/>
 
@@ -358,20 +360,61 @@
         android:id="@+id/homeButtonGoalsTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
         android:layout_marginBottom="22dp"
         android:fontFamily="@font/archivo_semibold"
         android:text="Goals"
         android:textColor="@color/white"
         android:textSize="25dp"
+        android:layout_marginRight="3dp"
+        app:layout_constraintEnd_toEndOf="@id/homeButtonGoals"
         app:layout_constraintBottom_toBottomOf="@id/homeButtonGoals"
         app:layout_constraintStart_toStartOf="@id/homeButtonGoals"/>
 
     <ImageView
         android:id="@+id/homeButtonCalendarIcon"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
         android:background="@drawable/home_calendaricon"
+        app:layout_constraintEnd_toEndOf="@id/homeButtonCalendarTitle"
+        app:layout_constraintStart_toStartOf="@id/homeButtonCalendarTitle"
+        app:layout_constraintBottom_toTopOf="@id/homeButtonCalendarTitle"
+        />
+
+    <ImageView
+        android:id="@+id/homeButtonLogFoodIcon"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:background="@drawable/home_foodicon"
+        android:layout_marginBottom="5dp"
+        app:layout_constraintEnd_toEndOf="@id/homeButtonLogFoodTitle"
+        app:layout_constraintStart_toStartOf="@id/homeButtonLogFoodTitle"
+        app:layout_constraintBottom_toTopOf="@id/homeButtonLogFoodTitle"
+        />
+
+    <ImageView
+        android:id="@+id/homeButtonSettingsIcon"
+        android:layout_width="90dp"
+        android:layout_height="90dp"
+        android:background="@drawable/home_settingsicon"
+        android:layout_marginBottom="5dp"
+        app:layout_constraintEnd_toEndOf="@id/homeButtonSettingsTitle"
+        app:layout_constraintStart_toStartOf="@id/homeButtonSettingsTitle"
+        app:layout_constraintBottom_toTopOf="@id/homeButtonSettingsTitle"
+        />
+
+    <ImageView
+        android:id="@+id/homeButtonGoalsIcon"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:background="@drawable/home_goal"
+        android:layout_marginBottom="5dp"
+        app:layout_constraintEnd_toEndOf="@id/homeButtonGoalsTitle"
+        app:layout_constraintStart_toStartOf="@id/homeButtonGoalsTitle"
+        app:layout_constraintBottom_toTopOf="@id/homeButtonGoalsTitle"
+        />
+
+
+
 
 
 
