@@ -10,6 +10,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import androidx.viewpager.widget.ViewPager
@@ -172,6 +173,10 @@ class GoalsFragment : Fragment() {
                 if (editableCalorie > 100 || isAdding > 0) {
                     editableCalorie += (100 * isAdding)
                     binding.goalsValueDisplay.text = editableCalorie.toString()
+                }
+
+                else {
+                    Toast.makeText(requireActivity(), "Can't go lower!", Toast.LENGTH_SHORT).show()
                 }
 
 

@@ -263,8 +263,7 @@ class HomeFragment : Fragment(), GestureDetector.OnGestureListener {
             if (e1.x - e2.x > SWIPE_MIN_DISTANCE
                 && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY
             ) {
-                //Navigate to WriteFragment
-                Log.d("HomeFragment", "Right to Left")
+                //Navigate to WriteFragment with right to left swipe
                 (activity as MainActivity?)!!.startTransition()
                 removeAllButtonFunctionality()
                 lifecycleScope.launch() {
@@ -272,7 +271,6 @@ class HomeFragment : Fragment(), GestureDetector.OnGestureListener {
                     val navigateToWriteFragWithNoFood =
                         HomeFragmentDirections.actionHomeFragmentToWriteFragment(Food())
                     binding.root.findNavController().navigate(navigateToWriteFragWithNoFood)
-                    //TODO HERE
                 }
 
 
@@ -280,15 +278,12 @@ class HomeFragment : Fragment(), GestureDetector.OnGestureListener {
             } else if (e2.x - e1.x > SWIPE_MIN_DISTANCE
                 && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY
             ) {
-                //Navigate to CameraFragment
-                Log.d("HomeFragment", "Left to Right")
+                //Navigate to CameraFragment with left to right swipe
                 (activity as MainActivity?)!!.startTransition()
                 removeAllButtonFunctionality()
                 lifecycleScope.launch() {
                     delay(Constants.transitionStartTime)
-                    val navigateToWriteFragWithNoFood =
-                        HomeFragmentDirections.actionHomeFragmentToCameraFragment(Food())
-                    binding.root.findNavController().navigate(navigateToWriteFragWithNoFood)
+                    binding.root.findNavController().navigate(R.id.action_homeFragment_to_cameraFragment)
                     //TODO HERE
                 }
             }
