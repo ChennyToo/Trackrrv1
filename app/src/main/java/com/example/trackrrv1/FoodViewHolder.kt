@@ -82,7 +82,7 @@ class FoodViewHolder(val binding: ListItemLayoutBinding) : RecyclerView.ViewHold
                 Log.d("FoodViewHolder", "download failed, retrying")
                 parentFragment!!.lifecycleScope.launch {
                     delay(delayIteration)
-                    bindImageFromFirebase(id, delayIteration + 500L)
+                    bindImageFromFirebase(id, delayIteration + 1500L)
                 }
             }
     }

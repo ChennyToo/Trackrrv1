@@ -41,7 +41,7 @@ class FoodViewModel : ViewModel() {
     val field1value = MutableLiveData(-1)
     val field2value = MutableLiveData(-1)
     val field3value = MutableLiveData(-1)
-    var foodFromCamera = MutableLiveData(Food())//Mutable live data because CameraFragment needs to know when the information updates in order to navigate
+    var foodFromCamera = MutableLiveData(Food("initializedFoodFromCamera"))//Mutable live data because CameraFragment needs to know when the information updates in order to navigate
 
 
     fun getNutritionToday(nutrient : String){
@@ -94,13 +94,15 @@ class FoodViewModel : ViewModel() {
     request.enqueue(object : Callback<FoodsResponse> {
             override fun onFailure(call: Call<FoodsResponse>, t: Throwable) {
                 Log.d("RESPONSE", "Failure: " + t.message)
-                //TODO Display Toast Prompting that Barcode does not work
+                //erroneous barcode does not result in failure
             }
             override fun onResponse(call: Call<FoodsResponse>, response: Response<FoodsResponse>) {
                 val foodsResponse : FoodsResponse? = response.body()
                 val foodsItemList = foodsResponse?.foodsItemsList ?: listOf()
+                Log.d("FoodViewModel", "${foodsItemList}")
 
                 for (foodItem in foodsItemList){
+                    Log.d("FoodViewModel", "Called1")
                     val name = if(foodItem.name!!.length > 16){foodItem.name!!.substring(0, 16)}else{foodItem.name}
                     val calorie = foodItem.calorie
                     val fat = foodItem.fat
@@ -111,11 +113,17 @@ class FoodViewModel : ViewModel() {
                     val imageUriString = foodItem.imageLinks.thumbnail!!.toUri().buildUpon().scheme("https").build().toString()
                     //Have the imageUriString be uploaded to Storage
 
-                    val newFood = Food(name?: "", calorie?: 0, fat?: 0, sugar?: 0,
+                    val newFood = Food(name?: "empty", calorie?: 0, fat?: 0, sugar?: 0,
                         sodium?: 0, protein?: 0, carbohydrate?: 0, LocalDateTime.now(), imageUriString)
                     foodFromCamera.value = newFood
 
                 }
+
+                if(foodsItemList.isEmpty()){
+                    Log.d("FoodViewModel", "Called2")
+                    foodFromCamera.value = Food()
+                }
+
             }
 
 
