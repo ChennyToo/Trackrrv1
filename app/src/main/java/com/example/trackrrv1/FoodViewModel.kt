@@ -96,8 +96,10 @@ class FoodViewModel : ViewModel() {
                 Log.d("RESPONSE", "Failure: " + t.message)
                 //erroneous barcode does not result in failure
             }
+            //DO NOTE THAT APP IS LIMITED TO 50 API CALLS PER DAY AND WILL RETURN EMPTY LIST IF SO
             override fun onResponse(call: Call<FoodsResponse>, response: Response<FoodsResponse>) {
                 val foodsResponse : FoodsResponse? = response.body()
+                Log.d("FoodViewModel", "${foodsResponse}")
                 val foodsItemList = foodsResponse?.foodsItemsList ?: listOf()
                 Log.d("FoodViewModel", "${foodsItemList}")
 
