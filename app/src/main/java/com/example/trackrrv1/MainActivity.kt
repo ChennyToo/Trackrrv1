@@ -3,8 +3,10 @@ package com.example.trackrrv1
 import android.content.ContentResolver
 import android.content.Context
 import android.content.SharedPreferences
+import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.MediaStore.Audio.Media
 import android.util.Log
 import android.view.View
 import android.view.Window
@@ -28,6 +30,9 @@ class MainActivity : AppCompatActivity() {
     private var _binding: ActivityMainBinding? = null
     private val binding get() = _binding!!
     lateinit var transition : LottieAnimationView
+    lateinit var startingTransitionSound : MediaPlayer
+    lateinit var endingTransitionSound : MediaPlayer
+
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -35,6 +40,9 @@ class MainActivity : AppCompatActivity() {
         _binding = ActivityMainBinding.inflate(layoutInflater)
         globalActivity = this
         setSettings()
+        startingTransitionSound = MediaPlayer.create(this, R.raw.whooshsound2)
+        endingTransitionSound = MediaPlayer.create(this, R.raw.whooshsound1)
+
 //        var userPref = applicationContext.getSharedPreferences("UserPref", Context.MODE_PRIVATE)
 //        userPref.edit().remove("username").apply()
 //        Way to remove value from sharedpreferences, can be used to log out
@@ -73,6 +81,8 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun startTransition(){
+        startingTransitionSound.seekTo(500)
+        startingTransitionSound.start()
         transition.playAnimation()
         lifecycleScope.launch(){
                 delay(Constants.transitionStartTime)
@@ -83,6 +93,7 @@ class MainActivity : AppCompatActivity() {
 
 
     fun endTransition(delayTime: Long = Constants.transitionEndTimeQuick){
+        endingTransitionSound.start()
         lifecycleScope.launch(){
             delay(delayTime)
             transition.resumeAnimation()
