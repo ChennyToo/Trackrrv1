@@ -3,6 +3,7 @@ package com.example.trackrrv1
 import android.animation.ObjectAnimator
 import android.content.Context
 import android.content.SharedPreferences
+import android.media.MediaPlayer
 import android.net.SocketKeepalive.Callback
 import android.os.Bundle
 import android.util.Log
@@ -35,6 +36,7 @@ class GoalsFragment : Fragment() {
     var editableSugar = Constants.sugarIntake
     private var plusThread : Job? = null
     private var minusThread : Job? = null
+    lateinit var buttonClickSound : MediaPlayer
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -47,6 +49,7 @@ class GoalsFragment : Fragment() {
             R.drawable.goals_fatcard, R.drawable.goals_sugarcard
         )
         initializeButtons()
+        buttonClickSound = MediaPlayer.create(requireContext(), R.raw.goals_buttonclicksound)
         binding.goalsValueDisplay.text = editableCalorie.toString()
         val adapter = ViewPagerAdapter(images)
         binding.goalsViewPager.adapter = adapter
@@ -58,6 +61,7 @@ class GoalsFragment : Fragment() {
                 //When image stops on screen, it will be called again with state of 0
                 Log.d("GoalsFragment", "State: ${state}")
                 if (state == 1) {
+                    MainActivity.playWhooshSound()
                     binding.goalsNutrientLabel.text = ""
                     if (!isObjectAnimatorPlaying) {
                         ObjectAnimator.ofFloat(binding.goalsWholeBottomScreen, "translationY", 800f)
@@ -187,6 +191,8 @@ class GoalsFragment : Fragment() {
     }
 
     private fun changeNutrientGoalValue(isAdding: Int) {
+        buttonClickSound.seekTo(50)
+        buttonClickSound.start()
         when (currentPagerPosition) {
             0 -> {
                 if (editableCalorie > 100 || isAdding > 0) {

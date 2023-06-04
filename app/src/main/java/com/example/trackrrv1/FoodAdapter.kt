@@ -64,6 +64,8 @@ class FoodAdapter(var foods: MutableList<Food>, myFragment: MainFragment) :
                         //RUNS IF CLOSED
                         if (holder.binding.CustomizeFoodItemButton.text.equals("closed")) {
                             holder.binding.CustomizeFoodItemButton.text = "opened"//set state to open
+                            MainFragment.interfaceOpeningSound.seekTo(0)
+                            MainFragment.interfaceOpeningSound.start()
                             if (holder.binding.customizeAnimation.speed > 0) {//if animation is normal speed, play
                                 holder.binding.customizeAnimation.playAnimation()
                             } else {
@@ -86,7 +88,8 @@ class FoodAdapter(var foods: MutableList<Food>, myFragment: MainFragment) :
                                 holder.binding.customizeAnimation.reverseAnimationSpeed()
                                 holder.binding.customizeAnimation.playAnimation()
                             }
-
+                            MainFragment.interfaceClosingSound.seekTo(0)
+                            MainFragment.interfaceClosingSound.start()
                             holder.binding.TrashFoodItemButton.visibility = View.INVISIBLE//disables the two buttons when closing
                             holder.binding.WriteFoodItemButton.visibility = View.INVISIBLE
                             Log.d("1MainActivity", "IsNotVISIBLE")

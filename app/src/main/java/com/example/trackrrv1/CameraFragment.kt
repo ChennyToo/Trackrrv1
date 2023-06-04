@@ -2,6 +2,7 @@ package com.example.trackrrv1
 
 
 import android.content.pm.PackageManager
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.util.Log
 
@@ -40,6 +41,7 @@ class CameraFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentCameraBinding.inflate(inflater, container, false)
+        var getBarcodeSound = MediaPlayer.create(requireContext(), R.raw.camera_getbarcodesound)
         val scannerView = binding.scannerView
         codeScanner = CodeScanner(this.requireContext(), scannerView)
         if (ContextCompat.checkSelfPermission(
@@ -67,6 +69,8 @@ class CameraFragment : Fragment() {
         initializeFailureOrSuccessFunctionality()
         // Callbacks
         codeScanner.decodeCallback = DecodeCallback {
+            getBarcodeSound.seekTo(0)
+            getBarcodeSound.start()
             requireActivity().runOnUiThread {
                 var UPC = it.text.toLong()
                 viewModel.getFoods(UPC)
@@ -89,6 +93,7 @@ class CameraFragment : Fragment() {
             View.OnClickListener { view ->
                 when (view.id) {
                     R.id.BackCameraButton -> {
+                        binding.BackCameraButton.isClickable = false
                         (activity as MainActivity?)!!.startTransition()
                         lifecycleScope.launch() {
                             delay(Constants.transitionStartTime)

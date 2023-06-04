@@ -41,6 +41,7 @@ class DayAdapter (var days: MutableList<Day>, var calendar : CalendarFragment, v
                     R.id.dayNode -> {
                         if(positionOfSelected != holder.bindingAdapterPosition) {//Condition makes it so that
                             //When pressing the day that is already selected, it will not do anything
+                            CalendarFragment.playDayClickSound()
                             positionOfSelected = holder.bindingAdapterPosition // updates the selected position if user selects new dat
                             view.findViewById<View>(R.id.dayNode)
                                 .setBackgroundResource(R.drawable.cal_selected_day)  //makes the clicked day selected

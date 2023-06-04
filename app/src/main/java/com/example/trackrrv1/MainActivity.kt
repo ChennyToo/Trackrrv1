@@ -30,8 +30,7 @@ class MainActivity : AppCompatActivity() {
     private var _binding: ActivityMainBinding? = null
     private val binding get() = _binding!!
     lateinit var transition : LottieAnimationView
-    lateinit var startingTransitionSound : MediaPlayer
-    lateinit var endingTransitionSound : MediaPlayer
+
 
 
 
@@ -42,6 +41,9 @@ class MainActivity : AppCompatActivity() {
         setSettings()
         startingTransitionSound = MediaPlayer.create(this, R.raw.whooshsound2)
         endingTransitionSound = MediaPlayer.create(this, R.raw.whooshsound1)
+        transition = binding.transitionAnimation
+        transition.frame = 0
+        transition.pauseAnimation()
 
 //        var userPref = applicationContext.getSharedPreferences("UserPref", Context.MODE_PRIVATE)
 //        userPref.edit().remove("username").apply()
@@ -69,9 +71,7 @@ class MainActivity : AppCompatActivity() {
 
 
 
-        transition = binding.transitionAnimation
-        transition.frame = 0
-        transition.pauseAnimation()
+
         setContentView(binding.root)
     }
 
@@ -93,10 +93,11 @@ class MainActivity : AppCompatActivity() {
 
 
     fun endTransition(delayTime: Long = Constants.transitionEndTimeQuick){
-        endingTransitionSound.start()
         lifecycleScope.launch(){
             delay(delayTime)
             transition.resumeAnimation()
+            endingTransitionSound.seekTo(300)
+            endingTransitionSound.start()
         }
     }
 
@@ -115,6 +116,13 @@ class MainActivity : AppCompatActivity() {
 
     companion object{
         lateinit var globalActivity : AppCompatActivity
+        lateinit var startingTransitionSound : MediaPlayer
+        lateinit var endingTransitionSound : MediaPlayer
+        fun playWhooshSound(){
+            startingTransitionSound.seekTo(500)
+            startingTransitionSound.start()
+        }
+
     }
 
 

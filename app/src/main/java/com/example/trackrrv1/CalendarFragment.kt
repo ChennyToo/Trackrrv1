@@ -1,6 +1,7 @@
 package com.example.trackrrv1
 
 import android.app.Activity
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.util.Log
 import android.view.LayoutInflater
@@ -39,6 +40,7 @@ class CalendarFragment : Fragment() {
     lateinit var Thread3 : Job
     var didProgressThreadsCreated = false //shows if threads have been created yet
 
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -51,6 +53,7 @@ class CalendarFragment : Fragment() {
         dbRef = Constants.userDatabaseReference
         displayDataForDate(now)
         displayDaysOfMonth(now.monthValue)
+        initializeSound()
 
         var initializationCheck = 0
 
@@ -84,6 +87,7 @@ class CalendarFragment : Fragment() {
                         FLAG_LAYOUT_NO_LIMITS,
                         FLAG_LAYOUT_NO_LIMITS
                     )
+                    playSpinnerClickSound()
                     false
                 }
                 binding.monthSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener{
@@ -93,6 +97,7 @@ class CalendarFragment : Fragment() {
 
                     override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
                         if(initializationCheck !=0) {
+                            playDayClickSound()
                             displayDaysOfMonth(position + 1)//index starts at 0, month value starts at 1
                             binding.selectedMonthTV.text = Constants.monthList.get(position)
                         }
@@ -234,6 +239,11 @@ class CalendarFragment : Fragment() {
         binding.monthSpinner.isClickable = false
     }
 
+    fun initializeSound(){
+        dayClickSound = MediaPlayer.create(requireContext(), R.raw.calendar_daychangesound)
+        monthSpinnerSound = MediaPlayer.create(requireContext(), R.raw.calendar_monthchangesound)
+    }
+
 
 
 
@@ -243,6 +253,17 @@ class CalendarFragment : Fragment() {
 
     companion object{
         var density : Float = 0f
+        lateinit var dayClickSound : MediaPlayer
+        lateinit var monthSpinnerSound : MediaPlayer
+
+        fun playDayClickSound(){
+            dayClickSound.start()
+        }
+
+        fun playSpinnerClickSound(){
+            monthSpinnerSound.start()
+        }
+
     }
 
 

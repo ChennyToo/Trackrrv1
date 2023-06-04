@@ -31,6 +31,7 @@ class HomeFragment : Fragment(), GestureDetector.OnGestureListener {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+        Log.d("HomeFragment", "Home created")
         viewModel.getCalorieToday()
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         lifecycleScope.launch() {

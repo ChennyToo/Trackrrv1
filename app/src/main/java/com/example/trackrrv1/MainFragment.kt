@@ -1,6 +1,8 @@
 package com.example.trackrrv1
 
+import android.media.MediaPlayer
 import android.os.Bundle
+import android.provider.MediaStore.Audio.Media
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -64,6 +66,7 @@ class MainFragment : Fragment() {
         setTopTimeOfDay(LocalDateTime.now().hour)
         var previouslyClickedIcon = binding.mainButtonAll
         dbRef = Constants.userDatabaseReference
+        initializeSound()
 
 
 
@@ -126,6 +129,8 @@ class MainFragment : Fragment() {
             View.OnClickListener { view ->
                 when (view.id) {
                     R.id.NewFoodButton -> {
+                        fabSound.seekTo(0)
+                        fabSound.start()
                         if (firstClick) {
                             fabani.playAnimation()
                             firstClick = false
@@ -368,6 +373,8 @@ class MainFragment : Fragment() {
     }
 
     fun IconClickResponse(Id: Int) {
+        timeOfDayChangeSound.seekTo(0)
+        timeOfDayChangeSound.start()
         binding.iconClickAnimation.updateLayoutParams<ConstraintLayout.LayoutParams> {
             startToStart = Id
             bottomToBottom = Id
@@ -501,6 +508,13 @@ private fun removeNavButtonFunctionality() {
         }
     }
 
+    private fun initializeSound(){
+        timeOfDayChangeSound = MediaPlayer.create(requireContext(), R.raw.main_timeofdaychangesound)
+        interfaceOpeningSound = MediaPlayer.create(requireContext(), R.raw.main_openinterface)
+        interfaceClosingSound = MediaPlayer.create(requireContext(), R.raw.main_closeinterface)
+        fabSound = MediaPlayer.create(requireContext(), R.raw.main_fabsound)
+    }
+
 
 companion object {
     var dbRef: DatabaseReference = Constants.userDatabaseReference
@@ -509,6 +523,10 @@ companion object {
     var month = systemTime.month.toString()
     var day = systemTime.dayOfMonth.toString()
     var mStorageRef: StorageReference =  FirebaseStorage.getInstance().getReference("uploads")
+    lateinit var timeOfDayChangeSound : MediaPlayer
+    lateinit var interfaceOpeningSound : MediaPlayer
+    lateinit var interfaceClosingSound : MediaPlayer
+    lateinit var fabSound : MediaPlayer
 
     fun removeItemInList(name: String) {
         Log.d("MainActivity", "$name")

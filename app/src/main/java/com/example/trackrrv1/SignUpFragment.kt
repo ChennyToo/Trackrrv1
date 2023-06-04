@@ -7,11 +7,14 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.findNavController
 import com.example.trackrrv1.databinding.FragmentLogInBinding
 import com.example.trackrrv1.databinding.FragmentSignUpBinding
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class SignUpFragment : Fragment() {
     private var _binding: FragmentSignUpBinding? = null
@@ -59,30 +62,42 @@ class SignUpFragment : Fragment() {
 
                         else {
                             dbRef.child(username).child("Password").setValue(password)
-                             binding.root.findNavController()
-                             .navigate(R.id.action_signUpFragment_to_logInFragment)
+                            disableButtonFunctionality()
+                            (activity as MainActivity?)!!.startTransition()//begins screen transition
+                            lifecycleScope.launch {
+                                delay(Constants.transitionStartTime)
+                                binding.root.findNavController()
+                                    .navigate(R.id.action_signUpFragment_to_logInFragment)
+                            }
                             Toast.makeText(requireActivity(), "Account made!", Toast.LENGTH_SHORT).show()
                         }
                     }
                 }
-
-//                if (credentialSnapShot == null && password == confirmpassword && password != "empty" && username != "empty") {//Is name is not taken yet
-//                    //Additionally, passwords must match, username and password must not be empty
-//                    dbRef.child(username).child("Password").setValue(password)
-//                    binding.root.findNavController()
-//                        .navigate(R.id.action_signUpFragment_to_logInFragment)
-//                } else {//If name exists
-//                    Log.d("LogIn", "Cannot sign up, ensure all fields are correct and filled + name isnt taken")
-//                }
-
 
             }
 
 
         }
 
+        binding.signupBackButton.setOnClickListener {
+            disableButtonFunctionality()
+            (activity as MainActivity?)!!.startTransition()//begins screen transition
+            lifecycleScope.launch {
+                delay(Constants.transitionStartTime)
+                binding.root.findNavController()
+                    .navigate(R.id.action_signUpFragment_to_logInFragment)
+            }
+        }
+
+        (activity as MainActivity?)!!.endTransition()
+
         // Inflate the layout for this fragment
         return binding.root
+    }
+
+    private fun disableButtonFunctionality(){
+        binding.signupButton.isClickable = false
+        binding.signupBackButton.isClickable = false
     }
 
 

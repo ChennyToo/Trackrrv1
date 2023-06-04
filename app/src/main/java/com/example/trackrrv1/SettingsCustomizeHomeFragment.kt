@@ -4,6 +4,7 @@ import android.content.ClipData
 import android.content.ClipDescription
 import android.content.Context
 import android.content.SharedPreferences
+import android.media.MediaPlayer
 import android.os.Bundle
 import android.util.Log
 import android.view.DragEvent
@@ -27,6 +28,9 @@ class SettingsCustomizeHomeFragment : Fragment() {
     var Position1Value: String = ""
     var Position2Value: String = ""
     var Position3Value: String = ""
+    lateinit var buttonDingSound : MediaPlayer
+    lateinit var buttonErrorSound : MediaPlayer
+    lateinit var nodeLockSound : MediaPlayer
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,6 +38,7 @@ class SettingsCustomizeHomeFragment : Fragment() {
     ): View? {
 
         _binding = FragmentSettingsCustomizeHomeBinding.inflate(inflater, container, false)
+        initializeSound()
         initializeDragAndDrop()
         val buttonsClickListener: View.OnClickListener =
             View.OnClickListener { view ->
@@ -210,6 +215,7 @@ class SettingsCustomizeHomeFragment : Fragment() {
     }
 
     fun setNodeHolderValue(destination: ConstraintLayout, value: String) {
+        var playClickSound = true
         if (destination == binding.customizeNodeHolder1) {
             binding.customizeHomeHolder1Animation.playAnimation()
             binding.customizeHomeHolder1Label.visibility = View.INVISIBLE
@@ -225,8 +231,13 @@ class SettingsCustomizeHomeFragment : Fragment() {
             binding.customizeHomeHolder3Label.visibility = View.INVISIBLE
             Position3Value = value
             Log.d("CustomizeHome", "$value")
-        } else {
+        }
+        else {
             Log.d("CustomizeHome", "getNodeHolderValues no valid destination")
+            playClickSound = false
+        }
+        if(playClickSound){
+            nodeLockSound.start()
         }
     }
 
@@ -244,6 +255,8 @@ class SettingsCustomizeHomeFragment : Fragment() {
             editor.putString("HCField3", Position3Value)
             editor.commit()
 
+            buttonDingSound.start()
+
 
 
             (activity as MainActivity?)!!.startTransition() //How to call methods in MainActivity
@@ -255,6 +268,7 @@ class SettingsCustomizeHomeFragment : Fragment() {
             }
         } else {
             Log.d("CustomizeHome", "updateHomeNutrients ERROR Atleast One position value is empty")
+            buttonErrorSound.start()
         }
     }
 
@@ -267,6 +281,12 @@ class SettingsCustomizeHomeFragment : Fragment() {
         binding.customizeHomeConfirmButton.setOnClickListener(null)
         binding.customizeHomeRefreshButton.setOnClickListener(null)
         binding.customizeBackButton.setOnClickListener(null)
+    }
+
+    private fun initializeSound(){
+        buttonDingSound = MediaPlayer.create(requireContext(), R.raw.settings_buttondingsound)
+        buttonErrorSound = MediaPlayer.create(requireContext(), R.raw.settings_buttonerrorsound)
+        nodeLockSound = MediaPlayer.create(requireContext(), R.raw.settings_nodelocksound)
     }
 
 

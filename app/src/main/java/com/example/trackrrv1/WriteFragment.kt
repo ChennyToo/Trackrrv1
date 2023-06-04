@@ -1,6 +1,7 @@
 package com.example.trackrrv1
 
 import android.content.Intent
+import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -9,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Gallery
+import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
@@ -44,38 +46,17 @@ class WriteFragment : Fragment() {
     lateinit var foodName: String
     lateinit var foodTimeIdentifier: String
     lateinit var imageUri: Uri
+    lateinit var logSound : MediaPlayer
     var didChangeImage = false
     private var imagePickerActivityResult: ActivityResultLauncher<Intent> =
-    // lambda expression to receive a result back, here we
-        // receive single item(photo) on selection
+
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             if (result != null && result.data != null) {
                 // getting URI of selected Image
                 imageUri = result.data?.data!!
                 Glide.with(this).load(imageUri).into(binding.writeFoodImage)
                 didChangeImage = true
-                //Add in image locally first then upload to Firebase?
 
-
-                //Delete task is meant to remove any existing images on that picture incase they want to update the food image
-//                val deleteTask = mStorageRef.child("${Constants.username}/${foodName}${foodTimeIdentifier}").delete()
-//                val uploadTask = mStorageRef.child("${Constants.username}/${foodName}${foodTimeIdentifier}").putFile(imageUri!!)
-
-                // On success, download the file URL and display it
-//                uploadTask.addOnSuccessListener {
-                // using glide library to display the image
-//                    mStorageRef.child("2").downloadUrl.addOnSuccessListener {
-//                        Glide.with(this)
-//                            .load(it)
-//                            .into(binding.writeFoodImage)
-//
-//                        Log.d("Firebase", "download passed")
-//                    }.addOnFailureListener {
-//                        Log.d("Firebase", "Failed in downloading")
-//                    }
-//                }.addOnFailureListener {
-//                    Log.d("Firebase", "Image Upload fail")
-//                }
             }
         }
 
@@ -85,11 +66,8 @@ class WriteFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         isEditState = false
-//        Log.d("Main", "${foodArgs.foodItemPassedInFromEdit}")
-
-
-//        dbRef = Firebase.database.reference.child(Constants.username)
         _binding = FragmentWriteBinding.inflate(inflater, container, false)
+        logSound = MediaPlayer.create(requireContext(), R.raw.write_logfoodsound)
 
         val buttonsClickListener: View.OnClickListener =
             View.OnClickListener { view ->
@@ -250,6 +228,7 @@ class WriteFragment : Fragment() {
         ) {
             displayErrorToUser()
         } else {
+            logSound.start()
             disableButtonFunctionality()
             LogAndNavigate()
         }
@@ -257,6 +236,7 @@ class WriteFragment : Fragment() {
 
     fun displayErrorToUser() {
         Log.d("WriteFragment", "displayErrorToUser name field has bad characters")
+        Toast.makeText(requireActivity(), "Invalid Food Name!", Toast.LENGTH_SHORT).show()
     }
 
     fun disableButtonFunctionality() {
