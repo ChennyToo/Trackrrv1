@@ -41,6 +41,7 @@ class CameraFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding = FragmentCameraBinding.inflate(inflater, container, false)
+        viewModel.foodFromCamera.value = Food("initializedFoodFromCamera")
         var getBarcodeSound = MediaPlayer.create(requireContext(), R.raw.camera_getbarcodesound)
         val scannerView = binding.scannerView
         codeScanner = CodeScanner(this.requireContext(), scannerView)
